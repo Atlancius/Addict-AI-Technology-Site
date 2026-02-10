@@ -36,6 +36,7 @@ NEXT_PUBLIC_SITE_URL=https://addictai.tech
 NEXT_PUBLIC_STRAPI_URL=https://cms.addictai.tech
 TRAEFIK_NETWORK=traefik
 TRAEFIK_ENTRYPOINT=websecure
+TRAEFIK_CERTRESOLVER=mytlschallenge
 ```
 2. S'assurer que Traefik est connecté au réseau `traefik`.
 3. Déployer :
