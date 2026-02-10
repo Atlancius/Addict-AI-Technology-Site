@@ -49,15 +49,22 @@ export async function getServicesWithFallback(): Promise<Service[]> {
   }
 }
 
-export async function getServiceBySlugWithFallback(slug: string) {
-  try {
-    const res = await getServiceBySlug(slug);
-    const services = unwrapCollection<Service>(res);
-    return services[0] ?? null;
-  } catch {
-    const fallback = fallbackServices.find((service) => service.slug === slug);
-    return fallback ?? null;
+export async function getServiceBySlugWithFallback(
+  slug: string,
+  options?: { skipRemote?: boolean }
+) {
+  if (!options?.skipRemote) {
+    try {
+      const res = await getServiceBySlug(slug);
+      const services = unwrapCollection<Service>(res);
+      return services[0] ?? null;
+    } catch {
+      // fall through to fallback
+    }
   }
+
+  const fallback = fallbackServices.find((service) => service.slug === slug);
+  return fallback ?? null;
 }
 
 export async function getCaseStudiesWithFallback(): Promise<CaseStudy[]> {

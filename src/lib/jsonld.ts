@@ -2,6 +2,7 @@ import type { Location } from "./types";
 import type { FaqItem } from "./content";
 
 export function buildLocalBusinessJsonLd(location: Location) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
   const addressLines = [location.address_line1].filter(Boolean);
   const geo =
     location.geo_lat && location.geo_lng
@@ -16,7 +17,7 @@ export function buildLocalBusinessJsonLd(location: Location) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: location.name,
-    url: "https://addictai.tech",
+    url: siteUrl,
     telephone: location.phone,
     email: location.email,
     address: {
