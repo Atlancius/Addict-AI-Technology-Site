@@ -76,6 +76,23 @@ export default function BentoGrid() {
             </ScrollReveal>
           ))}
         </div>
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { label: "Réparations / mois", value: "100+" },
+            { label: "Satisfaction clients", value: "4,9/5" },
+            { label: "Délai moyen", value: "< 48h" },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="rounded-sm border border-stroke-subtle bg-surface-2/70 px-5 py-4 text-center"
+            >
+              <p className="text-xs uppercase tracking-wider text-text-muted font-heading">
+                {item.label}
+              </p>
+              <p className="text-2xl font-heading text-text-primary">{item.value}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

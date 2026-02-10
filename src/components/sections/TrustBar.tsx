@@ -35,15 +35,17 @@ export default function TrustBar() {
             </div>
 
             {/* Tool logos (text-based for now) */}
-            <div className="flex flex-wrap items-center gap-6 justify-center">
-              {TOOLS.map((tool) => (
-                <span
-                  key={tool}
-                  className="text-xs font-heading font-medium text-text-muted/40 uppercase tracking-wider"
-                >
-                  {tool}
-                </span>
-              ))}
+            <div className="relative overflow-hidden max-w-full">
+              <div className="flex flex-wrap items-center gap-6 justify-center">
+                {TOOLS.map((tool) => (
+                  <span
+                    key={tool}
+                    className="text-xs font-heading font-medium text-text-muted/50 uppercase tracking-wider"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </ScrollReveal>

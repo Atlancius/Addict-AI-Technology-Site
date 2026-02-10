@@ -4,12 +4,12 @@ export default function HeroSplit() {
   return (
     <section className="min-h-screen flex items-center relative overflow-hidden pt-24 surface-grid">
       {/* Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-        <div className="absolute -top-32 -left-40 w-[720px] h-[720px] bg-ember/20 rounded-full blur-[140px]" />
-        <div className="absolute top-0 -right-40 w-[720px] h-[720px] bg-flame/15 rounded-full blur-[160px]" />
-        <div className="absolute bottom-[-20%] left-[20%] w-[800px] h-[800px] bg-metal/15 rounded-full blur-[200px]" />
-      </div>
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
+          <div className="absolute -top-32 -left-40 w-[720px] h-[720px] bg-ember/20 rounded-full blur-[140px] aurora" />
+          <div className="absolute top-0 -right-40 w-[720px] h-[720px] bg-flame/20 rounded-full blur-[160px] aurora" />
+          <div className="absolute bottom-[-20%] left-[20%] w-[800px] h-[800px] bg-metal/20 rounded-full blur-[200px] aurora" />
+        </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full py-16 relative">
         {/* Central pivot logo */}
@@ -21,13 +21,14 @@ export default function HeroSplit() {
 
         <div className="hidden lg:block absolute -top-10 right-10 pointer-events-none">
           <div className="sigil flex items-center justify-center">
-            <span className="font-heading font-bold text-4xl metal-text">A</span>
+            <span className="relative z-10 font-heading font-bold text-4xl metal-text">A</span>
+            <span className="pulse-glow" />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
           {/* B2C — Left panel */}
-          <div className="hero-panel-left space-y-6 lg:pr-6 bg-surface-2/70 border border-stroke-subtle rounded-md p-8 lg:p-10 backdrop-blur">
+          <div className="hero-panel-left space-y-6 lg:pr-6 relief-panel rounded-md p-8 lg:p-10 backdrop-blur">
             <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60">
               <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-flame uppercase">
                 Réparation &bull; Boutique &bull; Café Manga
@@ -53,10 +54,28 @@ export default function HeroSplit() {
                 Demander une réparation
               </Button>
             </div>
+
+            <div className="grid grid-cols-3 gap-3 pt-4 text-center">
+              {[
+                { label: "Diagnostic", value: "Gratuit" },
+                { label: "Garantie", value: "6 mois" },
+                { label: "Délai", value: "Express" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-sm border border-stroke-subtle bg-surface-3/60 px-3 py-2"
+                >
+                  <p className="text-[10px] uppercase tracking-wider text-text-muted font-heading">
+                    {item.label}
+                  </p>
+                  <p className="text-sm font-heading text-text-primary">{item.value}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* B2B — Right panel */}
-          <div className="hero-panel-right space-y-6 lg:pl-6 bg-surface-2/70 border border-stroke-subtle rounded-md p-8 lg:p-10 backdrop-blur">
+          <div className="hero-panel-right space-y-6 lg:pl-6 relief-panel rounded-md p-8 lg:p-10 backdrop-blur">
             <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60">
               <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-metal uppercase">
                 Automatisation &bull; IA &bull; Formation
@@ -81,6 +100,24 @@ export default function HeroSplit() {
               <Button variant="outline" size="lg" href="/pro#audit">
                 Demander un audit
               </Button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 pt-4 text-center">
+              {[
+                { label: "Roadmap", value: "90 jours" },
+                { label: "ROI", value: "Mesuré" },
+                { label: "Support", value: "Continu" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-sm border border-stroke-subtle bg-surface-3/60 px-3 py-2"
+                >
+                  <p className="text-[10px] uppercase tracking-wider text-text-muted font-heading">
+                    {item.label}
+                  </p>
+                  <p className="text-sm font-heading text-text-primary">{item.value}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ export default function Card({
   children,
 }: CardProps) {
   return (
-    <div className={`rounded-sm p-6 ${variantClasses[variant]} ${className}`}>
+    <div className={`rounded-sm p-6 card-sheen ${variantClasses[variant]} ${className}`}>
       {children}
     </div>
   );
