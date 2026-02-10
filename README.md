@@ -3,7 +3,7 @@
 Ce repo contient :
 - `frontend/` : Next.js (App Router, TypeScript, Tailwind v4)
 - `cms/` : Strapi v5 (PostgreSQL)
-- `docker-compose.yml` : PostgreSQL + Strapi + Front + Caddy
+- `docker-compose.yml` : PostgreSQL + Strapi + Front (labels Traefik)
 
 ## Prérequis
 - Node.js 20+ (ou 22+)
@@ -18,12 +18,42 @@ docker compose up -d --build
 ```
 
 Par défaut :
-- Front : `http://localhost` (port 80 via Caddy)
-- CMS : `http://localhost:1337` (ou via domaine `cms.*` si DNS configuré)
+- Front : via Traefik (domaine public)
+- CMS : via Traefik (domaine public)
+
+## Déploiement Traefik (prod)
+Pré-requis :
+- Traefik déjà déployé sur le VPS.
+- Le réseau Docker `traefik` existe.
+- Traefik écoute sur 80/443 et a un `certResolver` configuré.
+
+Étapes :
+1. Mettre à jour `.env` :
+```bash
+FRONT_DOMAIN=addictai.tech
+CMS_DOMAIN=cms.addictai.tech
+NEXT_PUBLIC_SITE_URL=https://addictai.tech
+NEXT_PUBLIC_STRAPI_URL=https://cms.addictai.tech
+TRAEFIK_NETWORK=traefik
+TRAEFIK_ENTRYPOINT=websecure
+```
+2. S'assurer que Traefik est connecté au réseau `traefik`.
+3. Déployer :
+```bash
+docker compose down --remove-orphans
+docker compose up -d --build
+```
+4. Créer un token API Strapi **custom** :
+- `read` sur contenus publics (Location, Repairs, Services, FAQ, Case Studies)
+- `create` sur `lead`
+5. Mettre `STRAPI_API_TOKEN` dans `.env`, puis :
+```bash
+docker compose restart frontend
+```
 
 ## Configuration DNS (prod)
 - `FRONT_DOMAIN` et `CMS_DOMAIN` dans `.env` doivent correspondre aux domaines DNS.
-- Caddy gère automatiquement le HTTPS si les domaines pointent vers le VPS.
+- Le HTTPS est géré par Traefik (certResolver requis).
 
 ## Variables importantes (.env)
 - `POSTGRES_PASSWORD`
@@ -81,3 +111,26 @@ Le Dockerfile front utilise le mode `standalone` Next.js.
 ## Notes
 - `NEXT_PUBLIC_STRAPI_URL` doit pointer vers l'URL Strapi publique (`https://cms.domaine`).
 - Pour la prod, utiliser HTTPS + secrets uniques.
+
+## DNS & Troubleshooting
+Vérifier la résolution :
+```bash
+dig +short addictai.tech
+dig +short cms.addictai.tech
+```
+Vérifier le HTTPS :
+```bash
+curl -I https://addictai.tech
+curl -I https://cms.addictai.tech
+```
+Revalidate test :
+```bash
+curl -s -X POST https://addictai.tech/api/revalidate \
+  -H "x-revalidate-secret: <NEW_SECRET>" \
+  -H "Content-Type: application/json" \
+  -d '{"paths":["/"]}'
+```
+Si TLS ne répond pas :
+- Vérifier l’entrypoint Traefik utilisé (ex: `websecure`).
+- Vérifier qu’un `certResolver` est configuré côté Traefik.
+- Vérifier que Traefik écoute bien sur 80/443.
