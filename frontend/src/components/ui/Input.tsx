@@ -3,6 +3,7 @@ import { type InputHTMLAttributes, type TextareaHTMLAttributes, forwardRef } fro
 interface BaseInputProps {
   label?: string;
   error?: string;
+  tone?: "flame" | "metal";
   className?: string;
 }
 
@@ -10,13 +11,18 @@ type InputProps = BaseInputProps & InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = BaseInputProps & TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
 const baseClasses =
-  "w-full bg-surface-2/80 border border-stroke-subtle text-text-primary placeholder:text-text-muted/50 rounded-sm px-4 py-3 text-sm font-body transition-all duration-200 focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none";
+  "w-full bg-surface-2/80 border border-stroke-subtle text-text-primary placeholder:text-text-muted/50 rounded-sm px-4 py-3 text-sm font-body transition-all duration-200 focus:outline-none";
+
+const focusClasses: Record<NonNullable<BaseInputProps["tone"]>, string> = {
+  flame: "focus:border-flame focus:ring-1 focus:ring-flame/30",
+  metal: "focus:border-metal focus:ring-1 focus:ring-metal/30",
+};
 
 const errorClasses =
   "border-ember focus:border-ember focus:ring-ember/30";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  function Input({ label, error, className = "", ...props }, ref) {
+  function Input({ label, error, tone = "flame", className = "", ...props }, ref) {
     return (
       <div className="space-y-1.5">
         {label && (
@@ -29,7 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <input
           ref={ref}
-          className={`${baseClasses} ${error ? errorClasses : ""} ${className}`}
+          className={`${baseClasses} ${focusClasses[tone]} ${error ? errorClasses : ""} ${className}`}
           {...props}
         />
         {error && (
@@ -41,7 +47,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 );
 
 export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "multiline">>(
-  function Textarea({ label, error, className = "", ...props }, ref) {
+  function Textarea({ label, error, tone = "flame", className = "", ...props }, ref) {
     return (
       <div className="space-y-1.5">
         {label && (
@@ -55,7 +61,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "mul
         <textarea
           ref={ref}
           rows={4}
-          className={`${baseClasses} resize-y min-h-[100px] ${error ? errorClasses : ""} ${className}`}
+          className={`${baseClasses} ${focusClasses[tone]} resize-y min-h-[100px] ${error ? errorClasses : ""} ${className}`}
           {...props}
         />
         {error && (

@@ -10,11 +10,11 @@ interface CardProps {
 
 const variantClasses: Record<CardVariant, string> = {
   service:
-    "bg-gradient-to-b from-surface-2/80 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-ember/30 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.35)] transition-all duration-300 group",
+    "bg-gradient-to-b from-surface-2/90 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-ember/35 hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(0,0,0,0.4)] transition-all duration-300 group",
   bento:
-    "bg-gradient-to-b from-surface-2/80 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-flame/40 hover:shadow-[0_0_32px_rgba(255,122,61,0.12)] hover:-translate-y-1 transition-all duration-300 group",
+    "bg-gradient-to-b from-surface-2/90 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-flame/40 hover:shadow-[0_0_36px_rgba(255,90,31,0.18)] hover:-translate-y-1 transition-all duration-300 group",
   pricing:
-    "bg-gradient-to-b from-surface-2 to-surface-1 border border-stroke-subtle hover:border-metal/40 hover:shadow-[0_16px_40px_rgba(0,0,0,0.32)] transition-all duration-300",
+    "bg-gradient-to-b from-surface-2 to-surface-1 border border-stroke-subtle hover:border-metal/40 hover:shadow-[0_18px_48px_rgba(0,0,0,0.35)] transition-all duration-300",
 };
 
 export default function Card({

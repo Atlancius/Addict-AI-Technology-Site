@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import { Chakra_Petch, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
 
-const spaceGrotesk = Space_Grotesk({
+const chakraPetch = Chakra_Petch({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const manrope = Manrope({
+const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${manrope.variable} antialiased`}
+        className={`${chakraPetch.variable} ${plusJakarta.variable} antialiased`}
       >
         {children}
       </body>

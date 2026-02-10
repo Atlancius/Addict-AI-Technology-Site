@@ -135,6 +135,7 @@ export default function LeadB2BForm() {
           value={form.name}
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
+          tone="metal"
           required
         />
         <Input
@@ -143,6 +144,7 @@ export default function LeadB2BForm() {
           value={form.company}
           onChange={(event) => update("company", event.target.value)}
           error={errors.company}
+          tone="metal"
           required
         />
         <Input
@@ -152,6 +154,7 @@ export default function LeadB2BForm() {
           onChange={(event) => update("email", event.target.value)}
           error={errors.email}
           type="email"
+          tone="metal"
           required
         />
         <Input
@@ -160,6 +163,7 @@ export default function LeadB2BForm() {
           value={form.phone}
           onChange={(event) => update("phone", event.target.value)}
           error={errors.phone}
+          tone="metal"
         />
         <div>
           <label className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1">
@@ -168,7 +172,7 @@ export default function LeadB2BForm() {
           <select
             value={form.company_size}
             onChange={(event) => update("company_size", event.target.value)}
-            className="w-full bg-surface-1 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
+            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
           >
             {COMPANY_SIZES.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -187,7 +191,7 @@ export default function LeadB2BForm() {
           <select
             value={form.goal}
             onChange={(event) => update("goal", event.target.value)}
-            className="w-full bg-surface-1 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
+            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
           >
             {GOALS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -206,7 +210,7 @@ export default function LeadB2BForm() {
           <select
             value={form.budget}
             onChange={(event) => update("budget", event.target.value)}
-            className="w-full bg-surface-1 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
+            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
           >
             {BUDGETS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -226,6 +230,7 @@ export default function LeadB2BForm() {
         value={form.problem}
         onChange={(event) => update("problem", event.target.value)}
         error={errors.problem}
+        tone="metal"
         required
       />
 

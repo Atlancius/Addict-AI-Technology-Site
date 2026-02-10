@@ -109,6 +109,7 @@ export default function LeadB2CForm() {
           value={form.name}
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
+          tone="flame"
           required
         />
         <Input
@@ -117,6 +118,7 @@ export default function LeadB2CForm() {
           value={form.phone}
           onChange={(event) => update("phone", event.target.value)}
           error={errors.phone}
+          tone="flame"
           required
         />
         <Input
@@ -126,6 +128,7 @@ export default function LeadB2CForm() {
           onChange={(event) => update("email", event.target.value)}
           error={errors.email}
           type="email"
+          tone="flame"
         />
         <Input
           label="Marque"
@@ -133,6 +136,7 @@ export default function LeadB2CForm() {
           value={form.device_brand}
           onChange={(event) => update("device_brand", event.target.value)}
           error={errors.device_brand}
+          tone="flame"
           required
         />
         <Input
@@ -141,6 +145,7 @@ export default function LeadB2CForm() {
           value={form.device_model}
           onChange={(event) => update("device_model", event.target.value)}
           error={errors.device_model}
+          tone="flame"
           required
         />
         <div>
@@ -150,7 +155,7 @@ export default function LeadB2CForm() {
           <select
             value={form.urgency}
             onChange={(event) => update("urgency", event.target.value)}
-            className="w-full bg-surface-1 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none"
+            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none"
           >
             {URGENCY_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -170,6 +175,7 @@ export default function LeadB2CForm() {
         value={form.issue}
         onChange={(event) => update("issue", event.target.value)}
         error={errors.issue}
+        tone="flame"
         required
       />
 

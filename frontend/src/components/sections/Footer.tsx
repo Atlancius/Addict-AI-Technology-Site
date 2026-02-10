@@ -32,7 +32,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
-                <div className="relative w-9 h-9 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_18px_rgba(217,35,35,0.35)] flex items-center justify-center">
+                <div className="relative w-9 h-9 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_18px_rgba(230,57,70,0.35)] flex items-center justify-center">
                   <span className="font-heading font-bold text-white text-lg leading-none">
                     A
                   </span>

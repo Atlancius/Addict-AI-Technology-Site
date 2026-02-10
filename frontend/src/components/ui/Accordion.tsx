@@ -70,8 +70,8 @@ function AccordionRow({
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
-      className={`w-4 h-4 text-text-muted transition-transform duration-300 flex-shrink-0 ${
-        isOpen ? "rotate-180" : ""
+      className={`w-4 h-4 text-text-muted transition-transform transition-opacity duration-300 flex-shrink-0 ${
+        isOpen ? "rotate-180 opacity-100" : "opacity-60"
       }`}
       fill="none"
       viewBox="0 0 24 24"

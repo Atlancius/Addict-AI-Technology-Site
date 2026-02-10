@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import Link from "next/link";
 import Button from "./Button";
 
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -20,6 +22,45 @@ export default function Navbar() {
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const menu = menuRef.current;
+    if (!mobileOpen || !menu) return;
+
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReduced) {
+      gsap.set(menu, { opacity: 1 });
+      gsap.set(menu.querySelectorAll("[data-menu-item]"), {
+        opacity: 1,
+        y: 0,
+      });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        menu,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: "power2.out" }
+      );
+      gsap.fromTo(
+        menu.querySelectorAll("[data-menu-item]"),
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power3.out",
+        }
+      );
+    }, menu);
+
+    return () => ctx.revert();
+  }, [mobileOpen]);
 
   return (
     <header
@@ -95,23 +136,28 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden glass-panel border-t border-stroke-subtle">
-          <nav className="flex flex-col px-6 py-6 gap-4">
+        <div
+          ref={menuRef}
+          className="md:hidden fixed inset-0 z-40 glass-panel border-t border-stroke-subtle"
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-surface-0/80 via-surface-1/70 to-surface-0/90" />
+          <nav className="relative flex flex-col px-6 pt-28 pb-10 gap-6 h-full">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-heading font-medium uppercase tracking-wider text-text-secondary hover:text-flame transition-colors py-2"
+                data-menu-item
+                className="text-base font-heading font-medium uppercase tracking-wider text-text-secondary hover:text-flame transition-colors py-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="flex gap-3 pt-4 border-t border-stroke-subtle">
-              <Button variant="flame" size="sm" href="/addict-2-0" className="flex-1">
+            <div className="flex flex-col gap-3 pt-6 border-t border-stroke-subtle" data-menu-item>
+              <Button variant="flame" size="md" href="/addict-2-0" className="w-full">
                 Réparer
               </Button>
-              <Button variant="metal" size="sm" href="/pro" className="flex-1">
+              <Button variant="metal" size="md" href="/pro" className="w-full">
                 Audit
               </Button>
             </div>
