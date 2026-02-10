@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "locations",
+  "info": {
+    "singularName": "location",
+    "pluralName": "locations",
+    "displayName": "Location",
+    "description": "Boutique / point de vente"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address_line1": {
+      "type": "string",
+      "required": true
+    },
+    "postal_code": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "region": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "default": "FR"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "geo_lat": {
+      "type": "decimal"
+    },
+    "geo_lng": {
+      "type": "decimal"
+    },
+    "google_maps_url": {
+      "type": "string"
+    },
+    "opening_hours": {
+      "type": "json"
+    }
+  }
+}

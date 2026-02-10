@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "b2b_services",
+  "info": {
+    "singularName": "b2b-service",
+    "pluralName": "b2b-services",
+    "displayName": "B2B Service",
+    "description": "Services professionnels B2B"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["Audit", "Automation", "Training", "Support", "Web", "Branding"],
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "deliverables": {
+      "type": "json"
+    },
+    "duration_estimate": {
+      "type": "string"
+    },
+    "starting_price_text": {
+      "type": "string"
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "cta_link": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    },
+    "faqs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::faq.faq",
+      "inversedBy": "services"
+    }
+  }
+}

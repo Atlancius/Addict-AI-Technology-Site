@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "b2c_repairs",
+  "info": {
+    "singularName": "b2c-repair",
+    "pluralName": "b2c-repairs",
+    "displayName": "B2C Repair",
+    "description": "Tarifs réparation B2C"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "device_brand": {
+      "type": "string",
+      "required": true
+    },
+    "device_model": {
+      "type": "string",
+      "required": true
+    },
+    "repair_type": {
+      "type": "string",
+      "required": true
+    },
+    "price_from": {
+      "type": "decimal",
+      "required": true
+    },
+    "duration_text": {
+      "type": "string"
+    },
+    "warranty_text": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "text"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/* ============================================
+   ADDICT — Design System Tokens
+   Dark premium / Magma & Acier
+   ============================================ */
+
+:root {
+  /* Surfaces */
+  --surface-0: #0B0E13;
+  --surface-1: #0F1420;
+  --surface-2: #151922;
+  --surface-3: #1B2130;
+
+  /* Accents */
+  --metal: #415A77;
+  --ember: #E63946;
+  --flame: #FF5A1F;
+
+  /* Accent states */
+  --flame-hover: #FF6A37;
+  --flame-active: #E94D17;
+  --metal-hover: #4B6A8E;
+  --metal-active: #35506B;
+  --ember-hover: #F04A57;
+  --ember-active: #CC2E3A;
+
+  /* Text */
+  --text-primary: #E7E9EE;
+  --text-secondary: #B6BDC9;
+  --text-muted: #8B94A6;
+
+  /* Stroke */
+  --stroke-subtle: rgba(255, 255, 255, 0.08);
+  --stroke-medium: rgba(255, 255, 255, 0.14);
+
+  /* Glass */
+  --overlay-glass: rgba(11, 14, 19, 0.60);
+}
+
+/* Tailwind v4 theme extension */
+@theme inline {
+  /* Colors */
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+
+  --color-metal: var(--metal);
+  --color-metal-hover: var(--metal-hover);
+  --color-metal-active: var(--metal-active);
+
+  --color-ember: var(--ember);
+  --color-ember-hover: var(--ember-hover);
+  --color-ember-active: var(--ember-active);
+
+  --color-flame: var(--flame);
+  --color-flame-hover: var(--flame-hover);
+  --color-flame-active: var(--flame-active);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-stroke-subtle: var(--stroke-subtle);
+  --color-stroke-medium: var(--stroke-medium);
+
+  --color-overlay-glass: var(--overlay-glass);
+
+  /* Fonts */
+  --font-heading: "Chakra Petch", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--surface-0);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--ember);
+  color: white;
+}
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--flame);
+}
+
+/* ============================================
+   Glass Panel utility
+   ============================================ */
+
+.glass-panel {
+  background: var(--overlay-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--stroke-subtle);
+}
+
+/* ============================================
+   Hero animations
+   ============================================ */
+
+@keyframes hero-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-right {
+  0% {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-center {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-panel-left {
+  opacity: 0;
+  animation: hero-left 0.9s ease forwards;
+}
+
+.hero-panel-right {
+  opacity: 0;
+  animation: hero-right 0.9s ease 0.1s forwards;
+}
+
+.hero-center-mark {
+  opacity: 0;
+  animation: hero-center 1s ease 0.25s forwards;
+}
+
+.hero-center-copy {
+  opacity: 0;
+  animation: hero-center 0.9s ease 0.35s forwards;
+}
+
+/* ============================================
+   Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-panel-left,
+  .hero-panel-right,
+  .hero-center-mark,
+  .hero-center-copy {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   Focus styles (accessibility)
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--flame);
+  outline-offset: 2px;
+}

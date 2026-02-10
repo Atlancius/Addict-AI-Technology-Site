@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-addict}
+      POSTGRES_USER: ${POSTGRES_USER:-addict}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme_in_production}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-addict}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  strapi:
+    build:
+      context: ./cms
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-addict}
+      DATABASE_USERNAME: ${POSTGRES_USER:-addict}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-changeme_in_production}
+      DATABASE_SSL: "false"
+      APP_KEYS: ${APP_KEYS:-key1,key2,key3,key4}
+      API_TOKEN_SALT: ${API_TOKEN_SALT:-change_this_salt}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET:-change_this_jwt_secret}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT:-change_this_transfer_salt}
+      JWT_SECRET: ${JWT_SECRET:-change_this_jwt}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-change_this_encryption_key}
+    ports:
+      - "1337:1337"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./cms:/srv/app
+      - strapi_node_modules:/srv/app/node_modules
+      - strapi_uploads:/srv/app/public/uploads
+
+volumes:
+  pgdata:
+  strapi_node_modules:
+  strapi_uploads:

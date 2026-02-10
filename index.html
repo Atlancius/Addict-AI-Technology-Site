@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addict AI — Tech, Réparation &amp; Innovation</title>
+    <meta name="description" content="Réparation mobile, PC sur mesure, café manga. L'expert tech local.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Three.js & GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <!-- Configuration matches logo palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#0F1012',        // Dark concrete/charcoal from background
+                            surface: '#1A1B1E',   // Slightly lighter grey
+                            surface2: '#252629',  // Lighter surface
+                            text: '#E2E2E2',      // Metallic silver text
+                            muted: '#9CA3AF',     // Muted silver
+                            accent: '#D92323',    // Deep fiery red from wings
+                            accentDark: '#8B0000',// Dark blood red
+                            accentLight: '#FF7F3F',// Glowing ember orange
+                            silver: '#C0C0C0'     // Brushed metal
+                        }
+                    },
+                    backgroundImage: {
+                        'fire-glow': 'linear-gradient(135deg, #8B0000 0%, #D92323 50%, #FF7F3F 100%)', // Fiery gradient
+                        'metal-sheen': 'linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 40%, #9CA3AF 100%)', // Brushed silver text effect
+                        'dark-concrete': 'radial-gradient(circle at center, #1F2124 0%, #0F1012 100%)'
+                    },
+                    boxShadow: {
+                        'glow': '0 0 30px rgba(217, 35, 35, 0.3)',
+                        'glow-orange': '0 0 20px rgba(255, 127, 63, 0.2)',
+                        'metal': 'inset 0 1px 0 0 rgba(255,255,255,0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #0F1012;
+            color: #E2E2E2;
+        }
+        
+        /* Metallic Text Effect matching the logo text */
+        .text-metal {
+            background: linear-gradient(180deg, #FFFFFF 10%, #D1D5DB 45%, #9CA3AF 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Fiery Text Effect */
+        .text-fire {
+            background: linear-gradient(180deg, #FF7F3F 0%, #D92323 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Scanline Overlay (Subtler now) */
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.3;
+        }
+
+        /* Ambient Glows - Fire colored */
+        .ambient-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(217, 35, 35, 0.08) 0%, rgba(15, 16, 18, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F1012;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D92323;
+        }
+
+        /* Glass Panel - Darker, cleaner */
+        .glass-panel {
+            background: rgba(26, 27, 30, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 3D Container Fixes */
+        #phone-explode {
+            position: relative;
+            overflow: hidden;
+            /* Dark radial background to match logo atmosphere */
+            background: radial-gradient(circle at 50% 50%, #252629 0%, #0F1012 80%); 
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        /* CRITICAL FIX: Force canvas to fill container */
+        #phone-explode canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            outline: none;
+        }
+
+        #hint {
+            position: absolute;
+            left: 24px;
+            bottom: 24px;
+            font-size: 10px;
+            color: rgba(255,255,255,.3);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            user-select: none;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Intro Logo Overlay */
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(255, 127, 63, 0.22), rgba(15, 16, 18, 0.98) 58%),
+                linear-gradient(135deg, rgba(217, 35, 35, 0.08), transparent 40%),
+                #0F1012;
+            overflow: hidden;
+        }
+
+        #intro::before {
+            content: "";
+            position: absolute;
+            width: 120vmax;
+            height: 120vmax;
+            background: radial-gradient(circle at 50% 40%, rgba(217, 35, 35, 0.24), transparent 55%);
+            animation: intro-pulse 2.6s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+
+        #intro::after {
+            content: "";
+            position: absolute;
+            inset: -30%;
+            background: conic-gradient(from 90deg, rgba(255, 255, 255, 0.08), transparent 40%, rgba(217, 35, 35, 0.16) 60%, transparent 80%);
+            animation: intro-rotate 12s linear infinite;
+            opacity: 0.6;
+            filter: blur(1px);
+        }
+
+        .intro-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 64px 64px;
+            opacity: 0.35;
+            animation: intro-grid-move 14s linear infinite;
+            mask-image: radial-gradient(circle at 50% 35%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2) 65%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at 50% 35%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2) 65%, transparent 80%);
+            z-index: 1;
+        }
+
+        .intro-scanline {
+            position: absolute;
+            left: -20%;
+            right: -20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 127, 63, 0.8), transparent);
+            opacity: 0.6;
+            animation: intro-scan 2.8s linear infinite;
+            mix-blend-mode: screen;
+            z-index: 2;
+        }
+
+        .intro-logo {
+            position: relative;
+            width: min(70vw, 420px);
+            max-height: 70vh;
+            object-fit: contain;
+            filter: drop-shadow(0 16px 50px rgba(217, 35, 35, 0.5));
+            transform-origin: center;
+            z-index: 3;
+        }
+
+        .intro-hud {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(72vw, 420px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.28em;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 3;
+        }
+
+        .intro-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: intro-hud-flicker 2.8s steps(6, end) infinite;
+        }
+
+        .intro-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #FF7F3F;
+            box-shadow: 0 0 12px rgba(255, 127, 63, 0.8);
+            animation: intro-dot-pulse 1.6s ease-in-out infinite;
+        }
+
+        .intro-bar {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .intro-bar span {
+            position: absolute;
+            inset: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            background: linear-gradient(90deg, #8B0000, #D92323 60%, #FF7F3F);
+            box-shadow: 0 0 14px rgba(217, 35, 35, 0.6);
+        }
+
+        .intro-meta {
+            font-size: 9px;
+            letter-spacing: 0.34em;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #intro.intro-fallback {
+            animation: intro-out 0.8s ease 1.6s forwards;
+        }
+
+        #intro.intro-fallback .intro-bar span {
+            animation: intro-bar-fill 1.6s ease forwards;
+        }
+
+        @keyframes intro-pulse {
+            0%, 100% { transform: scale(0.98); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes intro-rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes intro-grid-move {
+            to { background-position: 128px 128px; }
+        }
+
+        @keyframes intro-scan {
+            0% { transform: translateY(-40vh); opacity: 0; }
+            10% { opacity: 0.7; }
+            60% { opacity: 0.4; }
+            100% { transform: translateY(120vh); opacity: 0; }
+        }
+
+        @keyframes intro-bar-fill {
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes intro-dot-pulse {
+            0%, 100% { transform: scale(0.7); opacity: 0.5; }
+            50% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes intro-hud-flicker {
+            0%, 100% { opacity: 0.9; }
+            40% { opacity: 0.7; }
+            60% { opacity: 1; }
+            80% { opacity: 0.6; }
+        }
+
+        @keyframes intro-out {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #intro::before,
+            #intro::after,
+            .intro-grid,
+            .intro-scanline,
+            .intro-dot,
+            .intro-status {
+                animation: none;
+            }
+
+            .intro-bar span {
+                transform: scaleX(1);
+            }
+        }
+
+        /* Offres Spline Reveal */
+        #offres {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #offres .offres-spline {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            clip-path: inset(45% 0 45% 0);
+            transform: scale(1.08);
+            transition: clip-path 1.2s ease, opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        #offres .offres-spline iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        #offres .offres-spline-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(255, 127, 63, 0.18), transparent 55%),
+                linear-gradient(180deg, rgba(15, 16, 18, 0.55) 0%, rgba(15, 16, 18, 0.95) 70%);
+            mix-blend-mode: screen;
+            opacity: 0.7;
+        }
+
+        #offres .offres-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+        }
+
+        #offres.offres-reveal .offres-spline {
+            clip-path: inset(0 0 0 0);
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #offres.offres-reveal .offres-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #offres .offres-spline,
+            #offres .offres-content {
+                transition: none;
+                clip-path: inset(0 0 0 0);
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-accent selection:text-white relative overflow-x-hidden">
+
+    <!-- Intro Logo Overlay -->
+    <div id="intro" class="intro-overlay" data-intro-logo="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5dd3343b-5e48-4527-9c12-77bd2e2ef0f7_320w.jpg">
+        <div class="intro-grid" aria-hidden="true"></div>
+        <div class="intro-scanline" aria-hidden="true"></div>
+        <img class="intro-logo" src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5dd3343b-5e48-4527-9c12-77bd2e2ef0f7_320w.jpg" alt="Addict AI Technology logo">
+        <div class="intro-hud" aria-hidden="true">
+            <div class="intro-status"><span class="intro-dot"></span> INITIALIZING SYSTEM</div>
+            <div class="intro-bar"><span></span></div>
+            <div class="intro-meta">FOLELLI // CORSE // SECURE LINK</div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Subtle Texture Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-[100] opacity-10 mix-blend-overlay w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')]"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand with Logo Image -->
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- Placeholder for the Logo Image provided by user -->
+                <div class="h-10 w-10 relative flex-shrink-0">
+                     <!-- Replace src with your actual logo file path -->
+                    <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5dd3343b-5e48-4527-9c12-77bd2e2ef0f7_320w.jpg" alt="Addict AI Logo" class="w-full h-full object-cover drop-shadow-[0_0_8px_rgba(217,35,35,0.5)]">
+                </div>
+                <div class="flex flex-col justify-center">
+                    <span class="font-display font-bold text-lg leading-none tracking-tight text-metal group-hover:text-white transition-colors uppercase">ADDICT</span>
+                    <span class="font-display font-semibold text-[10px] leading-tight tracking-[0.2em] text-brand-accentLight uppercase">AI TECHNOLOGY</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#offres" class="text-xs font-medium uppercase tracking-wide text-brand-muted hover:text-white transition-colors">Services</a>
+                <a href="#realisations" class="text-xs font-medium uppercase tracking-wide text-brand-muted hover:text-white transition-colors">Projets</a>
+                <a href="#addict-ai-technology" class="uppercase text-brand-muted hover:text-brand-accentLight transition-colors text-xs font-medium tracking-wide">Business Solution</a>
+                <a href="#rdv" class="text-xs font-medium uppercase tracking-wide text-brand-muted hover:text-white transition-colors">Rendez-vous</a>
+            </nav>
+
+            <!-- Desktop CTAs -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="tel:PHONE_TO_PROVIDE" class="text-sm font-medium text-brand-muted hover:text-brand-accent transition-colors flex items-center gap-2">
+                    <iconify-icon icon="lucide:phone"></iconify-icon>
+                    <span class="hidden lg:inline">Contact</span>
+                </a>
+                <a href="CAL_COM_URL_TO_PROVIDE" class="px-6 py-2.5 rounded-sm bg-gradient-to-r from-brand-accentDark to-brand-accent text-white text-sm font-bold uppercase tracking-wide hover:shadow-glow hover:scale-105 transition-all duration-300 border border-white/10">
+                    Prendre RDV
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-white p-2" type="button">
+                <iconify-icon icon="lucide:menu" width="24"></iconify-icon>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="min-h-screen flex overflow-hidden pt-28 pb-12 relative items-center" id="hero">
+            <!-- Spline Hero Background -->
+            <div class="absolute inset-0 -z-10 pointer-events-none">
+                <iframe
+                    class="absolute inset-0 w-full h-full"
+                    src="https://app.spline.design/community/file/aa06bcbf-929d-41c6-97a5-1f1590169b77"
+                    frameborder="0"
+                    aria-hidden="true"
+                    title="Addict AI Hero Background">
+                </iframe>
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-brand-bg/30 to-brand-bg"></div>
+            </div>
+            <!-- Fire Particles / Background -->
+            <div class="ambient-glow top-[-20%] right-[-10%] opacity-30 mix-blend-screen"></div>
+            <div class="ambient-glow bottom-[-10%] left-[-10%] opacity-20 mix-blend-screen"></div>
+
+            <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+                <!-- Content -->
+                <div class="space-y-8 order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-brand-accent bg-brand-surface/50 backdrop-blur-sm">
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-brand-accentLight uppercase">TECH • INNOVATION • CULTURE</span>
+                    </div>
+                    
+                    <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight">
+                        <span class="text-metal block mb-2">ADDICT AI</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-accentLight">TECHNOLOGY</span>
+                    </h1>
+                    
+                    <p class="text-lg text-brand-muted max-w-xl leading-relaxed font-light">
+                        Expertise hardware avancée, réparation de précision et solutions digitales pour les pros. L'alliance de la maîtrise technique et de la passion.
+                    </p>
+
+                    <!-- Trust Chips -->
+                    <div class="flex flex-wrap gap-6 text-sm text-brand-text/80 font-mono">
+                        <div class="flex items-center gap-2">
+                            <iconify-icon icon="lucide:zap" class="text-brand-accent"></iconify-icon>
+                            INTERVENTION RAPIDE
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <iconify-icon icon="lucide:shield-check" class="text-brand-accent"></iconify-icon>
+                            GARANTIE INCLUSE
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                        <a href="CAL_COM_URL_TO_PROVIDE" class="inline-flex justify-center items-center px-8 py-4 rounded-sm bg-fire-glow text-white font-bold text-sm uppercase tracking-wider hover:shadow-glow hover:-translate-y-1 transition-all duration-300">
+                            Prendre rendez-vous
+                        </a>
+                        <a href="#offres" class="inline-flex justify-center items-center px-8 py-4 rounded-sm border border-brand-text/20 text-brand-text font-bold text-sm uppercase tracking-wider hover:bg-white/5 hover:border-brand-accent transition-all duration-300">
+                            Nos Services
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual: 3D Phone Explode -->
+                <div class="order-1 lg:order-2 flex justify-center lg:justify-end relative">
+                    <!-- The Container for the 3D Scene -->
+                    <div class="aspect-square md:aspect-[4/3] lg:h-[600px] shadow-black/80 w-full border-white/10 rounded-sm border-t shadow-2xl" id="phone-explode">
+                        <div id="hint">Interactive 3D View</div>
+                        <!-- Canvas will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Grid -->
+        <section id="offres" class="py-24 relative bg-[#131416] border-t border-white/5">
+            <div class="offres-spline" aria-hidden="true">
+                <iframe
+                    src="https://app.spline.design/community/file/691afcb5-e8b2-4bcd-84d6-0557a88a4542"
+                    loading="lazy"
+                    title="Addict AI Services Background">
+                </iframe>
+                <div class="offres-spline-overlay"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-6 offres-content">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div>
+                        <h2 class="font-display text-4xl font-bold text-metal tracking-tight mb-2">NOS SERVICES</h2>
+                        <p class="text-brand-muted">Solutions techniques pour particuliers et professionnels.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="group relative p-1 rounded-sm bg-gradient-to-b from-white/10 to-transparent hover:from-brand-accent/50 transition-colors duration-500">
+                        <div class="bg-brand-surface h-full p-8 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-brand-accent/10 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-brand-accent/20"></div>
+                            
+                            <iconify-icon icon="lucide:smartphone" class="text-4xl text-brand-text mb-6 group-hover:text-brand-accent transition-colors"></iconify-icon>
+                            
+                            <h3 class="text-xl font-display font-bold text-white mb-2">RÉPARATION MOBILE</h3>
+                            <p class="text-brand-muted text-sm leading-relaxed mb-6">
+                                Diagnostic précis et réparation composants (écran, batterie, carte mère). Nous sauvons ce qui peut l'être.
+                            </p>
+                            <a href="#" class="text-xs font-bold text-brand-accentLight uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+                                En savoir plus <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="group relative p-1 rounded-sm bg-gradient-to-b from-white/10 to-transparent hover:from-brand-accent/50 transition-colors duration-500">
+                        <div class="bg-brand-surface h-full p-8 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-brand-accent/10 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-brand-accent/20"></div>
+                            
+                            <iconify-icon icon="lucide:monitor" class="text-4xl text-brand-text mb-6 group-hover:text-brand-accent transition-colors"></iconify-icon>
+                            
+                            <h3 class="text-xl font-display font-bold text-white mb-2">EXPERTISE PC &amp; MAC</h3>
+                            <p class="text-brand-muted text-sm leading-relaxed mb-6">
+                                Optimisation, nettoyage, upgrade hardware et dépannage logiciel. Redonnez de la puissance à votre station.
+                            </p>
+                            <a href="#" class="text-xs font-bold text-brand-accentLight uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+                                En savoir plus <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="group relative p-1 rounded-sm bg-gradient-to-b from-white/10 to-transparent hover:from-brand-accent/50 transition-colors duration-500">
+                         <div class="bg-brand-surface h-full p-8 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-brand-accent/10 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-brand-accent/20"></div>
+                            
+                            <iconify-icon icon="lucide:cpu" class="text-4xl text-brand-text mb-6 group-hover:text-brand-accent transition-colors"></iconify-icon>
+                            
+                            <h3 class="text-xl font-display font-bold text-white mb-2">CONFIG SUR-MESURE</h3>
+                            <p class="text-brand-muted text-sm leading-relaxed mb-6">
+                                Gaming, Workstation, Streaming. Nous assemblons la machine parfaite pour vos besoins et votre budget.
+                            </p>
+                            <a href="#" class="text-xs font-bold text-brand-accentLight uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+                                En savoir plus <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Addict AI Technology (B2B) -->
+        <section id="addict-ai-technology" class="py-24 relative overflow-hidden bg-brand-bg">
+            <!-- Background Elements -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#1a1b1e_1px,transparent_1px),linear-gradient(to_bottom,#1a1b1e_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="flex flex-col lg:flex-row gap-16 items-center">
+                    <div class="flex-1 space-y-8">
+                        <span class="text-brand-accent font-bold tracking-widest uppercase text-sm flex items-center gap-2">
+                            <span class="w-8 h-[2px] bg-brand-accent"></span> Pôle Professionnel
+                        </span>
+                        
+                        <h2 class="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">
+                            ADDICT AI <br>
+                            <span class="text-metal">TECHNOLOGY</span>
+                        </h2>
+                        
+                        <p class="text-brand-text/80 text-lg leading-relaxed border-l-2 border-white/10 pl-6">
+                            Accompagnement digital complet pour les entreprises. De la création de votre identité à l'automatisation de vos processus.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 bg-brand-surface border border-white/5 hover:border-brand-accent/50 transition-colors">
+                                <iconify-icon icon="lucide:globe" class="text-brand-accent mb-2 text-xl"></iconify-icon>
+                                <h4 class="font-bold text-white text-sm">Sites &amp; E-commerce</h4>
+                            </div>
+                            <div class="p-4 bg-brand-surface border border-white/5 hover:border-brand-accent/50 transition-colors">
+                                <iconify-icon icon="lucide:palette" class="text-brand-accent mb-2 text-xl"></iconify-icon>
+                                <h4 class="font-bold text-white text-sm">Branding &amp; Design</h4>
+                            </div>
+                            <div class="p-4 bg-brand-surface border border-white/5 hover:border-brand-accent/50 transition-colors">
+                                <iconify-icon icon="lucide:bot" class="text-brand-accent mb-2 text-xl"></iconify-icon>
+                                <h4 class="font-bold text-white text-sm">Automatisation IA</h4>
+                            </div>
+                             <div class="p-4 bg-brand-surface border border-white/5 hover:border-brand-accent/50 transition-colors">
+                                <iconify-icon icon="lucide:database" class="text-brand-accent mb-2 text-xl"></iconify-icon>
+                                <h4 class="font-bold text-white text-sm">Solutions SaaS</h4>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <a href="CAL_COM_URL_TO_PROVIDE" class="inline-flex items-center gap-2 text-white font-bold uppercase tracking-widest hover:text-brand-accent transition-colors">
+                                Discuter de votre projet <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 w-full relative">
+                        <!-- Abstract Tech Visual -->
+                        <div class="aspect-square md:aspect-video bg-gradient-to-br from-brand-surface2 to-brand-bg border border-white/10 relative overflow-hidden group">
+                            <!-- Animated Elements -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-32 h-32 border border-brand-accent/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                                <div class="absolute w-48 h-48 border border-white/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                                <iconify-icon icon="lucide:cpu" class="text-6xl text-brand-text opacity-50"></iconify-icon>
+                            </div>
+                            
+                            <!-- Overlay Info -->
+                            <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
+                                <div class="font-mono text-xs text-brand-accentLight mb-1">SYSTEM STATUS: ONLINE</div>
+                                <div class="h-0.5 w-full bg-brand-surface">
+                                    <div class="h-full w-2/3 bg-brand-accent animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Realisations / Portfolio -->
+        <section id="realisations" class="py-24 bg-[#0F1012]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-12 border-b border-white/5 pb-8 flex justify-between items-end">
+                    <h2 class="font-display text-3xl font-bold text-white tracking-tight">RÉALISATIONS</h2>
+                    <a href="#" class="hidden md:block text-xs font-mono text-brand-muted hover:text-white">VIEW_ALL_PROJECTS -&gt;</a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
+                    <!-- Project 1 -->
+                    <div class="group aspect-[4/3] bg-brand-surface relative overflow-hidden cursor-pointer">
+                        <div class="absolute inset-0 bg-brand-surface2 flex items-center justify-center">
+                            <iconify-icon icon="lucide:smartphone" class="text-4xl text-white/10 group-hover:scale-110 transition-transform duration-500"></iconify-icon>
+                        </div>
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <span class="text-brand-accent text-xs font-bold uppercase tracking-wider mb-2">Repair</span>
+                            <h3 class="text-white font-display text-xl">iPhone 14 Pro Max</h3>
+                            <p class="text-brand-muted text-xs mt-1">Remplacement écran OLED &amp; Châssis</p>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="group aspect-[4/3] bg-brand-surface relative overflow-hidden cursor-pointer">
+                        <div class="absolute inset-0 bg-brand-surface2 flex items-center justify-center">
+                            <iconify-icon icon="lucide:monitor-speaker" class="text-4xl text-white/10 group-hover:scale-110 transition-transform duration-500"></iconify-icon>
+                        </div>
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <span class="text-brand-accent text-xs font-bold uppercase tracking-wider mb-2">Build</span>
+                            <h3 class="text-white font-display text-xl">Watercooled Beast</h3>
+                            <p class="text-brand-muted text-xs mt-1">RTX 4090 - Ryzen 9 - Custom Loop</p>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="group aspect-[4/3] bg-brand-surface relative overflow-hidden cursor-pointer">
+                        <div class="absolute inset-0 bg-brand-surface2 flex items-center justify-center">
+                            <iconify-icon icon="lucide:gamepad-2" class="text-4xl text-white/10 group-hover:scale-110 transition-transform duration-500"></iconify-icon>
+                        </div>
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <span class="text-brand-accent text-xs font-bold uppercase tracking-wider mb-2">Console</span>
+                            <h3 class="text-white font-display text-xl">PS5 HDMI Port</h3>
+                            <p class="text-brand-muted text-xs mt-1">Micro-soudure de précision</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RDV Block -->
+        <section id="rdv" class="py-24 bg-gradient-to-b from-brand-bg to-black relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-1 bg-gradient-to-r from-transparent via-brand-accent to-transparent opacity-50"></div>
+            
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <iconify-icon icon="lucide:calendar-clock" class="text-5xl text-brand-accent mb-6 animate-pulse"></iconify-icon>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-6">PASSEZ NOUS VOIR</h2>
+                <p class="text-brand-muted text-lg mb-10">
+                    Réserver un créneau, c'est l'assurance d'une prise en charge immédiate.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="CAL_COM_URL_TO_PROVIDE" class="px-8 py-4 bg-fire-glow text-white font-bold uppercase tracking-wide hover:shadow-glow hover:scale-105 transition-all duration-300 rounded-sm">
+                        Ouvrir le planning
+                    </a>
+                    <a href="tel:PHONE_TO_PROVIDE" class="px-8 py-4 border border-white/10 bg-white/5 text-white font-bold uppercase tracking-wide hover:bg-white/10 transition-all duration-300 rounded-sm">
+                        Appeler le Shop
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Localisation Map Section -->
+    <section id="localisation" class="py-24 bg-brand-bg border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="font-display text-4xl font-bold text-metal tracking-tight mb-2">RETROUVEZ-NOUS</h2>
+                <p class="text-brand-muted">Visitez notre shop à Folelli</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Info Box -->
+                <div class="space-y-6">
+                    <div class="glass-panel p-6 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <iconify-icon icon="lucide:map-pin" class="text-brand-accent text-2xl flex-shrink-0 mt-1"></iconify-icon>
+                            <div>
+                                <h3 class="text-white font-bold mb-1">Adresse</h3>
+                                <p class="text-brand-muted text-sm">
+                                    Immeuble les Mimosas<br>
+                                    20213 Folelli<br>
+                                    Corse
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <iconify-icon icon="lucide:clock" class="text-brand-accent text-2xl flex-shrink-0 mt-1"></iconify-icon>
+                            <div>
+                                <h3 class="text-white font-bold mb-1">Horaires</h3>
+                                <p class="text-brand-muted text-sm">
+                                    Lun - Ven: 09h - 18h<br>
+                                    Sam: 10h - 16h<br>
+                                    Dim: Fermé
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <iconify-icon icon="lucide:phone" class="text-brand-accent text-2xl flex-shrink-0 mt-1"></iconify-icon>
+                            <div>
+                                <h3 class="text-white font-bold mb-1">Contact</h3>
+                                <p class="text-brand-muted text-sm">
+                                    <a href="tel:PHONE_TO_PROVIDE" class="hover:text-brand-accent transition-colors">PHONE_TO_PROVIDE</a><br>
+                                    <a href="mailto:contact@addictai.tech" class="hover:text-brand-accent transition-colors">contact@addictai.tech</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Container -->
+                <div class="lg:col-span-2">
+                    <div id="map-container" class="w-full h-96 lg:h-full min-h-96 rounded-sm border border-white/10 overflow-hidden">
+                        <iframe
+                            src="https://www.google.com/maps?q=42.4474697,9.5067658&z=17&output=embed"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Carte Addict AI Technology">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black pt-20 pb-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+                <div class="space-y-4 max-w-xs">
+                    <span class="font-display font-bold text-2xl text-white tracking-tight">ADDICT AI</span>
+                    <p class="text-brand-muted text-sm">
+                        L'expert tech local. Réparation, vente et services aux professionnels.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm uppercase mb-4 tracking-wider">Services</h4>
+                        <ul class="space-y-2 text-sm text-brand-muted">
+                            <li><a href="#" class="hover:text-brand-accent transition-colors">Réparation</a></li>
+                            <li><a href="#" class="hover:text-brand-accent transition-colors">Montage PC</a></li>
+                            <li><a href="#" class="hover:text-brand-accent transition-colors">B2B</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm uppercase mb-4 tracking-wider">Contact</h4>
+                        <ul class="space-y-2 text-sm text-brand-muted">
+                            <li>Immeuble les Mimosas<br>20213 Folelli</li>
+                            <li><a href="mailto:contact@addictai.tech" class="hover:text-brand-accent transition-colors">contact@addictai.tech</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm uppercase mb-4 tracking-wider">Social</h4>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-brand-muted hover:text-brand-accent transition-colors"><iconify-icon icon="lucide:instagram"></iconify-icon></a>
+                            <a href="#" class="text-brand-muted hover:text-brand-accent transition-colors"><iconify-icon icon="lucide:facebook"></iconify-icon></a>
+                            <a href="#" class="text-brand-muted hover:text-brand-accent transition-colors"><iconify-icon icon="lucide:linkedin"></iconify-icon></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-brand-muted/40">© 2026 Addict AI Technology. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="/mentions-legales" class="text-xs text-brand-muted/40 hover:text-brand-muted">Mentions légales</a>
+                    <a href="/cgv" class="text-xs text-brand-muted/40 hover:text-brand-muted">CGV</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 3D Phone Explode Script -->
+    <script>
+    (function () {
+      const container = document.getElementById("phone-explode");
+      if (!container) return;
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const defaultPhoneSvg = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 640">
+  <defs>
+    <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2b2f"/>
+      <stop offset="1" stop-color="#141416"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="304" height="624" rx="44" fill="url(#frame)" stroke="#3a3a3d" stroke-width="6"/>
+  <rect x="24" y="36" width="272" height="568" rx="36" fill="url(#screen)"/>
+  <rect x="120" y="24" width="80" height="10" rx="5" fill="#0b0b0d"/>
+  <circle cx="160" cy="604" r="5" fill="#1f1f22"/>
+  <g opacity="0.25">
+    <circle cx="80" cy="190" r="64" fill="#d92323"/>
+    <circle cx="230" cy="420" r="92" fill="#ff7f3f"/>
+  </g>
+</svg>
+      `.trim();
+      const phoneTextureUrl = container.dataset.phoneTexture || `data:image/svg+xml;utf8,${encodeURIComponent(defaultPhoneSvg)}`;
+
+      // ---------- SCENE / CAMERA / RENDERER ----------
+      const scene = new THREE.Scene();
+      //scene.background = new THREE.Color('#252629'); // Optional debugging color
+      
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.set(0, 0, 11);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      // Important: Allow the canvas to be sized by CSS
+      renderer.domElement.style.width = "100%";
+      renderer.domElement.style.height = "100%";
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      function resize() {
+        // Use clientWidth/Height directly from container
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false); // false prevents inline style overwrite
+      }
+      window.addEventListener("resize", resize);
+      // Call resize immediately to set initial size
+      resize();
+
+      // ---------- LIGHTS (Increased intensity for dark theme) ----------
+      const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambient);
+
+      const key = new THREE.DirectionalLight(0xffffff, 2.0);
+      key.position.set(5, 5, 10);
+      key.castShadow = true;
+      key.shadow.mapSize.set(1024, 1024);
+      scene.add(key);
+
+      const rim = new THREE.DirectionalLight(0xFF7F3F, 1.5); // Ember color
+      rim.position.set(-5, 5, -5);
+      scene.add(rim);
+
+      const fill = new THREE.PointLight(0xD92323, 1.0, 20); // Red fill
+      fill.position.set(0, -5, 5);
+      scene.add(fill);
+
+      // ---------- MATERIALS (Using palette colors) ----------
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.setCrossOrigin("anonymous");
+      const phoneTexture = textureLoader.load(phoneTextureUrl);
+      phoneTexture.colorSpace = THREE.SRGBColorSpace;
+      phoneTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+      const matFrame = new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        metalness: 0.9,
+        roughness: 0.2
+      });
+
+      const matScreen = new THREE.MeshStandardMaterial({
+        map: phoneTexture,
+        metalness: 0.2,
+        roughness: 0.4,
+        transparent: true
+      });
+
+      const matBack = new THREE.MeshStandardMaterial({
+        color: 0x111111,
+        metalness: 0.5,
+        roughness: 0.4
+      });
+
+      const matBattery = new THREE.MeshStandardMaterial({
+        color: 0x111111,
+        metalness: 0.3,
+        roughness: 0.7
+      });
+
+      const matBoard = new THREE.MeshStandardMaterial({
+        color: 0x1a332a,
+        metalness: 0.6,
+        roughness: 0.4
+      });
+
+      const matAccents = new THREE.MeshStandardMaterial({
+        color: 0xD92323, // Red Logo Color
+        metalness: 0.5,
+        roughness: 0.4,
+        emissive: 0x550000,
+        emissiveIntensity: 0.2
+      });
+
+      // ---------- PHONE CONSTRUCTION ----------
+      const phone = new THREE.Group();
+      scene.add(phone);
+
+      const W = 3.2, H = 6.4, D = 0.35;
+
+      // 1. Frame
+      const frameGeo = new THREE.BoxGeometry(W, H, D);
+      const frame = new THREE.Mesh(frameGeo, matFrame);
+      frame.castShadow = true;
+      phone.add(frame);
+
+      // 2. Screen
+      const screenGeo = new THREE.PlaneGeometry(W * 0.98, H * 0.98);
+      const screen = new THREE.Mesh(screenGeo, matScreen);
+      screen.position.z = D / 2 + 0.01;
+      phone.add(screen);
+
+      // 3. Back
+      const backGeo = new THREE.PlaneGeometry(W * 0.92, H * 0.94);
+      const back = new THREE.Mesh(backGeo, matBack);
+      back.rotation.y = Math.PI; // Face back
+      back.position.z = -D / 2 - 0.01;
+      phone.add(back);
+
+      // 4. Internals Group
+      const internals = new THREE.Group();
+      phone.add(internals);
+
+      // Battery
+      const batGeo = new THREE.BoxGeometry(W*0.55, H*0.6, 0.05);
+      const battery = new THREE.Mesh(batGeo, matBattery);
+      battery.position.set(-0.5, 0, 0);
+      internals.add(battery);
+
+      // Board
+      const boardGeo = new THREE.BoxGeometry(W*0.35, H*0.6, 0.05);
+      const board = new THREE.Mesh(boardGeo, matBoard);
+      board.position.set(0.6, 0.2, 0);
+      internals.add(board);
+
+      // Module (Camera/FaceID)
+      const modGeo = new THREE.BoxGeometry(W*0.8, H*0.15, 0.05);
+      const modulePart = new THREE.Mesh(modGeo, matAccents);
+      modulePart.position.set(0, H*0.35, 0.05);
+      internals.add(modulePart);
+
+      // ---------- ANIMATION DEFINITIONS ----------
+      // Store references to manipulate in GSAP
+      const parts = [
+        { mesh: screen,  exploded: { z: 1.5, y: 0.5, rotX: 0.1 }, delay: 0 },
+        { mesh: back,    exploded: { z: -1.5, y: -0.5, rotX: -0.1 }, delay: 0.1 },
+        { mesh: battery, exploded: { z: 0.4, x: -1.5, rotY: -0.2 }, delay: 0.2 },
+        { mesh: board,   exploded: { z: 0.2, x: 1.5, rotY: 0.2 }, delay: 0.3 },
+        { mesh: modulePart, exploded: { z: 0.8, y: 1.8, rotX: 0.2 }, delay: 0.15 }
+      ];
+
+      // Initial Rotation
+      phone.rotation.y = -0.5;
+      phone.rotation.x = 0.1;
+
+      // GSAP Timeline
+      const tl = gsap.timeline({ paused: true });
+      
+      // Step 1: Rotate to show depth
+      tl.to(phone.rotation, { y: Math.PI * 0.8, x: -0.2, duration: 1.5, ease: "power3.inOut" });
+      
+      // Step 2: Explode parts
+      parts.forEach(p => {
+        // Move local positions
+        tl.to(p.mesh.position, {
+          x: p.mesh.position.x + (p.exploded.x || 0),
+          y: p.mesh.position.y + (p.exploded.y || 0),
+          z: p.mesh.position.z + (p.exploded.z || 0),
+          duration: 1,
+          ease: "back.out(1.7)"
+        }, "-=1.0"); // Overlap slightly with rotation
+        
+        // Rotate local parts
+        if(p.exploded.rotX) tl.to(p.mesh.rotation, { x: p.exploded.rotX, duration: 1 }, "<");
+        if(p.exploded.rotY) tl.to(p.mesh.rotation, { y: p.exploded.rotY, duration: 1 }, "<");
+      });
+
+      // Continuous floating animation
+      function animate() {
+        requestAnimationFrame(animate);
+        phone.position.y = Math.sin(Date.now() * 0.001) * 0.1;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Trigger Animation on Scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tl.play();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      
+      observer.observe(container);
+
+    })();
+    </script>
+
+    <!-- Intro Animation -->
+    <script>
+    (function () {
+      const intro = document.getElementById("intro");
+      if (!intro) return;
+
+      const logo = intro.querySelector(".intro-logo");
+      const hud = intro.querySelector(".intro-hud");
+      const bar = intro.querySelector(".intro-bar span");
+      const logoUrl = intro.dataset.introLogo;
+      if (logo && logoUrl) {
+        logo.src = logoUrl;
+      }
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.body.classList.add("intro-active");
+
+      const finish = () => {
+        intro.remove();
+        document.body.classList.remove("intro-active");
+      };
+
+      intro.addEventListener("click", finish, { once: true });
+
+      if (prefersReduced || !window.gsap || !logo) {
+        intro.classList.add("intro-fallback");
+        setTimeout(finish, 2400);
+        return;
+      }
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      if (bar) {
+        tl.fromTo(bar, {
+          scaleX: 0
+        }, {
+          scaleX: 1,
+          duration: 1.5,
+          ease: "power2.inOut"
+        }, 0);
+      }
+
+      if (hud) {
+        tl.fromTo(hud, {
+          autoAlpha: 0,
+          y: 12
+        }, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7
+        }, 0.1);
+      }
+
+      tl.fromTo(logo, {
+        autoAlpha: 0,
+        scale: 0.8,
+        y: 20,
+        filter: "blur(6px)"
+      }, {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.1
+      })
+      .to(logo, { scale: 1.08, duration: 0.6 }, ">");
+
+      if (hud) {
+        tl.to(hud, { autoAlpha: 0, duration: 0.4 }, "-=0.2");
+      }
+
+      tl.to(logo, { autoAlpha: 0, scale: 1.4, duration: 0.6 }, "+=0.2")
+        .to(intro, { opacity: 0, duration: 0.7 }, "<")
+        .add(finish);
+    })();
+    </script>
+
+    <!-- Offres Reveal -->
+    <script>
+    (function () {
+      const section = document.getElementById("offres");
+      if (!section) return;
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) {
+        section.classList.add("offres-reveal");
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            section.classList.add("offres-reveal");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      observer.observe(section);
+    })();
+    </script>
+
+</body></html>

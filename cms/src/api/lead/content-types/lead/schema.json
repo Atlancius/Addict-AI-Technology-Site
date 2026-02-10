@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leads",
+  "info": {
+    "singularName": "lead",
+    "pluralName": "leads",
+    "displayName": "Lead",
+    "description": "Demandes de contact / formulaires"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "lead_type": {
+      "type": "enumeration",
+      "enum": ["b2c", "b2b"],
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "json",
+      "required": true
+    },
+    "source_page": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["new", "contacted", "closed", "spam"],
+      "required": true,
+      "default": "new"
+    },
+    "spam_score": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    }
+  }
+}
