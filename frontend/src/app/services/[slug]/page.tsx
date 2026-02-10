@@ -15,6 +15,7 @@ import {
 import { getServiceBySlug, unwrapCollection } from "@/lib/strapi";
 import type { Faq, Service } from "@/lib/types";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 type StrapiFaqRelation = { data?: Array<{ id: number; attributes: Faq }> };
 
@@ -35,10 +36,27 @@ export async function generateMetadata({
   const service = await getServiceBySlugWithFallback(params.slug);
   if (!service) return { title: "Service" };
 
+  const title = service.seo_title || service.title;
+  const description =
+    service.seo_description || service.summary || stripHtml(service.description || "");
+  const canonical = canonicalFor(`/services/${service.slug}`);
+
   return {
-    title: service.seo_title || service.title,
-    description:
-      service.seo_description || service.summary || stripHtml(service.description || ""),
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 }
 
@@ -93,7 +111,7 @@ export default async function ServiceDetailPage({
           <div className="max-w-5xl mx-auto px-6">
             <ScrollReveal>
               <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-1/60 mb-6">
-                <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-metal uppercase">
+                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
                   {service.category}
                 </span>
               </div>
