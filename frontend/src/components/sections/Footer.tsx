@@ -23,22 +23,26 @@ const FOOTER_LINKS = {
 
 export default function Footer() {
   return (
-    <footer className="bg-surface-0 border-t border-stroke-subtle pt-16 pb-8">
+    <footer className="bg-surface-1/80 border-t border-stroke-subtle pt-16 pb-8 relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-sm bg-gradient-to-br from-ember to-flame flex items-center justify-center">
-                <span className="font-heading font-bold text-white text-lg leading-none">
-                  A
-                </span>
+              <div className="relative">
+                <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
+                <div className="relative w-9 h-9 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_18px_rgba(217,35,35,0.35)] flex items-center justify-center">
+                  <span className="font-heading font-bold text-white text-lg leading-none">
+                    A
+                  </span>
+                </div>
               </div>
               <div>
-                <div className="font-heading font-bold text-sm text-text-primary uppercase tracking-tight">
+                <div className="font-heading font-bold text-sm uppercase tracking-tight metal-text">
                   ADDICT
                 </div>
-                <div className="font-heading text-[9px] tracking-[0.2em] text-flame uppercase">
+                <div className="font-heading text-[9px] tracking-[0.2em] text-text-muted uppercase">
                   AI TECHNOLOGY
                 </div>
               </div>

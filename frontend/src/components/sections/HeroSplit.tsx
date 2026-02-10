@@ -2,36 +2,42 @@ import Button from "@/components/ui/Button";
 
 export default function HeroSplit() {
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden pt-20">
-      {/* Background gradient */}
+    <section className="min-h-screen flex items-center relative overflow-hidden pt-24 surface-grid">
+      {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-        {/* Flame glow left */}
-        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-flame/5 rounded-full blur-3xl" />
-        {/* Metal glow right */}
-        <div className="absolute top-1/3 -right-32 w-[600px] h-[600px] bg-metal/5 rounded-full blur-3xl" />
+        <div className="absolute -top-32 -left-40 w-[720px] h-[720px] bg-ember/20 rounded-full blur-[140px]" />
+        <div className="absolute top-0 -right-40 w-[720px] h-[720px] bg-flame/15 rounded-full blur-[160px]" />
+        <div className="absolute bottom-[-20%] left-[20%] w-[800px] h-[800px] bg-metal/15 rounded-full blur-[200px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full py-16 relative">
         {/* Central pivot logo */}
         <div className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none">
-          <div className="hero-center-mark w-16 h-16 rounded-sm border border-stroke-medium bg-surface-1/60 backdrop-blur flex items-center justify-center shadow-[0_0_30px_rgba(255,90,31,0.15)]">
-            <span className="font-heading font-bold text-xl text-text-primary">A</span>
+          <div className="hero-center-mark w-24 h-24 rounded-md border border-stroke-medium bg-surface-2/70 backdrop-blur flex items-center justify-center shadow-[0_0_40px_rgba(217,35,35,0.2)]">
+            <span className="font-heading font-bold text-3xl metal-text">A</span>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
+
+        <div className="hidden lg:block absolute -top-10 right-10 pointer-events-none">
+          <div className="sigil flex items-center justify-center">
+            <span className="font-heading font-bold text-4xl metal-text">A</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           {/* B2C — Left panel */}
-          <div className="hero-panel-left space-y-6 lg:pr-12 lg:border-r border-stroke-subtle">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-1/60">
+          <div className="hero-panel-left space-y-6 lg:pr-6 bg-surface-2/70 border border-stroke-subtle rounded-md p-8 lg:p-10 backdrop-blur">
+            <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60">
               <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-flame uppercase">
                 Réparation &bull; Boutique &bull; Café Manga
               </span>
             </div>
 
-            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-text-primary leading-tight">
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-tight">
               Votre QG Tech
               <br />
-              <span className="text-flame">à Folelli</span>
+              <span className="ember-text">à Folelli</span>
             </h2>
 
             <p className="text-text-secondary text-base leading-relaxed max-w-md">
@@ -50,17 +56,17 @@ export default function HeroSplit() {
           </div>
 
           {/* B2B — Right panel */}
-          <div className="hero-panel-right space-y-6 lg:pl-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-1/60">
+          <div className="hero-panel-right space-y-6 lg:pl-6 bg-surface-2/70 border border-stroke-subtle rounded-md p-8 lg:p-10 backdrop-blur">
+            <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60">
               <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-metal uppercase">
                 Automatisation &bull; IA &bull; Formation
               </span>
             </div>
 
-            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-text-primary leading-tight">
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-tight">
               Solutions Pros
               <br />
-              <span className="text-metal">sur-mesure</span>
+              <span className="metal-text">sur-mesure</span>
             </h2>
 
             <p className="text-text-secondary text-base leading-relaxed max-w-md">
@@ -80,16 +86,25 @@ export default function HeroSplit() {
         </div>
 
         {/* Central info */}
-        <div className="text-center mt-16 space-y-3 hero-center-copy">
+        <div className="text-center mt-14 space-y-3 hero-center-copy">
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary">
             Deux univers.{" "}
-            <span className="bg-gradient-to-r from-flame to-ember bg-clip-text text-transparent">
-              Une seule adresse.
-            </span>
+            <span className="ember-text">Une seule adresse.</span>
           </h1>
           <p className="text-text-muted text-sm font-heading tracking-wider uppercase">
             20213 Folelli – Corse
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3 text-xs font-heading uppercase tracking-wider text-text-muted">
+            <span className="px-3 py-1 rounded-sm border border-stroke-subtle bg-surface-2/60">
+              Diagnostic gratuit
+            </span>
+            <span className="px-3 py-1 rounded-sm border border-stroke-subtle bg-surface-2/60">
+              Garantie 6 mois
+            </span>
+            <span className="px-3 py-1 rounded-sm border border-stroke-subtle bg-surface-2/60">
+              Local &amp; humain
+            </span>
+          </div>
         </div>
       </div>
     </section>

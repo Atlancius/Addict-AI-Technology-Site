@@ -15,11 +15,11 @@ export default function EvenementsPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-20 bg-surface-0">
+        <section className="pt-28 pb-20 bg-surface-0 surface-grid">
           <div className="max-w-5xl mx-auto px-6 text-center">
             <ScrollReveal>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                Événements
+                Événements <span className="metal-text">Tech</span>
               </h1>
               <p className="text-text-secondary text-lg mb-8">
                 Workshops, meetups et sessions pratiques arrivent bientôt.

@@ -10,7 +10,7 @@ type InputProps = BaseInputProps & InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = BaseInputProps & TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
 const baseClasses =
-  "w-full bg-surface-1 border border-stroke-subtle text-text-primary placeholder:text-text-muted/50 rounded-sm px-4 py-3 text-sm font-body transition-all duration-200 focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none";
+  "w-full bg-surface-2/80 border border-stroke-subtle text-text-primary placeholder:text-text-muted/50 rounded-sm px-4 py-3 text-sm font-body transition-all duration-200 focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none";
 
 const errorClasses =
   "border-ember focus:border-ember focus:ring-ember/30";

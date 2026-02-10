@@ -104,9 +104,9 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
         />
       </div>
 
-      <div className="overflow-x-auto border border-stroke-subtle rounded-sm">
+      <div className="overflow-x-auto border border-stroke-subtle rounded-sm bg-surface-2/60">
         <table className="min-w-full text-left text-sm">
-          <thead className="bg-surface-2 text-text-secondary uppercase text-xs font-heading tracking-wider">
+          <thead className="bg-surface-3 text-text-secondary uppercase text-xs font-heading tracking-wider">
             <tr>
               <th className="px-4 py-3">Marque</th>
               <th className="px-4 py-3">Modele</th>

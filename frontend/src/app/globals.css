@@ -2,40 +2,47 @@
 
 /* ============================================
    ADDICT — Design System Tokens
-   Dark premium / Magma & Acier
+   Dark premium / Ember & Steel
    ============================================ */
 
 :root {
   /* Surfaces */
-  --surface-0: #0B0E13;
-  --surface-1: #0F1420;
-  --surface-2: #151922;
-  --surface-3: #1B2130;
+  --surface-0: #0a0b0d;
+  --surface-1: #111318;
+  --surface-2: #171a1f;
+  --surface-3: #1f242b;
+  --surface-4: #282e36;
 
   /* Accents */
-  --metal: #415A77;
-  --ember: #E63946;
-  --flame: #FF5A1F;
+  --metal: #a7b0bd;
+  --metal-deep: #7b8796;
+  --ember: #d92323;
+  --flame: #ff7a3d;
+  --ember-deep: #8b0000;
 
   /* Accent states */
-  --flame-hover: #FF6A37;
-  --flame-active: #E94D17;
-  --metal-hover: #4B6A8E;
-  --metal-active: #35506B;
-  --ember-hover: #F04A57;
-  --ember-active: #CC2E3A;
+  --flame-hover: #ff8b57;
+  --flame-active: #e86b33;
+  --metal-hover: #c0c8d4;
+  --metal-active: #8f9baa;
+  --ember-hover: #f03a3a;
+  --ember-active: #b41f1f;
 
   /* Text */
-  --text-primary: #E7E9EE;
-  --text-secondary: #B6BDC9;
-  --text-muted: #8B94A6;
+  --text-primary: #e8e9ed;
+  --text-secondary: #c1c7d2;
+  --text-muted: #8c96a5;
 
   /* Stroke */
   --stroke-subtle: rgba(255, 255, 255, 0.08);
-  --stroke-medium: rgba(255, 255, 255, 0.14);
+  --stroke-medium: rgba(255, 255, 255, 0.16);
 
   /* Glass */
-  --overlay-glass: rgba(11, 14, 19, 0.60);
+  --overlay-glass: rgba(10, 11, 13, 0.62);
+
+  /* Shadows */
+  --shadow-ember: 0 0 32px rgba(217, 35, 35, 0.28);
+  --shadow-flame: 0 0 40px rgba(255, 122, 61, 0.2);
 }
 
 /* Tailwind v4 theme extension */
@@ -45,14 +52,17 @@
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
+  --color-surface-4: var(--surface-4);
 
   --color-metal: var(--metal);
   --color-metal-hover: var(--metal-hover);
   --color-metal-active: var(--metal-active);
+  --color-metal-deep: var(--metal-deep);
 
   --color-ember: var(--ember);
   --color-ember-hover: var(--ember-hover);
   --color-ember-active: var(--ember-active);
+  --color-ember-deep: var(--ember-deep);
 
   --color-flame: var(--flame);
   --color-flame-hover: var(--flame-hover);
@@ -68,8 +78,8 @@
   --color-overlay-glass: var(--overlay-glass);
 
   /* Fonts */
-  --font-heading: "Chakra Petch", sans-serif;
-  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Manrope", sans-serif;
 }
 
 /* ============================================
@@ -82,10 +92,28 @@ html {
 
 body {
   background-color: var(--surface-0);
+  background-image:
+    radial-gradient(900px 600px at 10% 10%, rgba(255, 122, 61, 0.08), transparent 55%),
+    radial-gradient(900px 600px at 90% 0%, rgba(217, 35, 35, 0.12), transparent 50%),
+    radial-gradient(1200px 900px at 50% 100%, rgba(90, 102, 120, 0.15), transparent 60%),
+    linear-gradient(180deg, rgba(10, 11, 13, 0.9), rgba(10, 11, 13, 1));
   color: var(--text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  z-index: 0;
 }
 
 ::selection {
@@ -125,6 +153,90 @@ body {
   border: 1px solid var(--stroke-subtle);
 }
 
+.metal-text {
+  background: linear-gradient(180deg, #ffffff 10%, #cdd3db 45%, #8c96a5 85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.ember-text {
+  background: linear-gradient(180deg, #ffb38c 0%, #ff7a3d 45%, #d92323 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.surface-grid {
+  position: relative;
+  isolation: isolate;
+}
+
+.surface-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.2;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at 40% 20%, rgba(0, 0, 0, 0.9), transparent 70%);
+  z-index: 0;
+}
+
+.surface-grid > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: -50% -20%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 20%, transparent 40%);
+  transform: translateX(-120%);
+  transition: transform 0.8s ease;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.btn-sheen:hover::after {
+  transform: translateX(120%);
+}
+
+.sigil {
+  position: relative;
+  width: 220px;
+  aspect-ratio: 1 / 1;
+  clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);
+  border: 1px solid rgba(255, 122, 61, 0.35);
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 122, 61, 0.25), transparent 60%),
+    radial-gradient(circle at 50% 75%, rgba(217, 35, 35, 0.35), transparent 60%),
+    rgba(17, 19, 24, 0.65);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(217, 35, 35, 0.25);
+  animation: ember-float 12s ease-in-out infinite;
+}
+
+.sigil::before {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  clip-path: polygon(50% 4%, 94% 36%, 78% 96%, 22% 96%, 6% 36%);
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.06), transparent 60%);
+}
+
+.sigil::after {
+  content: "";
+  position: absolute;
+  inset: 34%;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 35, 35, 0.35);
+  box-shadow: 0 0 18px rgba(217, 35, 35, 0.4);
+}
+
 /* ============================================
    Hero animations
    ============================================ */
@@ -154,11 +266,21 @@ body {
 @keyframes hero-center {
   0% {
     opacity: 0;
-    transform: scale(0.98);
+    transform: scale(0.96);
   }
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes ember-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
   }
 }
 

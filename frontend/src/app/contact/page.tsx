@@ -27,11 +27,11 @@ export default async function ContactPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-16">
+        <section className="pt-28 pb-16 surface-grid">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                Contact
+                <span className="metal-text">Contact</span>
               </h1>
               <p className="text-text-secondary text-lg max-w-2xl mb-12">
                 Une question, un devis, un projet ? Contactez-nous par le moyen

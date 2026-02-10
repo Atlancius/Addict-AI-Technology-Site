@@ -39,15 +39,18 @@ const BENTO_ITEMS = [
 
 export default function BentoGrid() {
   return (
-    <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+    <section className="py-24 bg-surface-1 border-y border-stroke-subtle surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <h2 className="font-heading text-3xl font-bold text-text-primary mb-2">
-              Ce qu&apos;on fait
+            <p className="text-xs font-heading uppercase tracking-[0.3em] text-text-muted mb-3">
+              Deux univers
+            </p>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
+              Ce qu&apos;on fait, avec obsession du détail.
             </h2>
             <p className="text-text-muted">
-              Un aperçu de nos univers B2C et B2B.
+              Un aperçu de nos services B2C et B2B.
             </p>
           </div>
         </ScrollReveal>

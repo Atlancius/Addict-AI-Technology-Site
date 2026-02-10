@@ -42,11 +42,11 @@ function AccordionRow({
   onToggle: () => void;
 }) {
   return (
-    <div className="border border-stroke-subtle rounded-sm overflow-hidden">
+    <div className="border border-stroke-subtle rounded-sm overflow-hidden bg-surface-2/60">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-5 py-4 text-left bg-surface-1 hover:bg-surface-2 transition-colors cursor-pointer"
+        className="w-full flex items-center justify-between px-5 py-4 text-left bg-surface-2/70 hover:bg-surface-3/80 transition-colors cursor-pointer"
         aria-expanded={isOpen}
       >
         <span className="font-heading font-medium text-sm text-text-primary pr-4">
@@ -59,7 +59,7 @@ function AccordionRow({
           isOpen ? "max-h-96" : "max-h-0"
         }`}
       >
-        <div className="px-5 py-4 text-sm text-text-secondary leading-relaxed bg-surface-0 border-t border-stroke-subtle">
+        <div className="px-5 py-4 text-sm text-text-secondary leading-relaxed bg-surface-1 border-t border-stroke-subtle">
           {answer}
         </div>
       </div>
