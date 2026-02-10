@@ -30,3 +30,4 @@ Thumbs.db
 .claude/
 cms_custom_backup/
 nul
+tmp_script*.js
