@@ -24,6 +24,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
+      NODE_ENV: production
       DATABASE_CLIENT: postgres
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
@@ -37,6 +38,7 @@ services:
       TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT:-change_this_transfer_salt}
       JWT_SECRET: ${JWT_SECRET:-change_this_jwt}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY:-change_this_encryption_key}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
     ports:
       - "1337:1337"
     depends_on:
@@ -47,7 +49,41 @@ services:
       - strapi_node_modules:/srv/app/node_modules
       - strapi_uploads:/srv/app/public/uploads
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_STRAPI_URL: ${NEXT_PUBLIC_STRAPI_URL:-http://localhost:1337}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://addictai.tech}
+      STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:-}
+    depends_on:
+      - strapi
+    ports:
+      - "3000:3000"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      FRONT_DOMAIN: ${FRONT_DOMAIN:-addictai.tech}
+      CMS_DOMAIN: ${CMS_DOMAIN:-cms.addictai.tech}
+      CADDY_EMAIL: ${CADDY_EMAIL:-contact@addictai.tech}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+      - strapi
+
 volumes:
   pgdata:
   strapi_node_modules:
   strapi_uploads:
+  caddy_data:
+  caddy_config:

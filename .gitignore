@@ -31,3 +31,4 @@ Thumbs.db
 cms_custom_backup/
 nul
 tmp_script*.js
+caddy/.certs

@@ -3,31 +3,49 @@
 Ce repo contient :
 - `frontend/` : Next.js (App Router, TypeScript, Tailwind v4)
 - `cms/` : Strapi v5 (PostgreSQL)
-- `docker-compose.yml` : PostgreSQL + Strapi
+- `docker-compose.yml` : PostgreSQL + Strapi + Front + Caddy
 
 ## Prérequis
 - Node.js 20+ (ou 22+)
-- Docker (optionnel pour la stack CMS/DB)
+- Docker + Docker Compose
 
-## Démarrage rapide (Frontend)
+## Déploiement full-docker (recommandé)
+```bash
+cp .env.example .env
+# Remplir tous les secrets dans .env
+
+docker compose up -d --build
+```
+
+Par défaut :
+- Front : `http://localhost` (port 80 via Caddy)
+- CMS : `http://localhost:1337` (ou via domaine `cms.*` si DNS configuré)
+
+## Configuration DNS (prod)
+- `FRONT_DOMAIN` et `CMS_DOMAIN` dans `.env` doivent correspondre aux domaines DNS.
+- Caddy gère automatiquement le HTTPS si les domaines pointent vers le VPS.
+
+## Variables importantes (.env)
+- `POSTGRES_PASSWORD`
+- `APP_KEYS`
+- `ADMIN_JWT_SECRET`
+- `API_TOKEN_SALT`
+- `TRANSFER_TOKEN_SALT`
+- `JWT_SECRET`
+- `ENCRYPTION_KEY`
+- `REVALIDATE_SECRET`
+- `NEXT_PUBLIC_STRAPI_URL`
+- `STRAPI_API_TOKEN`
+- `FRONT_DOMAIN` / `CMS_DOMAIN` / `CADDY_EMAIL`
+
+## Démarrage rapide (Frontend local)
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-Accès : `http://localhost:3000`
 
-## Démarrage rapide (Strapi + PostgreSQL via Docker)
-```bash
-docker compose up
-```
-Accès admin : `http://localhost:1337/admin`
-
-Variables à définir (voir `.env.example`) :
-- Secrets Strapi (`APP_KEYS`, `ADMIN_JWT_SECRET`, etc.)
-- PostgreSQL (`POSTGRES_*` ou `DATABASE_*`)
-
-## Démarrage Strapi en local (sans Docker)
+## Démarrage Strapi local (sans Docker)
 ```bash
 cd cms
 npm install
@@ -43,21 +61,6 @@ Configurer `.env` pour pointer vers PostgreSQL.
 - `Case Study`
 - `Lead`
 
-## Frontend : pages principales
-- `/` (Home)
-- `/addict-2-0` (B2C)
-- `/pro` (B2B)
-- `/reparations`
-- `/services`
-- `/services/[slug]`
-- `/realisations`
-- `/realisations/[slug]`
-- `/formations`
-- `/evenements`
-- `/contact`
-- `/mentions-legales`
-- `/confidentialite`
-
 ## API Leads (Next.js)
 - `POST /api/leads/b2c`
 - `POST /api/leads/b2b`
@@ -72,13 +75,9 @@ Payload optionnel :
 { "paths": ["/", "/services"] }
 ```
 
-## Build
-```bash
-cd frontend
-npm run build
-```
+## Build front (Docker)
+Le Dockerfile front utilise le mode `standalone` Next.js.
 
 ## Notes
-- `NEXT_PUBLIC_STRAPI_URL` doit pointer vers l'URL Strapi.
-- `STRAPI_API_TOKEN` doit être un token public en lecture pour les contenus.
+- `NEXT_PUBLIC_STRAPI_URL` doit pointer vers l'URL Strapi publique (`https://cms.domaine`).
 - Pour la prod, utiliser HTTPS + secrets uniques.
