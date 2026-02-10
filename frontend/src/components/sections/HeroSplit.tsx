@@ -159,9 +159,9 @@ export default function HeroSplit() {
       {/* Background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-          <div className="absolute -top-32 -left-40 w-[720px] h-[720px] bg-metal/20 rounded-full blur-[140px] aurora" />
-          <div className="absolute top-0 -right-40 w-[720px] h-[720px] bg-flame/20 rounded-full blur-[160px] aurora" />
-          <div className="absolute bottom-[-20%] left-[20%] w-[800px] h-[800px] bg-ember/20 rounded-full blur-[200px] aurora" />
+          <div className="absolute -top-32 -left-40 w-[45rem] h-[45rem] bg-metal/20 rounded-full blur-[8.75rem] aurora" />
+          <div className="absolute top-0 -right-40 w-[45rem] h-[45rem] bg-flame/20 rounded-full blur-[10rem] aurora" />
+          <div className="absolute bottom-[-20%] left-[20%] w-[50rem] h-[50rem] bg-ember/20 rounded-full blur-[12.5rem] aurora" />
         </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full py-16 relative">
@@ -169,7 +169,7 @@ export default function HeroSplit() {
         <div className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none">
           <div
             ref={pivotRef}
-            className="relative w-24 h-24 rounded-md border border-stroke-medium bg-surface-2/70 backdrop-blur flex items-center justify-center shadow-[0_0_40px_rgba(65,90,119,0.2)]"
+            className="relative w-24 h-24 rounded-md border border-stroke-medium bg-surface-2/70 backdrop-blur flex items-center justify-center shadow-[0_0_2.5rem_rgba(65,90,119,0.2)]"
           >
             <span
               ref={pivotGlowFlameRef}
@@ -203,7 +203,7 @@ export default function HeroSplit() {
               <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_0%,rgba(255,90,31,0.35),transparent_60%)] blur-3xl" />
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60">
-              <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-flame uppercase">
+              <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
                 Réparation &bull; Boutique &bull; Café Manga
               </span>
             </div>
@@ -238,7 +238,7 @@ export default function HeroSplit() {
                   key={item.label}
                   className="rounded-sm border border-stroke-subtle bg-surface-3/60 px-3 py-2"
                 >
-                  <p className="text-[10px] uppercase tracking-wider text-text-muted font-heading">
+                  <p className="text-[0.625rem] uppercase tracking-wider text-text-muted font-heading">
                     {item.label}
                   </p>
                   <p className="text-sm font-heading text-text-primary">{item.value}</p>
@@ -259,7 +259,7 @@ export default function HeroSplit() {
               <div className="absolute -inset-10 bg-[radial-gradient(circle_at_70%_0%,rgba(65,90,119,0.35),transparent_60%)] blur-3xl" />
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60">
-              <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-metal uppercase">
+              <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
                 Automatisation &bull; IA &bull; Formation
               </span>
             </div>
@@ -294,7 +294,7 @@ export default function HeroSplit() {
                   key={item.label}
                   className="rounded-sm border border-stroke-subtle bg-surface-3/60 px-3 py-2"
                 >
-                  <p className="text-[10px] uppercase tracking-wider text-text-muted font-heading">
+                  <p className="text-[0.625rem] uppercase tracking-wider text-text-muted font-heading">
                     {item.label}
                   </p>
                   <p className="text-sm font-heading text-text-primary">{item.value}</p>

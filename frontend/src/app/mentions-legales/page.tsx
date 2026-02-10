@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
   description: "Mentions légales du site Addict AI Technology.",
+  alternates: {
+    canonical: canonicalFor("/mentions-legales"),
+  },
 };
 
 export default function MentionsLegales() {

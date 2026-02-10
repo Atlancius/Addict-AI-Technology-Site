@@ -37,8 +37,8 @@
   --text-muted: var(--text-3);
 
   /* Stroke */
-  --stroke-1: #ffffff14;
-  --stroke-2: #ffffff24;
+  --stroke-1: rgba(255, 255, 255, 0.08);
+  --stroke-2: rgba(255, 255, 255, 0.14);
   --stroke-subtle: var(--stroke-1);
   --stroke-medium: var(--stroke-2);
 
@@ -47,11 +47,11 @@
   --overlay-glass: var(--glass);
 
   /* Effects */
-  --shadow-1: 0 16px 40px rgba(0, 0, 0, 0.35);
-  --shadow-2: 0 28px 80px rgba(0, 0, 0, 0.55);
-  --glow-flame: 0 0 52px rgba(255, 90, 31, 0.35);
-  --glow-metal: 0 0 44px rgba(65, 90, 119, 0.35);
-  --highlight: linear-gradient(120deg, rgba(255, 255, 255, 0.16), transparent 50%);
+  --shadow-1: 0 1rem 2.5rem rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 1.75rem 5rem rgba(0, 0, 0, 0.55);
+  --glow-flame: 0 0 3.25rem rgba(255, 90, 31, 0.35);
+  --glow-metal: 0 0 2.75rem rgba(65, 90, 119, 0.35);
+  --highlight: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 55%);
 }
 
 /* Tailwind v4 theme extension */
@@ -108,8 +108,8 @@ html {
 body {
   background-color: var(--surface-0);
   background-image:
-    radial-gradient(820px 560px at 10% 0%, rgba(65, 90, 119, 0.28), transparent 60%),
-    radial-gradient(900px 620px at 90% 100%, rgba(255, 90, 31, 0.22), transparent 60%),
+    radial-gradient(51.25rem 35rem at 10% 0%, rgba(65, 90, 119, 0.28), transparent 60%),
+    radial-gradient(56.25rem 38.75rem at 90% 100%, rgba(255, 90, 31, 0.22), transparent 60%),
     linear-gradient(180deg, rgba(11, 14, 19, 0.95), rgba(11, 14, 19, 1));
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -125,7 +125,7 @@ body::before {
   inset: 0;
   background-image: url("/noise.png");
   background-repeat: repeat;
-  background-size: 512px 512px;
+  background-size: 32rem 32rem;
   opacity: 0.06;
   pointer-events: none;
   mix-blend-mode: soft-light;
@@ -153,7 +153,7 @@ body::after {
    ============================================ */
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 0.375rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -162,7 +162,7 @@ body::after {
 
 ::-webkit-scrollbar-thumb {
   background: var(--surface-3);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -175,8 +175,8 @@ body::after {
 
 .glass-panel {
   background: var(--glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
   border: 1px solid var(--stroke-subtle);
   box-shadow: var(--shadow-1);
 }
@@ -185,7 +185,7 @@ body::after {
   background: linear-gradient(180deg, #f5f7fb 10%, #b6bdc9 45%, #415a77 90%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.45);
 }
 
 .ember-text {
@@ -198,7 +198,7 @@ body::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02) 40%, rgba(0, 0, 0, 0.35));
   border: 1px solid var(--stroke-subtle);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08),
     var(--shadow-2);
 }
 
@@ -242,7 +242,7 @@ body::after {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-size: 4rem 4rem;
   opacity: 0.2;
   pointer-events: none;
   mask-image: radial-gradient(circle at 40% 20%, rgba(0, 0, 0, 0.9), transparent 70%);
@@ -271,7 +271,7 @@ body::after {
 
 .sigil {
   position: relative;
-  width: 220px;
+  width: 13.75rem;
   aspect-ratio: 1 / 1;
   clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);
   border: 1px solid rgba(255, 90, 31, 0.35);
@@ -279,7 +279,7 @@ body::after {
     radial-gradient(circle at 50% 35%, rgba(255, 90, 31, 0.25), transparent 60%),
     radial-gradient(circle at 50% 75%, rgba(230, 57, 70, 0.35), transparent 60%),
     rgba(17, 19, 24, 0.65);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), 0 0 60px rgba(230, 57, 70, 0.35);
+  box-shadow: 0 1.25rem 3.75rem rgba(0, 0, 0, 0.55), 0 0 3.75rem rgba(230, 57, 70, 0.35);
 }
 
 .sigil::before {
@@ -295,9 +295,9 @@ body::after {
   content: "";
   position: absolute;
   inset: 34%;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   border: 1px solid rgba(230, 57, 70, 0.35);
-  box-shadow: 0 0 18px rgba(230, 57, 70, 0.4);
+  box-shadow: 0 0 1.125rem rgba(230, 57, 70, 0.4);
 }
 
 .pulse-glow {
@@ -305,7 +305,7 @@ body::after {
   inset: -40%;
   background: radial-gradient(circle, rgba(255, 90, 31, 0.3), transparent 70%);
   pointer-events: none;
-  filter: blur(30px);
+  filter: blur(1.875rem);
   z-index: 0;
 }
 
@@ -333,6 +333,6 @@ body::after {
    ============================================ */
 
 :focus-visible {
-  outline: 2px solid var(--flame);
-  outline-offset: 2px;
+  outline: 0.125rem solid var(--flame);
+  outline-offset: 0.125rem;
 }

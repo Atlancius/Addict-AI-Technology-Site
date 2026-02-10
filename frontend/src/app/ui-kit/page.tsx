@@ -5,6 +5,8 @@ import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Accordion from "@/components/ui/Accordion";
 import { Input, Textarea } from "@/components/ui/Input";
+import RepairsTable from "@/components/sections/RepairsTable";
+import { fallbackRepairs, fallbackServices, fallbackCaseStudies } from "@/lib/fallback-data";
 
 const FAQ_SAMPLE = [
   { question: "Question exemple", answer: "Réponse courte pour démonstration." },
@@ -60,21 +62,60 @@ export default function UiKitPage() {
                 <CardDescription>Bloc tarifaire ou offre.</CardDescription>
               </Card>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card variant="caseStudy">
+                <CardTitle>Case Study</CardTitle>
+                <CardDescription>
+                  Réduction de 12h/semaine grâce à l&apos;automatisation des reportings.
+                </CardDescription>
+              </Card>
+              <Card variant="repair">
+                <CardTitle>Repair Card</CardTitle>
+                <CardDescription>
+                  Écran iPhone 13 — à partir de 149€ • 60-90 min • Garantie 6 mois.
+                </CardDescription>
+              </Card>
+            </div>
           </section>
 
           <section className="space-y-4">
             <h2 className="font-heading text-2xl text-text-primary">Inputs</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Input label="Champ" placeholder="Votre nom" />
-              <Input label="Email" placeholder="email@exemple.fr" type="email" />
-              <Textarea label="Message" placeholder="Votre message" />
-              <Input label="Erreur" placeholder="Erreur" error="Message d'erreur" />
+              <Input label="Champ" placeholder="Votre nom" tone="flame" />
+              <Input label="Email" placeholder="email@exemple.fr" type="email" tone="metal" />
+              <Textarea label="Message" placeholder="Votre message" tone="flame" />
+              <Input label="Erreur" placeholder="Erreur" error="Message d'erreur" tone="metal" />
             </div>
           </section>
 
           <section className="space-y-4">
             <h2 className="font-heading text-2xl text-text-primary">Accordion</h2>
             <Accordion items={FAQ_SAMPLE} />
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="font-heading text-2xl text-text-primary">Table Tarifs</h2>
+            <RepairsTable items={fallbackRepairs} />
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="font-heading text-2xl text-text-primary">Data Preview</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {fallbackServices.map((service) => (
+                <Card key={service.id} variant="service">
+                  <CardTitle>{service.title}</CardTitle>
+                  <CardDescription>{service.summary}</CardDescription>
+                </Card>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {fallbackCaseStudies.map((caseStudy) => (
+                <Card key={caseStudy.id} variant="caseStudy">
+                  <CardTitle>{caseStudy.title}</CardTitle>
+                  <CardDescription>{caseStudy.results}</CardDescription>
+                </Card>
+              ))}
+            </div>
           </section>
         </div>
       </main>

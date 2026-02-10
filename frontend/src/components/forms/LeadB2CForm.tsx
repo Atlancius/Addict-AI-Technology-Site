@@ -94,9 +94,9 @@ export default function LeadB2CForm() {
         consent: false,
         website: "",
       });
-    } catch (error) {
+    } catch {
       setStatus("error");
-      setMessage("Impossible d'envoyer la demande. Reessayez.");
+      setMessage("Impossible d'envoyer la demande. Réessayez.");
     }
   };
 
@@ -113,7 +113,7 @@ export default function LeadB2CForm() {
           required
         />
         <Input
-          label="Telephone"
+          label="Téléphone"
           id="b2c-phone"
           value={form.phone}
           onChange={(event) => update("phone", event.target.value)}
@@ -140,7 +140,7 @@ export default function LeadB2CForm() {
           required
         />
         <Input
-          label="Modele"
+          label="Modèle"
           id="b2c-model"
           value={form.device_model}
           onChange={(event) => update("device_model", event.target.value)}
@@ -170,7 +170,7 @@ export default function LeadB2CForm() {
       </div>
 
       <Textarea
-        label="Probleme"
+        label="Problème"
         id="b2c-issue"
         value={form.issue}
         onChange={(event) => update("issue", event.target.value)}
@@ -199,7 +199,7 @@ export default function LeadB2CForm() {
           className="mt-1 accent-flame"
         />
         <span>
-          J'accepte d'etre recontacte et que mes donnees soient traitees.
+          J&apos;accepte d&apos;être recontacté et que mes données soient traitées.
         </span>
       </label>
       {errors.consent && (

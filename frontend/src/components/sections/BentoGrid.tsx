@@ -4,36 +4,89 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const BENTO_ITEMS = [
   {
-    icon: "🔧",
+    accent: "flame",
+    icon: (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path d="M5 12h14M12 5v14" />
+        <circle cx="12" cy="12" r="9" />
+      </svg>
+    ),
     title: "Réparation Express",
     description:
-      "Écran, batterie, carte mère — diagnostic gratuit, réparation rapide avec pièces de qualité.",
+      "Écran, batterie, connecteur — diagnostic gratuit, réparation rapide avec pièces testées.",
     href: "/addict-2-0",
     span: "lg:col-span-2",
   },
   {
-    icon: "☕",
+    accent: "flame",
+    icon: (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path d="M4 8h12a4 4 0 0 1 0 8H6a4 4 0 0 1-2-8Z" />
+        <path d="M16 8h2a3 3 0 0 1 0 6h-2" />
+      </svg>
+    ),
     title: "Café Manga",
     description:
-      "Espace détente avec boissons et manga. Attendez votre réparation ou venez juste passer un bon moment.",
+      "Espace détente avec boissons et mangas. Attendez sur place ou faites un stop plaisir.",
     href: "/addict-2-0",
     span: "",
   },
   {
-    icon: "🤖",
+    accent: "metal",
+    icon: (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path d="M7 7h10v10H7z" />
+        <path d="M4 12h3M17 12h3M12 4v3M12 17v3" />
+      </svg>
+    ),
     title: "Automatisation IA",
     description:
-      "On connecte vos outils, automatise vos process et vous fait gagner des heures chaque semaine.",
+      "Workflows connectés et agents IA pour réduire les tâches manuelles et accélérer l’exécution.",
     href: "/pro",
     span: "",
   },
   {
-    icon: "🎓",
-    title: "Formation",
+    accent: "metal",
+    icon: (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path d="M4 19h16" />
+        <path d="M6 7h12l-6 8z" />
+      </svg>
+    ),
+    title: "Formations",
     description:
-      "Formations pratiques sur le no-code, l'IA et l'automatisation pour monter en compétence.",
-    href: "/pro",
+      "Parcours no-code, IA et automatisation. Objectifs clairs, exercices pratiques, support.",
+    href: "/formations",
     span: "lg:col-span-2",
+  },
+  {
+    accent: "metal",
+    icon: (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path d="M6 6h12v12H6z" />
+        <path d="M9 9h6v6H9z" />
+      </svg>
+    ),
+    title: "Cas clients",
+    description:
+      "KPIs concrets, gains de temps mesurés, documentation claire et transfert de compétences.",
+    href: "/realisations",
+    span: "",
+  },
+  {
+    accent: "flame",
+    icon: (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path d="M4 7h16" />
+        <path d="M6 7v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7" />
+        <path d="M9 11h6" />
+      </svg>
+    ),
+    title: "Tarifs transparents",
+    description:
+      "Grille claire “à partir de”, délais annoncés, garantie et conseil avant toute décision.",
+    href: "/reparations",
+    span: "",
   },
 ];
 
@@ -60,7 +113,9 @@ export default function BentoGrid() {
             <ScrollReveal key={item.title} delay={i * 80} className={item.span}>
               <Card variant="bento" className="h-full flex flex-col">
                 <CardIcon>
-                  <span className="text-3xl">{item.icon}</span>
+                  <span className={`text-2xl ${item.accent === "metal" ? "text-metal" : "text-flame"}`}>
+                    {item.icon}
+                  </span>
                 </CardIcon>
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>

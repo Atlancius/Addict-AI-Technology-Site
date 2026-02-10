@@ -6,8 +6,11 @@ import Link from "next/link";
 import Button from "./Button";
 
 const NAV_LINKS = [
+  { href: "/", label: "Home" },
   { href: "/addict-2-0", label: "Addict 2.0" },
   { href: "/pro", label: "Pro" },
+  { href: "/services", label: "Services" },
+  { href: "/reparations", label: "Réparations" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -76,7 +79,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative">
             <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
-            <div className="relative w-10 h-10 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_18px_rgba(217,35,35,0.35)] flex items-center justify-center">
+            <div className="relative w-10 h-10 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
               <span className="font-heading font-bold text-lg leading-none metal-text">
                 A
               </span>
@@ -86,7 +89,7 @@ export default function Navbar() {
             <span className="font-heading font-bold text-sm leading-none tracking-tight metal-text uppercase">
               ADDICT
             </span>
-            <span className="font-heading font-medium text-[9px] leading-tight tracking-[0.2em] text-text-muted uppercase">
+            <span className="font-heading font-medium text-[0.5625rem] leading-tight tracking-[0.2em] text-text-muted uppercase">
               AI TECHNOLOGY
             </span>
           </div>

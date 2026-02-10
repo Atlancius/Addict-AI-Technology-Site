@@ -26,10 +26,23 @@ export const metadata: Metadata = {
   description:
     "Réparation mobile & PC, boutique tech, café manga. Accompagnement digital, IA et automatisation pour les pros. Folelli, Corse.",
   metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
+    title: "Addict — Tech, Réparation & Innovation | Folelli, Corse",
+    description:
+      "Réparation mobile & PC, boutique tech, café manga. Accompagnement digital, IA et automatisation pour les pros. Folelli, Corse.",
     type: "website",
     locale: "fr_FR",
+    url: siteUrl,
     siteName: "Addict AI Technology",
+  },
+  twitter: {
+    card: "summary",
+    title: "Addict — Tech, Réparation & Innovation | Folelli, Corse",
+    description:
+      "Réparation mobile & PC, boutique tech, café manga. Accompagnement digital, IA et automatisation pour les pros. Folelli, Corse.",
   },
   robots: {
     index: true,

@@ -6,11 +6,27 @@ import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { getCaseStudiesWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Réalisations — Cas clients",
   description:
     "Découvrez nos études de cas : automatisations, IA, formations et transformations digitales.",
+  alternates: {
+    canonical: canonicalFor("/realisations"),
+  },
+  openGraph: {
+    title: "Réalisations — Cas clients",
+    description:
+      "Découvrez nos études de cas : automatisations, IA, formations et transformations digitales.",
+    url: canonicalFor("/realisations"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Réalisations — Cas clients",
+    description:
+      "Découvrez nos études de cas : automatisations, IA, formations et transformations digitales.",
+  },
 };
 
 export default async function RealisationsPage() {
@@ -38,11 +54,17 @@ export default async function RealisationsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {caseStudies.map((caseStudy, i) => (
                 <ScrollReveal key={caseStudy.id} delay={i * 80}>
-                  <Card variant="service" className="h-full flex flex-col">
+                  <Card variant="caseStudy" className="h-full flex flex-col">
                     <CardTitle>{caseStudy.title}</CardTitle>
                     <CardDescription className="mb-4">
                       {stripHtml(caseStudy.problem || "")}
                     </CardDescription>
+                    {caseStudy.results && (
+                      <p className="text-text-muted text-sm mb-4">
+                        <span className="text-text-secondary font-semibold">Résultat:</span>{" "}
+                        {stripHtml(caseStudy.results)}
+                      </p>
+                    )}
                     <div className="mt-auto">
                       <Link
                         href={`/realisations/${caseStudy.slug}`}

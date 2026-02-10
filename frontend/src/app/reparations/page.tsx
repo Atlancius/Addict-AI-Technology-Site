@@ -4,20 +4,38 @@ import Footer from "@/components/sections/Footer";
 import RepairsTable from "@/components/sections/RepairsTable";
 import Accordion from "@/components/ui/Accordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MobileB2CBar from "@/components/sections/MobileB2CBar";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd } from "@/lib/jsonld";
-import { getFaqsWithFallback, getRepairsWithFallback } from "@/lib/content";
+import { getFaqsWithFallback, getLocationWithFallback, getRepairsWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Réparations — Tarifs & Devis",
   description:
     "Consultez nos tarifs de réparation mobile et PC à Folelli. Filtres par marque, modèle et type de réparation.",
+  alternates: {
+    canonical: canonicalFor("/reparations"),
+  },
+  openGraph: {
+    title: "Réparations — Tarifs & Devis",
+    description:
+      "Consultez nos tarifs de réparation mobile et PC à Folelli. Filtres par marque, modèle et type de réparation.",
+    url: canonicalFor("/reparations"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Réparations — Tarifs & Devis",
+    description:
+      "Consultez nos tarifs de réparation mobile et PC à Folelli. Filtres par marque, modèle et type de réparation.",
+  },
 };
 
 export default async function ReparationsPage() {
   const repairs = await getRepairsWithFallback();
   const faqs = await getFaqsWithFallback("b2c");
+  const location = await getLocationWithFallback();
   const faqItems = faqs.map((faq) => ({
     question: faq.question,
     answer: stripHtml(faq.answer),
@@ -36,7 +54,7 @@ export default async function ReparationsPage() {
                 <span className="ember-text">Réparations</span>
               </h1>
               <p className="text-text-secondary text-lg max-w-3xl">
-                Tarifs indicatifs "à partir de". Pour un devis précis, contactez-nous ou passez au shop.
+                Tarifs indicatifs &quot;à partir de&quot;. Pour un devis précis, contactez-nous ou passez au shop.
               </p>
             </ScrollReveal>
           </div>
@@ -47,6 +65,41 @@ export default async function ReparationsPage() {
             <ScrollReveal>
               <RepairsTable items={repairs} />
             </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+          <div className="max-w-6xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
+                Réassurance
+              </h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Garantie 6 mois",
+                  desc: "Pièces et main d'œuvre garanties sur toutes les réparations.",
+                },
+                {
+                  title: "Données protégées",
+                  desc: "Nous n'accédons pas à vos données. Sauvegarde conseillée.",
+                },
+                {
+                  title: "Transparence totale",
+                  desc: "Devis clair, prix “à partir de”, aucun frais caché.",
+                },
+              ].map((item, i) => (
+                <ScrollReveal key={item.title} delay={i * 80}>
+                  <div className="card-sheen rounded-sm border border-stroke-subtle bg-surface-2/80 p-6">
+                    <h3 className="font-heading text-lg text-text-primary mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-text-muted text-sm">{item.desc}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -63,6 +116,11 @@ export default async function ReparationsPage() {
           </div>
         </section>
       </main>
+      <MobileB2CBar
+        phone={location.phone}
+        mapHref={location.google_maps_url}
+        quoteHref="/contact"
+      />
       <Footer />
     </>
   );

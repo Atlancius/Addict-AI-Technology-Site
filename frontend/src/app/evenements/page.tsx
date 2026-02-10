@@ -3,11 +3,27 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Événements — Workshops & Rencontres",
   description:
     "Découvrez nos prochains workshops et événements autour de la tech, de l'IA et du no-code.",
+  alternates: {
+    canonical: canonicalFor("/evenements"),
+  },
+  openGraph: {
+    title: "Événements — Workshops & Rencontres",
+    description:
+      "Découvrez nos prochains workshops et événements autour de la tech, de l'IA et du no-code.",
+    url: canonicalFor("/evenements"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Événements — Workshops & Rencontres",
+    description:
+      "Découvrez nos prochains workshops et événements autour de la tech, de l'IA et du no-code.",
+  },
 };
 
 export default function EvenementsPage() {
@@ -22,19 +38,41 @@ export default function EvenementsPage() {
                 Événements <span className="metal-text">Tech</span>
               </h1>
               <p className="text-text-secondary text-lg mb-8">
-                Workshops, meetups et sessions pratiques arrivent bientôt.
+                Workshops, masterclass IA et sessions no-code sur mesure pour équipes et communautés locales.
               </p>
-              <div className="glass-panel rounded-sm p-8">
-                <p className="text-text-muted mb-6">
-                  Restez connectés pour les prochaines dates. Vous pouvez deja nous contacter
-                  pour organiser un atelier sur-mesure.
-                </p>
+              <div className="glass-panel rounded-sm p-8 space-y-6 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    {
+                      title: "Workshop IA Express",
+                      desc: "3h pour appliquer l'IA aux tâches concrètes de votre équipe.",
+                    },
+                    {
+                      title: "No-code Ops",
+                      desc: "Automatisations rapides et workflows fiables pour gagner du temps.",
+                    },
+                    {
+                      title: "Roadmap Digitale",
+                      desc: "Session stratégique pour prioriser vos actions et KPI.",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.title}
+                      className="rounded-sm border border-stroke-subtle bg-surface-2/70 p-4"
+                    >
+                      <h3 className="font-heading text-sm uppercase tracking-wider text-text-primary mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-text-muted text-sm">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button variant="metal" href="/pro#contact-pro">
-                    Proposer un evenement
+                    Planifier une session
                   </Button>
                   <Button variant="outline" href="/contact">
-                    Nous contacter
+                    Demander un devis
                   </Button>
                 </div>
               </div>

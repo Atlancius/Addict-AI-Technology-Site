@@ -15,17 +15,33 @@ import {
   getServicesWithFallback,
 } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Solutions Pro — Automatisation, IA & Formation",
   description:
     "Accompagnement digital pour les entreprises : audit, automatisation IA, formation no-code. Gagnez du temps et optimisez vos process.",
+  alternates: {
+    canonical: canonicalFor("/pro"),
+  },
+  openGraph: {
+    title: "Solutions Pro — Automatisation, IA & Formation",
+    description:
+      "Accompagnement digital pour les entreprises : audit, automatisation IA, formation no-code. Gagnez du temps et optimisez vos process.",
+    url: canonicalFor("/pro"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Solutions Pro — Automatisation, IA & Formation",
+    description:
+      "Accompagnement digital pour les entreprises : audit, automatisation IA, formation no-code. Gagnez du temps et optimisez vos process.",
+  },
 };
 
 const METHODOLOGY = [
   { step: "01", title: "Audit", description: "Analyse de vos process et identification des opportunites." },
-  { step: "02", title: "Strategie", description: "Roadmap priorisee avec ROI estime." },
-  { step: "03", title: "Implementation", description: "Mise en place des solutions et automatisations." },
+  { step: "02", title: "Stratégie", description: "Roadmap priorisée avec ROI estimé." },
+  { step: "03", title: "Implémentation", description: "Mise en place des solutions et automatisations." },
   { step: "04", title: "Suivi", description: "Accompagnement continu et optimisation." },
 ];
 
@@ -58,13 +74,13 @@ export default async function ProPage() {
         {/* Hero B2B */}
         <section className="min-h-[70vh] flex items-center pt-24 pb-16 relative surface-grid">
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-          <div className="absolute top-1/4 -left-32 w-[520px] h-[520px] bg-metal/15 rounded-full blur-3xl -z-10" />
-          <div className="absolute -bottom-24 right-24 w-[520px] h-[520px] bg-ember/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-1/4 -left-32 w-[32.5rem] h-[32.5rem] bg-metal/15 rounded-full blur-3xl -z-10" />
+          <div className="absolute -bottom-24 right-24 w-[32.5rem] h-[32.5rem] bg-ember/10 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
             <ScrollReveal>
               <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60 mb-6">
-                <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-metal uppercase">
+                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
                   B2B • Digital • Automatisation
                 </span>
               </div>
@@ -77,7 +93,7 @@ export default async function ProPage() {
 
               <p className="text-text-secondary text-lg max-w-2xl mb-8 leading-relaxed">
                 Accompagnement digital complet : audit, automatisation IA, formation.
-                On transforme vos process pour que vous puissiez vous concentrer sur votre metier.
+                On transforme vos process pour que vous puissiez vous concentrer sur votre métier.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -100,7 +116,7 @@ export default async function ProPage() {
                 Nos offres
               </h2>
               <p className="text-text-muted mb-12">
-                Des solutions adaptees a chaque besoin, de l'audit a la formation.
+                Des solutions adaptees a chaque besoin, de l&apos;audit a la formation.
               </p>
             </ScrollReveal>
 
@@ -143,7 +159,7 @@ export default async function ProPage() {
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-12 text-center">
-                Notre methodologie
+                Notre méthodologie
               </h2>
             </ScrollReveal>
 
@@ -167,12 +183,12 @@ export default async function ProPage() {
           </div>
         </section>
 
-        {/* Stack & credibilite */}
+        {/* Stack & crédibilité */}
         <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4">
-                Stack & credibilite
+                Stack & crédibilité
               </h2>
               <p className="text-text-muted mb-8">
                 Outils fiables, process documentes et approche orientee ROI.
@@ -200,14 +216,14 @@ export default async function ProPage() {
                 Cas clients
               </h2>
               <p className="text-text-muted mb-8">
-                Quelques exemples de projets realises.
+                Quelques exemples de projets réalisés.
               </p>
             </ScrollReveal>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {caseStudies.map((caseStudy, i) => (
                 <ScrollReveal key={caseStudy.id} delay={i * 100}>
-                  <Card variant="service" className="h-full">
+                  <Card variant="caseStudy" className="h-full">
                     <CardTitle>{caseStudy.title}</CardTitle>
                     <CardDescription className="mb-3">
                       {stripHtml(caseStudy.problem || "")} 
@@ -217,7 +233,7 @@ export default async function ProPage() {
                       {stripHtml(caseStudy.solution || "")}
                     </p>
                     <p className="text-text-muted text-sm">
-                      <span className="text-text-secondary font-semibold">Resultat:</span>{" "}
+                      <span className="text-text-secondary font-semibold">Résultat:</span>{" "}
                       {stripHtml(caseStudy.results || "")}
                     </p>
                     <div className="mt-4">

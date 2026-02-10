@@ -18,13 +18,13 @@ const DAY_ORDER = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 function formatHours(location: Location) {
   const opening = location.opening_hours;
   if (!opening || Object.keys(opening).length === 0) {
-    return ["Lun – Ven : 09h – 18h", "Sam : 10h – 16h", "Dim : Ferme"];
+    return ["Lun – Ven : 09h – 18h", "Sam : 10h – 16h", "Dim : Fermé"];
   }
 
   return DAY_ORDER.filter((day) => opening[day]).map((day) => {
     const slots = opening[day];
     const label = DAY_LABELS[day] || day;
-    if (!slots || slots.length === 0) return `${label} : Ferme`;
+    if (!slots || slots.length === 0) return `${label} : Fermé`;
     const ranges = slots
       .map((slot) => `${slot.open} – ${slot.close}`)
       .join(", ");
@@ -131,7 +131,7 @@ export default function LocationMap({ location }: { location?: Location }) {
           {/* Map */}
           <div className="lg:col-span-2">
             <ScrollReveal>
-              <div className="w-full h-80 lg:h-full min-h-80 rounded-sm border border-stroke-subtle overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+              <div className="w-full h-80 lg:h-full min-h-80 rounded-sm border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
                 <iframe
                   src={mapEmbed}
                   width="100%"

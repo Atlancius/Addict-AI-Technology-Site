@@ -4,6 +4,26 @@ import type { FaqItem } from "./content";
 export function buildLocalBusinessJsonLd(location: Location) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
   const addressLines = [location.address_line1].filter(Boolean);
+  const opening = location.opening_hours || {};
+  const dayMap: Record<string, string> = {
+    mon: "Monday",
+    tue: "Tuesday",
+    wed: "Wednesday",
+    thu: "Thursday",
+    fri: "Friday",
+    sat: "Saturday",
+    sun: "Sunday",
+  };
+  const openingHoursSpecification = Object.entries(opening)
+    .flatMap(([day, slots]) =>
+      (slots || []).map((slot) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: dayMap[day] || day,
+        opens: slot.open,
+        closes: slot.close,
+      }))
+    )
+    .filter((item) => item.opens && item.closes);
   const geo =
     location.geo_lat && location.geo_lng
       ? {
@@ -29,6 +49,8 @@ export function buildLocalBusinessJsonLd(location: Location) {
       addressCountry: location.country,
     },
     geo,
+    openingHoursSpecification:
+      openingHoursSpecification.length > 0 ? openingHoursSpecification : undefined,
   };
 }
 

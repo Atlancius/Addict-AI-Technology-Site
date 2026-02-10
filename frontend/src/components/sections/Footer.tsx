@@ -32,7 +32,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
-                <div className="relative w-9 h-9 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_18px_rgba(230,57,70,0.35)] flex items-center justify-center">
+                <div className="relative w-9 h-9 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
                   <span className="font-heading font-bold text-white text-lg leading-none">
                     A
                   </span>
@@ -42,7 +42,7 @@ export default function Footer() {
                 <div className="font-heading font-bold text-sm uppercase tracking-tight metal-text">
                   ADDICT
                 </div>
-                <div className="font-heading text-[9px] tracking-[0.2em] text-text-muted uppercase">
+                <div className="font-heading text-[0.5625rem] tracking-[0.2em] text-text-muted uppercase">
                   AI TECHNOLOGY
                 </div>
               </div>
@@ -55,6 +55,7 @@ export default function Footer() {
             <div className="text-text-muted text-sm space-y-1">
               <p>Immeuble les Mimosas</p>
               <p>20213 Folelli, Corse</p>
+              <p>+33 4 95 31 12 90</p>
               <p>
                 <a
                   href="mailto:contact@addictai.tech"
