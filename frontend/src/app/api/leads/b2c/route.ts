@@ -7,9 +7,11 @@ const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW = 60_000;
 
 function getClientIp(request: NextRequest) {
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) return realIp;
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
-  return request.headers.get("x-real-ip") || "unknown";
+  return "unknown";
 }
 
 export async function POST(request: NextRequest) {
@@ -33,8 +35,7 @@ export async function POST(request: NextRequest) {
 
   const data = validation.data;
   const ip = getClientIp(request);
-  const ua = request.headers.get("user-agent") || "unknown";
-  const rateKey = `b2c:${ip}:${ua}`;
+  const rateKey = `b2c:${ip}`;
   const rate = checkRateLimit(rateKey, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW);
 
   if (!rate.allowed) {

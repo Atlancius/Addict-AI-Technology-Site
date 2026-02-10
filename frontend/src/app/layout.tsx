@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Chakra_Petch, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
+
 const chakraPetch = Chakra_Petch({
   variable: "--font-heading",
   subsets: ["latin"],
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
   },
   description:
     "Réparation mobile & PC, boutique tech, café manga. Accompagnement digital, IA et automatisation pour les pros. Folelli, Corse.",
-  metadataBase: new URL("https://addictai.tech"),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     type: "website",
     locale: "fr_FR",

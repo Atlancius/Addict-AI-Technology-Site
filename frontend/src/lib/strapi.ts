@@ -7,6 +7,12 @@ import type { CaseStudy, Faq, Location, Repair, Service } from "./types";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN || "";
+const DEFAULT_TIMEOUT_MS = 8000;
+const STRAPI_TIMEOUT_MS = (() => {
+  const raw = process.env.STRAPI_TIMEOUT_MS;
+  const parsed = raw ? Number(raw) : NaN;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_TIMEOUT_MS;
+})();
 
 export interface StrapiMeta {
   pagination?: {
@@ -110,10 +116,18 @@ async function fetchStrapi<T>(
     headers["Authorization"] = `Bearer ${STRAPI_TOKEN}`;
   }
 
-  const res = await fetch(url, {
-    headers,
-    next: { revalidate },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), STRAPI_TIMEOUT_MS);
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      headers,
+      next: { revalidate },
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!res.ok) {
     throw new Error(`Strapi fetch error: ${res.status} ${res.statusText}`);
@@ -136,11 +150,19 @@ async function postStrapi<T>(
     headers["Authorization"] = `Bearer ${STRAPI_TOKEN}`;
   }
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ data: body }),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), STRAPI_TIMEOUT_MS);
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ data: body }),
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!res.ok) {
     throw new Error(`Strapi post error: ${res.status} ${res.statusText}`);

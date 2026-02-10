@@ -67,7 +67,9 @@ export default async function ServiceDetailPage({
   }
 
   if (!service) {
-    const fallback = await getServiceBySlugWithFallback(params.slug);
+    const fallback = await getServiceBySlugWithFallback(params.slug, {
+      skipRemote: true,
+    });
     if (!fallback) notFound();
     service = fallback;
   }
