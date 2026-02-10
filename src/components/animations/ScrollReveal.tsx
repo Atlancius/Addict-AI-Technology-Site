@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -21,40 +23,45 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
-    // Check reduced motion preference
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.opacity = "1";
-      el.style.transform = "none";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReduced) {
+      gsap.set(el, { opacity: 1, y: 0 });
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          }, delay);
-          observer.unobserve(el);
+    const startPoint = Math.round((1 - threshold) * 100);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: delay / 1000,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: `top ${startPoint}%`,
+            once: true,
+          },
         }
-      },
-      { threshold }
-    );
+      );
+    }, el);
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    return () => ctx.revert();
   }, [delay, threshold]);
 
   return (
     <div
       ref={ref}
       className={className}
-      style={{
-        opacity: 0,
-        transform: "translateY(16px)",
-        transition: "opacity 0.6s ease, transform 0.6s ease",
-        willChange: "opacity, transform",
-      }}
+      style={{ willChange: "opacity, transform" }}
     >
       {children}
     </div>

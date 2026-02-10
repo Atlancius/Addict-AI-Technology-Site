@@ -6,13 +6,13 @@ type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
   flame:
-    "btn-sheen bg-gradient-to-r from-ember-deep via-ember to-flame text-white border border-ember/40 shadow-[0_0_24px_rgba(217,35,35,0.25)] hover:shadow-[0_0_42px_rgba(255,122,61,0.35)] hover:-translate-y-0.5",
+    "btn-sheen bg-gradient-to-r from-ember-deep via-ember to-flame text-white border border-ember/40 shadow-[0_0_24px_rgba(230,57,70,0.25)] hover:shadow-[0_0_42px_rgba(255,90,31,0.35)] hover:-translate-y-0.5",
   metal:
-    "btn-sheen bg-gradient-to-r from-surface-2 to-surface-3 text-metal border border-white/10 hover:text-white hover:border-white/20 hover:shadow-[0_0_24px_rgba(167,176,189,0.25)] hover:-translate-y-0.5",
+    "btn-sheen bg-gradient-to-r from-metal/30 via-surface-2 to-surface-3 text-text-primary border border-stroke-subtle hover:text-text-primary hover:border-stroke-medium hover:shadow-[0_0_28px_rgba(65,90,119,0.35)] hover:-translate-y-0.5",
   outline:
     "bg-transparent text-text-primary border border-stroke-medium hover:bg-surface-2/60 hover:border-flame",
   ghost:
-    "bg-transparent text-text-secondary hover:text-text-primary hover:bg-surface-2",
+    "bg-transparent text-text-secondary hover:text-text-primary hover:bg-surface-2/70",
 };
 
 const sizeClasses: Record<Size, string> = {
