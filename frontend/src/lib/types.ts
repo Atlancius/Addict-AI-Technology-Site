@@ -73,6 +73,29 @@ export interface Service {
   updatedAt: string;
 }
 
+// ─── Trainings ───────────────────────────────────────
+
+export interface Training {
+  id: number;
+  title: string;
+  slug: string;
+  summary?: string;
+  description?: string;
+  audience?: string;
+  format?: string;
+  duration?: string;
+  objectives?: string[];
+  prerequisites?: string[];
+  program_outline?: string;
+  cta_label?: string;
+  cta_link?: string;
+  sort_order: number;
+  seo_title?: string;
+  seo_description?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // ─── FAQ ──────────────────────────────────────────────
 
 export type FaqScope = "b2c" | "b2b" | "global";

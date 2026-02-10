@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trainings",
+  "info": {
+    "singularName": "training",
+    "pluralName": "trainings",
+    "displayName": "Training",
+    "description": "Programmes de formation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "objectives": {
+      "type": "json"
+    },
+    "prerequisites": {
+      "type": "json"
+    },
+    "program_outline": {
+      "type": "richtext"
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "cta_link": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    },
+    "faqs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::faq.faq"
+    }
+  }
+}

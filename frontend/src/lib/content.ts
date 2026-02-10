@@ -6,9 +6,11 @@ import {
   getRepairs,
   getServiceBySlug,
   getServices,
+  getTrainingBySlug,
+  getTrainings,
   unwrapCollection,
 } from "./strapi";
-import type { CaseStudy, Faq, Location, Repair, Service } from "./types";
+import type { CaseStudy, Faq, Location, Repair, Service, Training } from "./types";
 import {
   fallbackCaseStudies,
   fallbackFaqsB2B,
@@ -16,6 +18,7 @@ import {
   fallbackLocation,
   fallbackRepairs,
   fallbackServices,
+  fallbackTrainings,
 } from "./fallback-data";
 
 export type FaqItem = { question: string; answer: string };
@@ -84,6 +87,27 @@ export async function getCaseStudyBySlugWithFallback(slug: string) {
     return cases[0] ?? null;
   } catch {
     const fallback = fallbackCaseStudies.find((caseStudy) => caseStudy.slug === slug);
+    return fallback ?? null;
+  }
+}
+
+export async function getTrainingsWithFallback(): Promise<Training[]> {
+  try {
+    const res = await getTrainings();
+    const trainings = unwrapCollection<Training>(res);
+    return trainings.length > 0 ? trainings : fallbackTrainings;
+  } catch {
+    return fallbackTrainings;
+  }
+}
+
+export async function getTrainingBySlugWithFallback(slug: string) {
+  try {
+    const res = await getTrainingBySlug(slug);
+    const trainings = unwrapCollection<Training>(res);
+    return trainings[0] ?? null;
+  } catch {
+    const fallback = fallbackTrainings.find((training) => training.slug === slug);
     return fallback ?? null;
   }
 }

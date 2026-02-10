@@ -1,4 +1,4 @@
-// import type { Core } from '@strapi/strapi';
+import { seedPremium } from "./seed/premium";
 
 export default {
   /**
@@ -16,5 +16,12 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap({ strapi }: { strapi: { log: { info: (msg: string) => void } } }) {
+    try {
+      await seedPremium(strapi as any);
+      strapi.log.info("Premium seed: done");
+    } catch (error) {
+      strapi.log.info("Premium seed: skipped");
+    }
+  },
 };

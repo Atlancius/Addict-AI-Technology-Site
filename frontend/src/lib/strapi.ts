@@ -3,7 +3,7 @@
  * Handles all communication with the Strapi headless CMS.
  */
 
-import type { CaseStudy, Faq, Location, Repair, Service } from "./types";
+import type { CaseStudy, Faq, Location, Repair, Service, Training } from "./types";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN || "";
@@ -252,6 +252,22 @@ export async function getCaseStudyBySlug(
   return fetchStrapi("case-studies", {
     filters: { slug: { $eq: slug } },
     populate: ["cover_image"],
+  });
+}
+
+export async function getTrainings(): Promise<StrapiCollection<Training>> {
+  return fetchStrapi("trainings", {
+    sort: "sort_order:asc",
+    pagination: { pageSize: 200 },
+  });
+}
+
+export async function getTrainingBySlug(
+  slug: string
+): Promise<StrapiCollection<Training>> {
+  return fetchStrapi("trainings", {
+    filters: { slug: { $eq: slug } },
+    populate: ["faqs"],
   });
 }
 
