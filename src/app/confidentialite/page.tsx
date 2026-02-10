@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
   description:
     "Politique de confidentialité et protection des données personnelles d'Addict AI Technology.",
+  alternates: {
+    canonical: canonicalFor("/confidentialite"),
+  },
 };
 
 export default function Confidentialite() {

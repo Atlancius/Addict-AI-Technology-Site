@@ -61,7 +61,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "mul
         <textarea
           ref={ref}
           rows={4}
-          className={`${baseClasses} ${focusClasses[tone]} resize-y min-h-[100px] ${error ? errorClasses : ""} ${className}`}
+          className={`${baseClasses} ${focusClasses[tone]} resize-y min-h-[6.25rem] ${error ? errorClasses : ""} ${className}`}
           {...props}
         />
         {error && (

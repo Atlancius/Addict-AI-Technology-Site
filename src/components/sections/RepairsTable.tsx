@@ -107,7 +107,7 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
         </div>
 
         <Input
-          label="Modele"
+          label="Modèle"
           id="repair-model"
           placeholder="Ex: iPhone 13"
           value={filters.model}
@@ -123,17 +123,20 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
           <thead className="sticky top-0 z-10 bg-surface-3/90 backdrop-blur text-text-secondary uppercase text-xs font-heading tracking-wider">
             <tr>
               <th className="px-4 py-3">Marque</th>
-              <th className="px-4 py-3">Modele</th>
+              <th className="px-4 py-3">Modèle</th>
               <th className="px-4 py-3">Type</th>
               <th className="px-4 py-3">Prix</th>
-              <th className="px-4 py-3">Delai</th>
+              <th className="px-4 py-3">Délai</th>
               <th className="px-4 py-3">Garantie</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-stroke-subtle">
             {isLoading &&
               skeletonRows.map((_, index) => (
-                <tr key={`skeleton-${index}`} className="odd:bg-surface-1/40 even:bg-surface-2/40">
+                <tr
+                  key={`skeleton-${index}`}
+                  className="odd:bg-surface-1/40 even:bg-surface-2/40 animate-pulse"
+                >
                   <td className="px-4 py-4">
                     <div className="h-3 w-16 rounded-full bg-surface-3/80" />
                   </td>

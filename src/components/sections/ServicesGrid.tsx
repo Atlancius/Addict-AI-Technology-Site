@@ -8,6 +8,15 @@ import { stripHtml } from "@/lib/text";
 
 export default function ServicesGrid({ items }: { items: Service[] }) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const categoryLabels: Record<string, string> = {
+    all: "Tout",
+    Audit: "Audit",
+    Automation: "Automatisation",
+    Training: "Formation",
+    Support: "Support",
+    Web: "Web",
+    Branding: "Branding",
+  };
 
   const categories = useMemo(() => {
     const set = new Set(items.map((item) => item.category));
@@ -29,11 +38,11 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
             onClick={() => setActiveCategory(category)}
             className={`px-3 py-1.5 text-xs font-heading uppercase tracking-wider rounded-sm border transition-colors ${
               activeCategory === category
-                ? "bg-surface-3 text-metal border-metal/40 shadow-[0_0_18px_rgba(65,90,119,0.3)]"
+                ? "bg-surface-3 text-metal border-metal/40 shadow-[0_0_1.125rem_rgba(65,90,119,0.3)]"
                 : "bg-surface-2/70 text-text-secondary border-stroke-subtle hover:text-text-primary"
             }`}
           >
-            {category === "all" ? "Tout" : category}
+            {categoryLabels[category] || category}
           </button>
         ))}
       </div>

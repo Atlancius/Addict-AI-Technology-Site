@@ -9,6 +9,7 @@ const DEFAULT_PATHS = [
   "/reparations",
   "/services",
   "/realisations",
+  "/formations",
 ];
 
 const MAX_PATHS = 25;

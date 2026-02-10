@@ -30,7 +30,7 @@ const GOALS: Array<{ value: GoalValue; label: string }> = [
 
 const BUDGETS: Array<{ value: BudgetValue; label: string }> = [
   { value: "", label: "Choisir" },
-  { value: "unknown", label: "A definir" },
+  { value: "unknown", label: "À définir" },
   { value: "<2k", label: "< 2k" },
   { value: "2k-5k", label: "2k - 5k" },
   { value: "5k-10k", label: "5k - 10k" },
@@ -120,9 +120,9 @@ export default function LeadB2BForm() {
         consent: false,
         website: "",
       });
-    } catch (error) {
+    } catch {
       setStatus("error");
-      setMessage("Impossible d'envoyer la demande. Reessayez.");
+      setMessage("Impossible d'envoyer la demande. Réessayez.");
     }
   };
 
@@ -158,7 +158,7 @@ export default function LeadB2BForm() {
           required
         />
         <Input
-          label="Telephone (optionnel)"
+          label="Téléphone (optionnel)"
           id="b2b-phone"
           value={form.phone}
           onChange={(event) => update("phone", event.target.value)}
@@ -167,7 +167,7 @@ export default function LeadB2BForm() {
         />
         <div>
           <label className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1">
-            Taille entreprise
+            Taille d&apos;entreprise
           </label>
           <select
             value={form.company_size}
@@ -225,7 +225,7 @@ export default function LeadB2BForm() {
       </div>
 
       <Textarea
-        label="Probleme a resoudre"
+        label="Problème à résoudre"
         id="b2b-problem"
         value={form.problem}
         onChange={(event) => update("problem", event.target.value)}
@@ -254,7 +254,7 @@ export default function LeadB2BForm() {
           className="mt-1 accent-metal"
         />
         <span>
-          J'accepte d'etre recontacte et que mes donnees soient traitees.
+          J&apos;accepte d&apos;être recontacté et que mes données soient traitées.
         </span>
       </label>
       {errors.consent && (

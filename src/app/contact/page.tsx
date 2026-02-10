@@ -5,11 +5,27 @@ import LocationMap from "@/components/sections/LocationMap";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { getLocationWithFallback } from "@/lib/content";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Contactez Addict AI Technology à Folelli, Corse. Réparation, devis, projet digital — on vous répond rapidement.",
+  alternates: {
+    canonical: canonicalFor("/contact"),
+  },
+  openGraph: {
+    title: "Contact — Addict AI Technology",
+    description:
+      "Contactez Addict AI Technology à Folelli, Corse. Réparation, devis, projet digital — on vous répond rapidement.",
+    url: canonicalFor("/contact"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact — Addict AI Technology",
+    description:
+      "Contactez Addict AI Technology à Folelli, Corse. Réparation, devis, projet digital — on vous répond rapidement.",
+  },
 };
 
 export default async function ContactPage() {

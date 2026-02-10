@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
       ok: true,
       message: "Merci, on te recontacte rapidement.",
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { ok: false, message: "Erreur serveur. Reessayez." },
       { status: 502 }

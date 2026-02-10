@@ -7,15 +7,32 @@ import Accordion from "@/components/ui/Accordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import RepairsTable from "@/components/sections/RepairsTable";
 import LeadB2CForm from "@/components/forms/LeadB2CForm";
+import MobileB2CBar from "@/components/sections/MobileB2CBar";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd } from "@/lib/jsonld";
-import { getFaqsWithFallback, getRepairsWithFallback } from "@/lib/content";
+import { getFaqsWithFallback, getLocationWithFallback, getRepairsWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Addict 2.0 — Réparation, Boutique Tech & Café Manga",
   description:
     "Réparation mobile & PC, boutique high-tech et café manga à Folelli, Corse. Diagnostic gratuit, intervention rapide, garantie incluse.",
+  alternates: {
+    canonical: canonicalFor("/addict-2-0"),
+  },
+  openGraph: {
+    title: "Addict 2.0 — Réparation, Boutique Tech & Café Manga",
+    description:
+      "Réparation mobile & PC, boutique high-tech et café manga à Folelli, Corse. Diagnostic gratuit, intervention rapide, garantie incluse.",
+    url: canonicalFor("/addict-2-0"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Addict 2.0 — Réparation, Boutique Tech & Café Manga",
+    description:
+      "Réparation mobile & PC, boutique high-tech et café manga à Folelli, Corse. Diagnostic gratuit, intervention rapide, garantie incluse.",
+  },
 };
 
 const PILLARS = [
@@ -65,6 +82,7 @@ const PROCESS_STEPS = [
 export default async function AddictB2C() {
   const repairs = await getRepairsWithFallback();
   const faqs = await getFaqsWithFallback("b2c");
+  const location = await getLocationWithFallback();
   const faqItems = faqs.map((faq) => ({
     question: faq.question,
     answer: stripHtml(faq.answer),
@@ -80,13 +98,13 @@ export default async function AddictB2C() {
         {/* Hero */}
         <section className="min-h-[70vh] flex items-center pt-24 pb-16 relative surface-grid">
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-          <div className="absolute top-1/4 -right-32 w-[520px] h-[520px] bg-flame/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute -bottom-24 left-24 w-[520px] h-[520px] bg-ember/15 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-1/4 -right-32 w-[32.5rem] h-[32.5rem] bg-flame/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute -bottom-24 left-24 w-[32.5rem] h-[32.5rem] bg-ember/15 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
             <ScrollReveal>
               <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60 mb-6">
-                <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-flame uppercase">
+                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
                   B2C • Folelli • Corse
                 </span>
               </div>
@@ -164,6 +182,42 @@ export default async function AddictB2C() {
           </div>
         </section>
 
+        {/* Réassurance */}
+        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+          <div className="max-w-7xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
+                Réassurance & garantie
+              </h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Garantie 6 mois",
+                  desc: "Pièces et main d'œuvre garanties sur toutes les réparations.",
+                },
+                {
+                  title: "Données protégées",
+                  desc: "Nous n'accédons pas à vos données. Sauvegarde conseillée.",
+                },
+                {
+                  title: "Transparence totale",
+                  desc: "Devis clair, tarifs “à partir de”, aucun frais caché.",
+                },
+              ].map((item, i) => (
+                <ScrollReveal key={item.title} delay={i * 80}>
+                  <div className="card-sheen rounded-sm border border-stroke-subtle bg-surface-2/80 p-6">
+                    <h3 className="font-heading text-lg text-text-primary mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-text-muted text-sm">{item.desc}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Tarifs */}
         <section id="tarifs" className="py-20 bg-surface-1 border-y border-stroke-subtle">
           <div className="max-w-7xl mx-auto px-6">
@@ -172,7 +226,7 @@ export default async function AddictB2C() {
                 Tarifs réparation
               </h2>
               <p className="text-text-muted mb-8">
-                Tarifs indicatifs "à partir de". Contactez-nous pour un devis précis.
+                Tarifs indicatifs &quot;à partir de&quot;. Contactez-nous pour un devis précis.
               </p>
             </ScrollReveal>
 
@@ -201,7 +255,7 @@ export default async function AddictB2C() {
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
-                Besoin d'une réparation ?
+                Besoin d&apos;une réparation ?
               </h2>
               <p className="text-text-muted mb-8 text-center">
                 Appelez-nous, passez au shop ou demandez un devis en ligne.
@@ -216,6 +270,7 @@ export default async function AddictB2C() {
           </div>
         </section>
       </main>
+      <MobileB2CBar phone={location.phone} mapHref={location.google_maps_url} />
       <Footer />
     </>
   );

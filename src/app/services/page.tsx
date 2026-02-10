@@ -4,11 +4,27 @@ import Footer from "@/components/sections/Footer";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { getServicesWithFallback } from "@/lib/content";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Services Pro — Audit, Automatisation, Formation",
   description:
     "Découvrez nos services B2B : audit digital, automatisation, IA, formation et accompagnement sur-mesure.",
+  alternates: {
+    canonical: canonicalFor("/services"),
+  },
+  openGraph: {
+    title: "Services Pro — Audit, Automatisation, Formation",
+    description:
+      "Découvrez nos services B2B : audit digital, automatisation, IA, formation et accompagnement sur-mesure.",
+    url: canonicalFor("/services"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Services Pro — Audit, Automatisation, Formation",
+    description:
+      "Découvrez nos services B2B : audit digital, automatisation, IA, formation et accompagnement sur-mesure.",
+  },
 };
 
 export default async function ServicesPage() {

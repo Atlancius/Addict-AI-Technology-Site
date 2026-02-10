@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { getCaseStudiesWithFallback, getCaseStudyBySlugWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const cases = await getCaseStudiesWithFallback();
@@ -20,10 +21,27 @@ export async function generateMetadata({
   const caseStudy = await getCaseStudyBySlugWithFallback(params.slug);
   if (!caseStudy) return { title: "Réalisation" };
 
+  const title = caseStudy.seo_title || caseStudy.title;
+  const description =
+    caseStudy.seo_description || stripHtml(caseStudy.problem || caseStudy.solution || "");
+  const canonical = canonicalFor(`/realisations/${caseStudy.slug}`);
+
   return {
-    title: caseStudy.seo_title || caseStudy.title,
-    description:
-      caseStudy.seo_description || stripHtml(caseStudy.problem || caseStudy.solution || ""),
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 }
 
@@ -72,7 +90,7 @@ export default async function RealisationDetailPage({
             <ScrollReveal>
               <div className="glass-panel rounded-sm p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Probleme
+                  Problème
                 </h3>
                 <p className="text-text-primary text-sm">
                   {stripHtml(caseStudy.problem || "")}
@@ -92,11 +110,32 @@ export default async function RealisationDetailPage({
             <ScrollReveal delay={160}>
               <div className="glass-panel rounded-sm p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Resultat
+                  Résultat
                 </h3>
                 <p className="text-text-primary text-sm">
                   {stripHtml(caseStudy.results || "")}
                 </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="py-20 bg-surface-0">
+          <div className="max-w-5xl mx-auto px-6 text-center">
+            <ScrollReveal>
+              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4">
+                Un projet similaire ?
+              </h2>
+              <p className="text-text-muted mb-8">
+                On vous aide à cadrer, prioriser et livrer une solution claire.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button variant="metal" href="/pro#contact-pro">
+                  Demander un audit
+                </Button>
+                <Button variant="outline" href="/services">
+                  Voir les services
+                </Button>
               </div>
             </ScrollReveal>
           </div>
