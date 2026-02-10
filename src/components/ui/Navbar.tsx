@@ -29,19 +29,23 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-sm bg-gradient-to-br from-ember to-flame flex items-center justify-center">
-            <span className="font-heading font-bold text-white text-lg leading-none">
-              A
-            </span>
+          <div className="relative">
+            <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
+            <div className="relative w-10 h-10 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_18px_rgba(217,35,35,0.35)] flex items-center justify-center">
+              <span className="font-heading font-bold text-lg leading-none metal-text">
+                A
+              </span>
+            </div>
           </div>
           <div className="flex flex-col">
-            <span className="font-heading font-bold text-sm leading-none tracking-tight text-text-primary group-hover:text-white transition-colors uppercase">
+            <span className="font-heading font-bold text-sm leading-none tracking-tight metal-text uppercase">
               ADDICT
             </span>
-            <span className="font-heading font-medium text-[9px] leading-tight tracking-[0.2em] text-flame uppercase">
+            <span className="font-heading font-medium text-[9px] leading-tight tracking-[0.2em] text-text-muted uppercase">
               AI TECHNOLOGY
             </span>
           </div>
@@ -53,7 +57,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-xs font-heading font-medium uppercase tracking-wider text-text-muted hover:text-text-primary transition-colors"
+              className="text-xs font-heading font-medium uppercase tracking-wider text-text-muted hover:text-flame transition-colors"
             >
               {link.label}
             </Link>
@@ -97,7 +101,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-heading font-medium uppercase tracking-wider text-text-secondary hover:text-text-primary transition-colors py-2"
+                className="text-sm font-heading font-medium uppercase tracking-wider text-text-secondary hover:text-flame transition-colors py-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}

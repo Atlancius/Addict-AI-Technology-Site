@@ -21,11 +21,11 @@ export default async function FormationsPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0">
+        <section className="pt-28 pb-16 bg-surface-0 surface-grid">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                Formations
+                Formations <span className="metal-text">IA</span>
               </h1>
               <p className="text-text-secondary text-lg max-w-3xl">
                 Des parcours concrets pour rendre vos equipes autonomes sur le no-code et l'IA.

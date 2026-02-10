@@ -44,11 +44,14 @@ export default function LocationMap({ location }: { location?: Location }) {
   const hours = formatHours(data);
 
   return (
-    <section className="py-20 bg-surface-0 border-t border-stroke-subtle">
+    <section className="py-24 bg-surface-0 border-t border-stroke-subtle surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <h2 className="font-heading text-3xl font-bold text-text-primary mb-2">
+            <p className="text-xs font-heading uppercase tracking-[0.3em] text-text-muted mb-3">
+              Sur place
+            </p>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
               Retrouvez-nous
             </h2>
             <p className="text-text-muted">
@@ -89,7 +92,7 @@ export default function LocationMap({ location }: { location?: Location }) {
             </ScrollReveal>
 
             <ScrollReveal delay={160}>
-              <div className="glass-panel rounded-sm p-6 space-y-4">
+              <div className="glass-panel rounded-sm p-6 space-y-4 border border-ember/20">
                 <h3 className="font-heading font-semibold text-sm text-text-primary uppercase tracking-wider">
                   Contact
                 </h3>
@@ -128,7 +131,7 @@ export default function LocationMap({ location }: { location?: Location }) {
           {/* Map */}
           <div className="lg:col-span-2">
             <ScrollReveal>
-              <div className="w-full h-80 lg:h-full min-h-80 rounded-sm border border-stroke-subtle overflow-hidden">
+              <div className="w-full h-80 lg:h-full min-h-80 rounded-sm border border-stroke-subtle overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
                 <iframe
                   src={mapEmbed}
                   width="100%"

@@ -78,13 +78,14 @@ export default async function AddictB2C() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="min-h-[70vh] flex items-center pt-24 pb-16 relative">
+        <section className="min-h-[70vh] flex items-center pt-24 pb-16 relative surface-grid">
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-          <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] bg-flame/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-1/4 -right-32 w-[520px] h-[520px] bg-flame/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute -bottom-24 left-24 w-[520px] h-[520px] bg-ember/15 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
             <ScrollReveal>
-              <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-1/60 mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60 mb-6">
                 <span className="text-[10px] font-heading font-medium tracking-[0.2em] text-flame uppercase">
                   B2C • Folelli • Corse
                 </span>
@@ -93,7 +94,7 @@ export default async function AddictB2C() {
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight mb-6">
                 Réparation rapide,
                 <br />
-                <span className="text-flame">boutique tech, café manga</span>
+                <span className="ember-text">boutique tech, café manga</span>
               </h1>
 
               <p className="text-text-secondary text-lg max-w-2xl mb-8 leading-relaxed">

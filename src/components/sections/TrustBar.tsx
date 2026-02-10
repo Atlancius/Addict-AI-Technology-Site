@@ -23,7 +23,7 @@ export default function TrustBar() {
     <section className="py-12 bg-surface-0">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 glass-panel rounded-md px-6 py-6">
             {/* Badges */}
             <div className="flex flex-wrap gap-3 justify-center">
               {TRUST_ITEMS.map((item) => (
