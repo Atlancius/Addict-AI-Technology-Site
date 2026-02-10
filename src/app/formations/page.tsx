@@ -4,18 +4,33 @@ import Footer from "@/components/sections/Footer";
 import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Button from "@/components/ui/Button";
-import { getServicesWithFallback } from "@/lib/content";
+import { getTrainingsWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
+import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Formations — No-code, IA & Automatisation",
   description:
     "Formations pratiques pour monter en compétence sur le no-code, l'IA et l'automatisation.",
+  alternates: {
+    canonical: canonicalFor("/formations"),
+  },
+  openGraph: {
+    title: "Formations — No-code, IA & Automatisation",
+    description:
+      "Formations pratiques pour monter en compétence sur le no-code, l'IA et l'automatisation.",
+    url: canonicalFor("/formations"),
+  },
+  twitter: {
+    card: "summary",
+    title: "Formations — No-code, IA & Automatisation",
+    description:
+      "Formations pratiques pour monter en compétence sur le no-code, l'IA et l'automatisation.",
+  },
 };
 
 export default async function FormationsPage() {
-  const services = await getServicesWithFallback();
-  const trainings = services.filter((service) => service.category === "Training");
+  const trainings = await getTrainingsWithFallback();
 
   return (
     <>
@@ -28,7 +43,7 @@ export default async function FormationsPage() {
                 Formations <span className="metal-text">IA</span>
               </h1>
               <p className="text-text-secondary text-lg max-w-3xl">
-                Des parcours concrets pour rendre vos equipes autonomes sur le no-code et l'IA.
+                Des parcours concrets pour rendre vos equipes autonomes sur le no-code et l&apos;IA.
               </p>
             </ScrollReveal>
           </div>
@@ -37,19 +52,23 @@ export default async function FormationsPage() {
         <section className="pb-20">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {(trainings.length > 0 ? trainings : services).map((service, i) => (
-                <ScrollReveal key={service.id} delay={i * 80}>
+              {trainings.map((training, i) => (
+                <ScrollReveal key={training.id} delay={i * 80}>
                   <Card variant="service" className="h-full flex flex-col">
-                    <CardTitle>{service.title}</CardTitle>
+                    <CardTitle>{training.title}</CardTitle>
                     <CardDescription className="mb-6">
-                      {service.summary || stripHtml(service.description || "")}
+                      {training.summary || stripHtml(training.description || "")}
                     </CardDescription>
+                    <div className="text-xs text-text-muted space-y-1 mb-6">
+                      <p>Durée : {training.duration || "À définir"}</p>
+                      <p>Format : {training.format || "Présentiel / distanciel"}</p>
+                    </div>
                     <Button
                       variant="metal"
                       size="sm"
-                      href={service.cta_link || "/pro#contact-pro"}
+                      href={`/formations/${training.slug}`}
                     >
-                      {service.cta_label || "Demander un programme"}
+                      {training.cta_label || "Voir le programme"}
                     </Button>
                   </Card>
                 </ScrollReveal>
