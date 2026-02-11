@@ -110,6 +110,9 @@ export default function LeadB2CForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <p className="text-xs text-text-muted">
+        Les champs marqués requis sont nécessaires pour traiter votre demande.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label="Nom"
@@ -117,6 +120,7 @@ export default function LeadB2CForm() {
           value={form.name}
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
+          autoComplete="name"
           tone="flame"
           required
         />
@@ -126,6 +130,8 @@ export default function LeadB2CForm() {
           value={form.phone}
           onChange={(event) => update("phone", event.target.value)}
           error={errors.phone}
+          autoComplete="tel"
+          inputMode="tel"
           tone="flame"
           required
         />
@@ -136,6 +142,7 @@ export default function LeadB2CForm() {
           onChange={(event) => update("email", event.target.value)}
           error={errors.email}
           type="email"
+          autoComplete="email"
           tone="flame"
         />
         <Input
@@ -144,6 +151,7 @@ export default function LeadB2CForm() {
           value={form.device_brand}
           onChange={(event) => update("device_brand", event.target.value)}
           error={errors.device_brand}
+          autoComplete="off"
           tone="flame"
           required
         />
@@ -153,6 +161,7 @@ export default function LeadB2CForm() {
           value={form.device_model}
           onChange={(event) => update("device_model", event.target.value)}
           error={errors.device_model}
+          autoComplete="off"
           tone="flame"
           required
         />

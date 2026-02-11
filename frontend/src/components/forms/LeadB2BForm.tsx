@@ -136,6 +136,9 @@ export default function LeadB2BForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <p className="text-xs text-text-muted">
+        Les champs requis permettent de cadrer votre besoin dès le premier échange.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label="Nom"
@@ -143,6 +146,7 @@ export default function LeadB2BForm() {
           value={form.name}
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
+          autoComplete="name"
           tone="metal"
           required
         />
@@ -152,6 +156,7 @@ export default function LeadB2BForm() {
           value={form.company}
           onChange={(event) => update("company", event.target.value)}
           error={errors.company}
+          autoComplete="organization"
           tone="metal"
           required
         />
@@ -162,6 +167,7 @@ export default function LeadB2BForm() {
           onChange={(event) => update("email", event.target.value)}
           error={errors.email}
           type="email"
+          autoComplete="email"
           tone="metal"
           required
         />
@@ -171,6 +177,8 @@ export default function LeadB2BForm() {
           value={form.phone}
           onChange={(event) => update("phone", event.target.value)}
           error={errors.phone}
+          autoComplete="tel"
+          inputMode="tel"
           tone="metal"
         />
         <div>

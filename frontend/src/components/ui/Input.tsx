@@ -23,6 +23,9 @@ const errorClasses =
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   function Input({ label, error, tone = "flame", className = "", ...props }, ref) {
+    const errorId = props.id ? `${props.id}-error` : undefined;
+    const describedBy = error ? errorId : props["aria-describedby"];
+
     return (
       <div className="space-y-1.5">
         {label && (
@@ -35,11 +38,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <input
           ref={ref}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
           className={`${baseClasses} ${focusClasses[tone]} ${error ? errorClasses : ""} ${className}`}
           {...props}
         />
         {error && (
-          <p className="text-xs text-ember mt-1">{error}</p>
+          <p id={errorId} className="text-xs text-ember mt-1">
+            {error}
+          </p>
         )}
       </div>
     );
@@ -48,6 +55,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "multiline">>(
   function Textarea({ label, error, tone = "flame", className = "", ...props }, ref) {
+    const errorId = props.id ? `${props.id}-error` : undefined;
+    const describedBy = error ? errorId : props["aria-describedby"];
+
     return (
       <div className="space-y-1.5">
         {label && (
@@ -61,11 +71,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "mul
         <textarea
           ref={ref}
           rows={4}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
           className={`${baseClasses} ${focusClasses[tone]} resize-y min-h-[6.25rem] ${error ? errorClasses : ""} ${className}`}
           {...props}
         />
         {error && (
-          <p className="text-xs text-ember mt-1">{error}</p>
+          <p id={errorId} className="text-xs text-ember mt-1">
+            {error}
+          </p>
         )}
       </div>
     );
