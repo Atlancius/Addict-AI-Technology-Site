@@ -107,6 +107,9 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ```
 Sinon, laissez la variable vide pour désactiver le tracking.
 
+Important : `NEXT_PUBLIC_GA_ID` est injecté au build Docker du frontend.
+Après changement de valeur, il faut relancer un build frontend.
+
 ## Revalidation (webhook)
 `POST /api/revalidate` avec header `x-revalidate-secret` ou query `?secret=`
 
