@@ -93,6 +93,49 @@ function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
+function lerp(from: number, to: number, progress: number) {
+  return from + (to - from) * progress;
+}
+
+function smoothstep(progress: number) {
+  const t = clamp(progress, 0, 1);
+  return t * t * (3 - 2 * t);
+}
+
+const STACK_CONFIG = {
+  stageBaseVh: 158,
+  stagePerCardVh: 46,
+  progressTrimStart: 0.03,
+  progressTrimLength: 0.94,
+  entering: {
+    x: 22,
+    y: 134,
+    scale: 0.9,
+    rotate: -4.6,
+  },
+  waitingStep: {
+    x: 10,
+    y: 30,
+    scaleDrop: 0.035,
+    rotate: 1.1,
+  },
+  stackedStep: {
+    x: 10,
+    y: -22,
+    scaleDrop: 0.048,
+    rotate: 1.45,
+  },
+  minScale: 0.78,
+};
+
+function computeSectionProgress(rect: DOMRect, viewportHeight: number) {
+  const startOffset = viewportHeight * 0.16;
+  const endOffset = viewportHeight * 0.72;
+  const distance = Math.max(rect.height + startOffset - endOffset, 1);
+  const rawProgress = (startOffset - rect.top) / distance;
+  return clamp(rawProgress, 0, 1);
+}
+
 function computeStackState(index: number, count: number, activeFloat: number): StackState {
   const delta = index - activeFloat;
 
@@ -110,33 +153,50 @@ function computeStackState(index: number, count: number, activeFloat: number): S
     };
   }
 
-  if (delta <= 0) {
-    const depth = -delta;
+  if (delta >= 1) {
+    const tail = delta - 1;
     return {
-      x: depth * 14,
-      y: -depth * 26,
-      scale: 1 - Math.min(0.22, depth * 0.055),
-      rotate: Math.min(5.5, depth * 2.1),
-      blur: Math.min(1.6, depth * 0.35),
-      brightness: Math.max(0.72, 1 - depth * 0.08),
-      opacity: Math.max(0.46, 1 - depth * 0.16),
-      zIndex: 320 - Math.round(depth * 20),
-      interactive: depth < 0.24,
+      x: STACK_CONFIG.entering.x + tail * STACK_CONFIG.waitingStep.x,
+      y: STACK_CONFIG.entering.y + tail * STACK_CONFIG.waitingStep.y,
+      scale: Math.max(
+        STACK_CONFIG.minScale,
+        STACK_CONFIG.entering.scale - tail * STACK_CONFIG.waitingStep.scaleDrop
+      ),
+      rotate: STACK_CONFIG.entering.rotate - tail * STACK_CONFIG.waitingStep.rotate,
+      blur: Math.min(0.45, tail * 0.18),
+      brightness: Math.max(0.82, 0.94 - tail * 0.04),
+      opacity: Math.max(0.78, 0.94 - tail * 0.06),
+      zIndex: 440 - Math.round(delta * 16),
+      interactive: false,
     };
   }
 
-  const approach = Math.min(1, delta);
-  const tail = Math.max(0, delta - 1);
+  if (delta > 0) {
+    const enteringProgress = smoothstep(1 - delta);
+    return {
+      x: lerp(STACK_CONFIG.entering.x, 0, enteringProgress),
+      y: lerp(STACK_CONFIG.entering.y, 0, enteringProgress),
+      scale: lerp(STACK_CONFIG.entering.scale, 1, enteringProgress),
+      rotate: lerp(STACK_CONFIG.entering.rotate, 0, enteringProgress),
+      blur: lerp(0.22, 0, enteringProgress),
+      brightness: lerp(0.92, 1, enteringProgress),
+      opacity: 1,
+      zIndex: 470 + Math.round(enteringProgress * 18),
+      interactive: false,
+    };
+  }
+
+  const depth = -delta;
   return {
-    x: approach * 18 + tail * 10,
-    y: approach * 124 + tail * 34,
-    scale: Math.max(0.78, 1 - approach * 0.09 - Math.min(0.18, tail * 0.04)),
-    rotate: -Math.min(4.6, delta * 1.35),
-    blur: Math.min(1.7, approach * 0.75 + tail * 0.28),
-    brightness: Math.max(0.72, 1 - approach * 0.1 - Math.min(0.3, tail * 0.06)),
-    opacity: Math.max(0.5, 1 - Math.min(0.45, delta * 0.1)),
-    zIndex: 520 - Math.round(delta * 20),
-    interactive: delta < 0.18,
+    x: depth * STACK_CONFIG.stackedStep.x,
+    y: depth * STACK_CONFIG.stackedStep.y,
+    scale: Math.max(STACK_CONFIG.minScale, 1 - depth * STACK_CONFIG.stackedStep.scaleDrop),
+    rotate: depth * STACK_CONFIG.stackedStep.rotate,
+    blur: Math.min(0.4, depth * 0.12),
+    brightness: Math.max(0.8, 1 - depth * 0.05),
+    opacity: Math.max(0.82, 1 - depth * 0.06),
+    zIndex: 500 - Math.round(depth * 22),
+    interactive: depth < 0.06,
   };
 }
 
@@ -166,11 +226,7 @@ export default function BentoGrid() {
 
       const rect = node.getBoundingClientRect();
       const vh = window.innerHeight || 1;
-      const startOffset = vh * 0.16;
-      const endOffset = vh * 0.72;
-      const distance = Math.max(rect.height + startOffset - endOffset, 1);
-      const rawProgress = (startOffset - rect.top) / distance;
-      setProgress(clamp(rawProgress, 0, 1));
+      setProgress(computeSectionProgress(rect, vh));
     };
 
     const onScroll = () => {
@@ -195,11 +251,18 @@ export default function BentoGrid() {
 
   const stackStates = useMemo(() => {
     const count = OFFER_CARDS.length;
-    const activeFloat = clamp(effectiveProgress, 0, 1) * (count - 1);
+    const normalizedProgress = clamp(
+      (effectiveProgress - STACK_CONFIG.progressTrimStart) /
+        STACK_CONFIG.progressTrimLength,
+      0,
+      1
+    );
+    const activeFloat = normalizedProgress * (count - 1);
     return OFFER_CARDS.map((_, index) => computeStackState(index, count, activeFloat));
   }, [effectiveProgress]);
 
-  const stageHeightVh = 170 + (OFFER_CARDS.length - 1) * 45;
+  const stageHeightVh =
+    STACK_CONFIG.stageBaseVh + (OFFER_CARDS.length - 1) * STACK_CONFIG.stagePerCardVh;
 
   return (
     <section className="py-24 bg-surface-1 section-shell surface-grid">
