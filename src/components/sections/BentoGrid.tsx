@@ -82,8 +82,6 @@ type StackState = {
   y: number;
   scale: number;
   rotate: number;
-  blur: number;
-  brightness: number;
   opacity: number;
   zIndex: number;
   interactive: boolean;
@@ -103,36 +101,34 @@ function smoothstep(progress: number) {
 }
 
 const STACK_CONFIG = {
-  stageBaseVh: 158,
-  stagePerCardVh: 46,
-  progressTrimStart: 0.03,
-  progressTrimLength: 0.94,
+  stageBaseVh: 170,
+  stagePerCardVh: 58,
+  progressTrimStart: 0.02,
+  progressTrimLength: 0.96,
   entering: {
-    x: 22,
-    y: 134,
+    x: 20,
+    y: 132,
     scale: 0.9,
-    rotate: -4.6,
+    rotate: -5.2,
   },
   waitingStep: {
     x: 10,
-    y: 30,
-    scaleDrop: 0.035,
-    rotate: 1.1,
+    y: 34,
+    scaleDrop: 0.034,
+    rotate: 1.15,
   },
   stackedStep: {
-    x: 10,
+    x: 9,
     y: -22,
-    scaleDrop: 0.048,
-    rotate: 1.45,
+    scaleDrop: 0.046,
+    rotate: 1.5,
   },
-  minScale: 0.78,
+  minScale: 0.8,
 };
 
 function computeSectionProgress(rect: DOMRect, viewportHeight: number) {
-  const startOffset = viewportHeight * 0.16;
-  const endOffset = viewportHeight * 0.72;
-  const distance = Math.max(rect.height + startOffset - endOffset, 1);
-  const rawProgress = (startOffset - rect.top) / distance;
+  const stickyTravel = Math.max(rect.height - viewportHeight, 1);
+  const rawProgress = -rect.top / stickyTravel;
   return clamp(rawProgress, 0, 1);
 }
 
@@ -145,8 +141,6 @@ function computeStackState(index: number, count: number, activeFloat: number): S
       y: 0,
       scale: 1,
       rotate: 0,
-      blur: 0,
-      brightness: 1,
       opacity: 1,
       zIndex: 10,
       interactive: true,
@@ -163,9 +157,7 @@ function computeStackState(index: number, count: number, activeFloat: number): S
         STACK_CONFIG.entering.scale - tail * STACK_CONFIG.waitingStep.scaleDrop
       ),
       rotate: STACK_CONFIG.entering.rotate - tail * STACK_CONFIG.waitingStep.rotate,
-      blur: Math.min(0.45, tail * 0.18),
-      brightness: Math.max(0.82, 0.94 - tail * 0.04),
-      opacity: Math.max(0.78, 0.94 - tail * 0.06),
+      opacity: Math.max(0.84, 0.95 - tail * 0.05),
       zIndex: 440 - Math.round(delta * 16),
       interactive: false,
     };
@@ -178,9 +170,7 @@ function computeStackState(index: number, count: number, activeFloat: number): S
       y: lerp(STACK_CONFIG.entering.y, 0, enteringProgress),
       scale: lerp(STACK_CONFIG.entering.scale, 1, enteringProgress),
       rotate: lerp(STACK_CONFIG.entering.rotate, 0, enteringProgress),
-      blur: lerp(0.22, 0, enteringProgress),
-      brightness: lerp(0.92, 1, enteringProgress),
-      opacity: 1,
+      opacity: lerp(0.92, 1, enteringProgress),
       zIndex: 470 + Math.round(enteringProgress * 18),
       interactive: false,
     };
@@ -192,9 +182,7 @@ function computeStackState(index: number, count: number, activeFloat: number): S
     y: depth * STACK_CONFIG.stackedStep.y,
     scale: Math.max(STACK_CONFIG.minScale, 1 - depth * STACK_CONFIG.stackedStep.scaleDrop),
     rotate: depth * STACK_CONFIG.stackedStep.rotate,
-    blur: Math.min(0.4, depth * 0.12),
-    brightness: Math.max(0.8, 1 - depth * 0.05),
-    opacity: Math.max(0.82, 1 - depth * 0.06),
+    opacity: Math.max(0.9, 1 - depth * 0.05),
     zIndex: 500 - Math.round(depth * 22),
     interactive: depth < 0.06,
   };
@@ -332,7 +320,6 @@ export default function BentoGrid() {
                       className="stack-card absolute inset-y-0 inset-x-1 md:inset-x-2 panel rounded-3xl p-6 md:p-7 grid grid-cols-[0.95fr_1.05fr] gap-8"
                       style={{
                         transform: `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale}) rotate(${state.rotate}deg)`,
-                        filter: `blur(${state.blur}px) brightness(${state.brightness})`,
                         opacity: state.opacity,
                         zIndex: state.zIndex,
                         pointerEvents: state.interactive ? "auto" : "none",
