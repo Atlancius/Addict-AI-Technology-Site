@@ -78,10 +78,8 @@ const OFFER_CARDS: OfferCard[] = [
 ];
 
 type StackState = {
-  x: number;
   y: number;
   scale: number;
-  rotate: number;
   opacity: number;
   zIndex: number;
   interactive: boolean;
@@ -95,94 +93,67 @@ function lerp(from: number, to: number, progress: number) {
   return from + (to - from) * progress;
 }
 
-function smoothstep(progress: number) {
+function easeOutCubic(progress: number) {
   const t = clamp(progress, 0, 1);
-  return t * t * (3 - 2 * t);
+  return 1 - (1 - t) * (1 - t) * (1 - t);
 }
 
 const STACK_CONFIG = {
-  stageBaseVh: 170,
+  stageBaseVh: 142,
   stagePerCardVh: 58,
-  progressTrimStart: 0.02,
-  progressTrimLength: 0.96,
-  entering: {
-    x: 20,
-    y: 132,
-    scale: 0.9,
-    rotate: -5.2,
-  },
-  waitingStep: {
-    x: 10,
-    y: 34,
-    scaleDrop: 0.034,
-    rotate: 1.15,
-  },
-  stackedStep: {
-    x: 9,
-    y: -22,
-    scaleDrop: 0.046,
-    rotate: 1.5,
-  },
-  minScale: 0.8,
+  enterY: 184,
+  waitingGap: 42,
+  stackGap: 26,
+  waitingScale: 0.93,
+  minScale: 0.84,
 };
 
 function computeSectionProgress(rect: DOMRect, viewportHeight: number) {
   const stickyTravel = Math.max(rect.height - viewportHeight, 1);
-  const rawProgress = -rect.top / stickyTravel;
-  return clamp(rawProgress, 0, 1);
+  const travelled = clamp(-rect.top, 0, stickyTravel);
+  return travelled / stickyTravel;
 }
 
 function computeStackState(index: number, count: number, activeFloat: number): StackState {
-  const delta = index - activeFloat;
+  const relative = index - activeFloat;
 
   if (count <= 1) {
     return {
-      x: 0,
       y: 0,
       scale: 1,
-      rotate: 0,
       opacity: 1,
       zIndex: 10,
       interactive: true,
     };
   }
 
-  if (delta >= 1) {
-    const tail = delta - 1;
+  if (relative >= 1) {
+    const tail = relative - 1;
     return {
-      x: STACK_CONFIG.entering.x + tail * STACK_CONFIG.waitingStep.x,
-      y: STACK_CONFIG.entering.y + tail * STACK_CONFIG.waitingStep.y,
-      scale: Math.max(
-        STACK_CONFIG.minScale,
-        STACK_CONFIG.entering.scale - tail * STACK_CONFIG.waitingStep.scaleDrop
-      ),
-      rotate: STACK_CONFIG.entering.rotate - tail * STACK_CONFIG.waitingStep.rotate,
-      opacity: Math.max(0.84, 0.95 - tail * 0.05),
-      zIndex: 440 - Math.round(delta * 16),
+      y: STACK_CONFIG.enterY + tail * STACK_CONFIG.waitingGap,
+      scale: Math.max(STACK_CONFIG.minScale, STACK_CONFIG.waitingScale - tail * 0.03),
+      opacity: 1,
+      zIndex: 360 - Math.round(relative * 16),
       interactive: false,
     };
   }
 
-  if (delta > 0) {
-    const enteringProgress = smoothstep(1 - delta);
+  if (relative > 0) {
+    const enteringProgress = easeOutCubic(1 - relative);
     return {
-      x: lerp(STACK_CONFIG.entering.x, 0, enteringProgress),
-      y: lerp(STACK_CONFIG.entering.y, 0, enteringProgress),
-      scale: lerp(STACK_CONFIG.entering.scale, 1, enteringProgress),
-      rotate: lerp(STACK_CONFIG.entering.rotate, 0, enteringProgress),
-      opacity: lerp(0.92, 1, enteringProgress),
-      zIndex: 470 + Math.round(enteringProgress * 18),
+      y: lerp(STACK_CONFIG.enterY, 0, enteringProgress),
+      scale: lerp(STACK_CONFIG.waitingScale, 1, enteringProgress),
+      opacity: 1,
+      zIndex: 460 + Math.round(enteringProgress * 24),
       interactive: false,
     };
   }
 
-  const depth = -delta;
+  const depth = -relative;
   return {
-    x: depth * STACK_CONFIG.stackedStep.x,
-    y: depth * STACK_CONFIG.stackedStep.y,
-    scale: Math.max(STACK_CONFIG.minScale, 1 - depth * STACK_CONFIG.stackedStep.scaleDrop),
-    rotate: depth * STACK_CONFIG.stackedStep.rotate,
-    opacity: Math.max(0.9, 1 - depth * 0.05),
+    y: -depth * STACK_CONFIG.stackGap,
+    scale: Math.max(STACK_CONFIG.minScale, 1 - depth * 0.04),
+    opacity: 1,
     zIndex: 500 - Math.round(depth * 22),
     interactive: depth < 0.06,
   };
@@ -239,13 +210,7 @@ export default function BentoGrid() {
 
   const stackStates = useMemo(() => {
     const count = OFFER_CARDS.length;
-    const normalizedProgress = clamp(
-      (effectiveProgress - STACK_CONFIG.progressTrimStart) /
-        STACK_CONFIG.progressTrimLength,
-      0,
-      1
-    );
-    const activeFloat = normalizedProgress * (count - 1);
+    const activeFloat = clamp(effectiveProgress, 0, 1) * (count - 1);
     return OFFER_CARDS.map((_, index) => computeStackState(index, count, activeFloat));
   }, [effectiveProgress]);
 
@@ -319,7 +284,7 @@ export default function BentoGrid() {
                       key={offer.title}
                       className="stack-card absolute inset-y-0 inset-x-1 md:inset-x-2 panel rounded-3xl p-6 md:p-7 grid grid-cols-[0.95fr_1.05fr] gap-8"
                       style={{
-                        transform: `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale}) rotate(${state.rotate}deg)`,
+                        transform: `translate3d(0, ${state.y}px, 0) scale(${state.scale})`,
                         opacity: state.opacity,
                         zIndex: state.zIndex,
                         pointerEvents: state.interactive ? "auto" : "none",
