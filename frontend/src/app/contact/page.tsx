@@ -5,6 +5,7 @@ import LocationMap from "@/components/sections/LocationMap";
 import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import CinematicHero from "@/components/sections/CinematicHero";
 import LeadB2CForm from "@/components/forms/LeadB2CForm";
 import LeadB2BForm from "@/components/forms/LeadB2BForm";
 import { getLocationWithFallback } from "@/lib/content";
@@ -46,18 +47,33 @@ export default async function ContactPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 surface-grid">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                <span className="metal-text">Contact</span>
-              </h1>
-              <p className="text-text-secondary text-lg max-w-2xl mb-12">
-                Une question, un devis, un projet ? Contactez-nous par le moyen
-                qui vous convient.
-              </p>
-            </ScrollReveal>
+        <CinematicHero
+          eyebrow="Contact · Réparation & projets digitaux"
+          title="Un seul point d'entrée"
+          accent="pour vos besoins B2C et B2B."
+          description="Appelez, écrivez ou passez directement au shop. On vous répond rapidement avec un plan clair."
+          tone="metal"
+          mainImage={{
+            src: "/images/stock/team-meeting.jpg",
+            alt: "Echange avec l'équipe Addict",
+          }}
+          sideImage={{
+            src: "/images/stock/cafe-cozy.jpg",
+            alt: "Accueil chaleureux en boutique",
+          }}
+          actions={[
+            { label: "Appeler", href: `tel:${phoneHref}`, variant: "flame" },
+            { label: "Voir l'itinéraire", href: mapHref, variant: "outline", target: "_blank", rel: "noopener noreferrer" },
+          ]}
+          metrics={[
+            { label: "Réponse", value: "Sous 24h ouvrées" },
+            { label: "Canaux", value: "Téléphone · Email · Sur place" },
+            { label: "Localisation", value: `${location.city}, ${location.region || "Corse"}` },
+          ]}
+        />
 
+        <section className="py-16 surface-grid">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <ScrollReveal variant="left">
                 <div className="panel rounded-2xl p-7 text-center space-y-3">

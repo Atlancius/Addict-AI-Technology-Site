@@ -4,6 +4,7 @@ import Footer from "@/components/sections/Footer";
 import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import CinematicHero from "@/components/sections/CinematicHero";
 import { getLocationWithFallback, getServicesWithFallback } from "@/lib/content";
 import { canonicalFor } from "@/lib/seo";
 
@@ -36,22 +37,34 @@ export default async function ServicesPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0 surface-grid">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                Services <span className="metal-text">Pro</span>
-              </h1>
-              <p className="text-text-secondary text-lg max-w-3xl">
-                Audit, automatisation, IA, formation - on construit des solutions concrètes pour vos équipes.
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+        <CinematicHero
+          eyebrow="Services B2B · Audit & automatisation"
+          title="Services"
+          accent="pro orientés résultats."
+          description="Audit, automatisation, IA et accompagnement: chaque service est pensé pour générer un gain opérationnel concret et mesurable."
+          tone="metal"
+          mainImage={{
+            src: "/images/stock/team-meeting.jpg",
+            alt: "Atelier stratégique pour un projet de transformation digitale",
+          }}
+          sideImage={{
+            src: "/images/stock/data-center.jpg",
+            alt: "Infrastructure digitale et automatisation",
+          }}
+          actions={[
+            { label: "Parler à un expert", href: "/pro#contact-pro", variant: "metal" },
+            { label: "Voir les réalisations", href: "/realisations", variant: "outline" },
+          ]}
+          metrics={[
+            { label: "Méthode", value: "Audit → Roadmap → Déploiement" },
+            { label: "Focus", value: "ROI et simplification process" },
+            { label: "Accompagnement", value: "Terrain + remote" },
+          ]}
+        />
 
-        <section className="pb-20">
+        <section className="pb-24">
           <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
+            <ScrollReveal variant="up" distance={20}>
               <ServicesGrid items={services} />
             </ScrollReveal>
           </div>

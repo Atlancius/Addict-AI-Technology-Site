@@ -5,6 +5,7 @@ import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Button from "@/components/ui/Button";
+import CinematicHero from "@/components/sections/CinematicHero";
 import { getLocationWithFallback, getTrainingsWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
 import { canonicalFor } from "@/lib/seo";
@@ -38,24 +39,36 @@ export default async function FormationsPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0 surface-grid">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                Formations <span className="metal-text">IA</span>
-              </h1>
-              <p className="text-text-secondary text-lg max-w-3xl">
-                Des parcours concrets pour rendre vos équipes autonomes sur le no-code et l&apos;IA.
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+        <CinematicHero
+          eyebrow="Formations · IA & no-code"
+          title="Formations"
+          accent="actionnables pour vos équipes."
+          description="Des formats courts et concrets, construits sur vos outils et vos cas d'usage pour passer de la théorie à l'exécution."
+          tone="metal"
+          mainImage={{
+            src: "/images/stock/pro-workspace.jpg",
+            alt: "Session de travail et montée en compétences en équipe",
+          }}
+          sideImage={{
+            src: "/images/stock/team-meeting.jpg",
+            alt: "Atelier de formation opérationnel",
+          }}
+          actions={[
+            { label: "Réserver une session", href: "/contact#contact-b2b", variant: "metal" },
+            { label: "Voir les services", href: "/services", variant: "outline" },
+          ]}
+          metrics={[
+            { label: "Formats", value: "Présentiel + distanciel" },
+            { label: "Approche", value: "Cas réels de votre équipe" },
+            { label: "Objectif", value: "Autonomie opérationnelle" },
+          ]}
+        />
 
-        <section className="pb-20">
+        <section className="pb-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {trainings.map((training, i) => (
-                <ScrollReveal key={training.id} delay={i * 80}>
+                <ScrollReveal key={training.id} delay={i * 80} variant={i % 2 === 0 ? "up" : "zoom"} distance={20}>
                   <Card variant="service" className="h-full flex flex-col">
                     <CardTitle>{training.title}</CardTitle>
                     <CardDescription className="mb-6">

@@ -427,6 +427,18 @@ body::after {
   box-shadow:
     inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1),
     0 0.875rem 2.2rem rgba(0, 0, 0, 0.34);
+  transition:
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    transform 0.24s ease;
+}
+
+.panel-soft:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-0.125rem);
+  box-shadow:
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12),
+    0 1.2rem 2.65rem rgba(0, 0, 0, 0.38);
 }
 
 .hero-pill {
@@ -485,6 +497,18 @@ body::after {
   box-shadow:
     inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12),
     0 0.75rem 2rem rgba(0, 0, 0, 0.3);
+  transition:
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    transform 0.24s ease;
+}
+
+.metric-chip:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  transform: translateY(-0.125rem);
+  box-shadow:
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14),
+    0 1.1rem 2.35rem rgba(0, 0, 0, 0.36);
 }
 
 .tool-marquee {
@@ -502,6 +526,7 @@ body::after {
 
 .section-shell {
   position: relative;
+  isolation: isolate;
 }
 
 .section-shell::before {
@@ -512,6 +537,21 @@ body::after {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   pointer-events: none;
+  z-index: 0;
+}
+
+.section-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 18% -12%, rgba(255, 255, 255, 0.08), transparent 42%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section-shell > * {
+  position: relative;
+  z-index: 1;
 }
 
 .ambient-orb {
