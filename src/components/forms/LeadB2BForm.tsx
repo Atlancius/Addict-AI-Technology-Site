@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Button from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
 import { validateB2B } from "@/lib/lead-validation";
@@ -9,7 +9,16 @@ import { trackEvent } from "@/lib/analytics";
 type FieldErrors = Partial<Record<string, string>>;
 
 type CompanySizeValue = "" | "1-10" | "11-50" | "51-200" | "200+";
-type GoalValue = "" | "automation" | "web" | "training" | "audit" | "other";
+type GoalValue =
+  | ""
+  | "marketing"
+  | "ia"
+  | "crm"
+  | "transition"
+  | "formation-pro"
+  | "formation-particulier"
+  | "audit"
+  | "other";
 type BudgetValue = "" | "unknown" | "<2k" | "2k-5k" | "5k-10k" | "10k+";
 
 const COMPANY_SIZES: Array<{ value: CompanySizeValue; label: string }> = [
@@ -22,23 +31,30 @@ const COMPANY_SIZES: Array<{ value: CompanySizeValue; label: string }> = [
 
 const GOALS: Array<{ value: GoalValue; label: string }> = [
   { value: "", label: "Choisir" },
-  { value: "automation", label: "Automatisation" },
-  { value: "web", label: "Site web" },
-  { value: "training", label: "Formation" },
-  { value: "audit", label: "Audit" },
-  { value: "other", label: "Autre" },
+  { value: "marketing", label: "Audit marketing" },
+  { value: "ia", label: "Audit automatisation & IA" },
+  { value: "crm", label: "Audit CRM / SaaS" },
+  { value: "transition", label: "Audit transition digitale" },
+  { value: "formation-pro", label: "Audit formation pro" },
+  { value: "formation-particulier", label: "Formation particulier" },
+  { value: "audit", label: "Audit global" },
+  { value: "other", label: "Autre besoin" },
 ];
 
 const BUDGETS: Array<{ value: BudgetValue; label: string }> = [
   { value: "", label: "Choisir" },
-  { value: "unknown", label: "À définir" },
+  { value: "unknown", label: "A définir" },
   { value: "<2k", label: "< 2k" },
   { value: "2k-5k", label: "2k - 5k" },
   { value: "5k-10k", label: "5k - 10k" },
   { value: "10k+", label: "10k+" },
 ];
 
-export default function LeadB2BForm() {
+interface LeadB2BFormProps {
+  defaultGoal?: GoalValue;
+}
+
+export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
   const [form, setForm] = useState<{
     name: string;
     company: string;
@@ -56,17 +72,20 @@ export default function LeadB2BForm() {
     email: "",
     phone: "",
     company_size: "",
-    goal: "",
+    goal: defaultGoal,
     problem: "",
     budget: "",
     consent: false,
     website: "",
   });
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  const goalLabel = useMemo(
+    () => GOALS.find((option) => option.value === form.goal)?.label,
+    [form.goal]
+  );
 
   const update = (field: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -83,7 +102,7 @@ export default function LeadB2BForm() {
       company_size: form.company_size || undefined,
       goal: form.goal || undefined,
       budget: form.budget || undefined,
-      source_page: window.location.pathname,
+      source_page: `${window.location.pathname}${window.location.search}`,
     };
 
     const validation = validateB2B(payload);
@@ -114,6 +133,7 @@ export default function LeadB2BForm() {
       trackEvent("lead_submit_success", {
         lead_type: "b2b",
         source_page: window.location.pathname,
+        goal: validation.data.goal,
       });
       setForm({
         name: "",
@@ -121,7 +141,7 @@ export default function LeadB2BForm() {
         email: "",
         phone: "",
         company_size: "",
-        goal: "",
+        goal: defaultGoal,
         problem: "",
         budget: "",
         consent: false,
@@ -137,8 +157,13 @@ export default function LeadB2BForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <p className="text-xs text-text-muted">
-        Les champs requis permettent de cadrer votre besoin dès le premier échange.
+        Décris ton contexte et tes objectifs: on revient avec un cadrage clair et une proposition adaptée.
       </p>
+      {goalLabel && (
+        <div className="inline-flex items-center rounded-full border border-copper/45 bg-tint-copper-12 px-3 py-1">
+          <span className="accent-label text-[0.58rem] text-copper-400">Contexte: {goalLabel}</span>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label="Nom"
@@ -147,7 +172,7 @@ export default function LeadB2BForm() {
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
           autoComplete="name"
-          tone="metal"
+          tone="copper"
           required
         />
         <Input
@@ -157,7 +182,7 @@ export default function LeadB2BForm() {
           onChange={(event) => update("company", event.target.value)}
           error={errors.company}
           autoComplete="organization"
-          tone="metal"
+          tone="copper"
           required
         />
         <Input
@@ -168,7 +193,7 @@ export default function LeadB2BForm() {
           error={errors.email}
           type="email"
           autoComplete="email"
-          tone="metal"
+          tone="copper"
           required
         />
         <Input
@@ -179,12 +204,12 @@ export default function LeadB2BForm() {
           error={errors.phone}
           autoComplete="tel"
           inputMode="tel"
-          tone="metal"
+          tone="copper"
         />
         <div>
           <label
             htmlFor="b2b-company-size"
-            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
+            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Taille d&apos;entreprise
           </label>
@@ -192,7 +217,7 @@ export default function LeadB2BForm() {
             id="b2b-company-size"
             value={form.company_size}
             onChange={(event) => update("company_size", event.target.value)}
-            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-metal focus:ring-2 focus:ring-metal/25 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-copper focus:ring-2 focus:ring-copper/25 focus:outline-none"
           >
             {COMPANY_SIZES.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -200,22 +225,20 @@ export default function LeadB2BForm() {
               </option>
             ))}
           </select>
-          {errors.company_size && (
-            <p className="text-xs text-ember mt-1">{errors.company_size}</p>
-          )}
+          {errors.company_size && <p className="text-xs text-ember mt-1">{errors.company_size}</p>}
         </div>
         <div>
           <label
             htmlFor="b2b-goal"
-            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
+            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
-            Objectif
+            Type d&apos;audit
           </label>
           <select
             id="b2b-goal"
             value={form.goal}
             onChange={(event) => update("goal", event.target.value)}
-            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-metal focus:ring-2 focus:ring-metal/25 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-copper focus:ring-2 focus:ring-copper/25 focus:outline-none"
           >
             {GOALS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -223,22 +246,20 @@ export default function LeadB2BForm() {
               </option>
             ))}
           </select>
-          {errors.goal && (
-            <p className="text-xs text-ember mt-1">{errors.goal}</p>
-          )}
+          {errors.goal && <p className="text-xs text-ember mt-1">{errors.goal}</p>}
         </div>
         <div>
           <label
             htmlFor="b2b-budget"
-            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
+            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
-            Budget
+            Budget indicatif
           </label>
           <select
             id="b2b-budget"
             value={form.budget}
             onChange={(event) => update("budget", event.target.value)}
-            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-metal focus:ring-2 focus:ring-metal/25 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-copper focus:ring-2 focus:ring-copper/25 focus:outline-none"
           >
             {BUDGETS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -246,23 +267,20 @@ export default function LeadB2BForm() {
               </option>
             ))}
           </select>
-          {errors.budget && (
-            <p className="text-xs text-ember mt-1">{errors.budget}</p>
-          )}
+          {errors.budget && <p className="text-xs text-ember mt-1">{errors.budget}</p>}
         </div>
       </div>
 
       <Textarea
-        label="Problème à résoudre"
+        label="Contexte, blocages et objectif"
         id="b2b-problem"
         value={form.problem}
         onChange={(event) => update("problem", event.target.value)}
         error={errors.problem}
-        tone="metal"
+        tone="copper"
         required
       />
 
-      {/* Honeypot */}
       <div className="hidden">
         <label>
           Website
@@ -280,26 +298,20 @@ export default function LeadB2BForm() {
           type="checkbox"
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
-          className="mt-1 h-4 w-4 rounded border-stroke-subtle accent-metal"
+          className="mt-1 h-4 w-4 rounded border-stroke-subtle accent-ember"
         />
-        <span>
-          J&apos;accepte d&apos;être recontacté et que mes données soient traitées.
-        </span>
+        <span>J&apos;accepte d&apos;être recontacté et que mes données soient traitées.</span>
       </label>
-      {errors.consent && (
-        <p className="text-xs text-ember">{errors.consent}</p>
-      )}
+      {errors.consent && <p className="text-xs text-ember">{errors.consent}</p>}
 
       <div className="flex flex-wrap items-center gap-4">
-        <Button variant="metal" size="md" type="submit" disabled={status === "loading"}>
+        <Button variant="primary" size="md" type="submit" disabled={status === "loading"}>
           {status === "loading" ? "Envoi..." : "Envoyer la demande"}
         </Button>
         {message && (
           <p
             aria-live="polite"
-            className={`text-sm ${
-              status === "success" ? "text-emerald-300" : "text-ember"
-            }`}
+            className={`text-sm ${status === "success" ? "text-copper-400" : "text-ember"}`}
           >
             {message}
           </p>

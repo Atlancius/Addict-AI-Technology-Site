@@ -1,38 +1,24 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
-import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
+import Card, { CardDescription, CardTitle } from "@/components/ui/Card";
 import Accordion from "@/components/ui/Accordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import LeadB2BForm from "@/components/forms/LeadB2BForm";
 import JsonLd from "@/components/seo/JsonLd";
-import {
-  buildBreadcrumbJsonLd,
-  buildFaqJsonLd,
-  buildServiceJsonLd,
-} from "@/lib/jsonld";
-import {
-  getFaqsWithFallback,
-  getLocationWithFallback,
-  getServiceBySlugWithFallback,
-  getServicesWithFallback,
-} from "@/lib/content";
-import { getServiceBySlug, unwrapCollection } from "@/lib/strapi";
-import type { Faq, Service } from "@/lib/types";
-import { stripHtml } from "@/lib/text";
 import { canonicalFor } from "@/lib/seo";
-
-type StrapiFaqRelation = { data?: Array<{ id: number; attributes: Faq }> };
-
-type ServiceWithFaqs = Service & {
-  faqs?: StrapiFaqRelation;
-};
+import {
+  PRO_SERVICES,
+  buildAuditHref,
+  getCaseStudiesForService,
+  getProServiceBySlug,
+} from "@/lib/hub-data";
 
 export async function generateStaticParams() {
-  const services = await getServicesWithFallback();
-  return services.map((service) => ({ slug: service.slug }));
+  return PRO_SERVICES.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({
@@ -40,209 +26,237 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const service = await getServiceBySlugWithFallback(params.slug);
+  const service = getProServiceBySlug(params.slug);
   if (!service) return { title: "Service" };
 
-  const title = service.seo_title || service.title;
-  const description =
-    service.seo_description || service.summary || stripHtml(service.description || "");
-  const canonical = canonicalFor(`/services/${service.slug}`);
-
   return {
-    title,
-    description,
+    title: service.title,
+    description: service.shortDescription,
     alternates: {
-      canonical,
+      canonical: canonicalFor(`/services/${service.slug}`),
     },
     openGraph: {
-      title,
-      description,
-      url: canonical,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
+      title: service.title,
+      description: service.shortDescription,
+      url: canonicalFor(`/services/${service.slug}`),
     },
   };
 }
 
-export default async function ServiceDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  let service: ServiceWithFaqs | null = null;
-  let faqItems: Array<{ question: string; answer: string }> = [];
-  const location = await getLocationWithFallback();
+export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
+  const service = getProServiceBySlug(params.slug);
+  if (!service) notFound();
 
-  try {
-    const res = await getServiceBySlug(params.slug);
-    const services = unwrapCollection<ServiceWithFaqs>(res);
-    service = services[0] ?? null;
+  const relatedCases = getCaseStudiesForService(service.slug, 3);
+  const crossLinks = service.crossNav
+    .map((slug) => getProServiceBySlug(slug))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
 
-    const relatedFaqs = service?.faqs?.data || [];
-    if (relatedFaqs.length > 0) {
-      faqItems = relatedFaqs.map((faq) => ({
-        question: faq.attributes.question,
-        answer: stripHtml(faq.attributes.answer),
-      }));
-    }
-  } catch {
-    service = null;
-  }
-
-  if (!service) {
-    const fallback = await getServiceBySlugWithFallback(params.slug, {
-      skipRemote: true,
-    });
-    if (!fallback) notFound();
-    service = fallback;
-  }
-
-  if (faqItems.length === 0) {
-    const fallbackFaqs = await getFaqsWithFallback("b2b");
-    faqItems = fallbackFaqs.map((faq) => ({
-      question: faq.question,
-      answer: stripHtml(faq.answer),
-    }));
-  }
-
-  const faqJsonLd = faqItems.length ? buildFaqJsonLd(faqItems) : null;
-  const serviceJsonLd = buildServiceJsonLd(service);
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: "Accueil", path: "/" },
-    { name: "Services", path: "/services" },
-    { name: service.title, path: `/services/${service.slug}` },
-  ]);
-  const jsonLdPayload = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: service.title,
+      description: service.shortDescription,
+      url: canonicalFor(`/services/${service.slug}`),
+      areaServed: "France",
+      provider: {
+        "@type": "Organization",
+        name: "Addict Hub",
+        url: canonicalFor("/"),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: canonicalFor("/") },
+        { "@type": "ListItem", position: 2, name: "Services Pro", item: canonicalFor("/services") },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: service.title,
+          item: canonicalFor(`/services/${service.slug}`),
+        },
+      ],
+    },
+  ];
 
   return (
     <>
-      <JsonLd data={jsonLdPayload} />
+      <JsonLd data={jsonLd} />
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0">
-          <div className="max-w-5xl mx-auto px-6">
-            <ScrollReveal>
-              <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-1/60 mb-6">
-                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
-                  {service.category}
-                </span>
+        <section className="pt-28 pb-18 md:pt-32 md:pb-22 surface-grid relative overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-deep via-bg-main to-bg-section" />
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center">
+            <ScrollReveal variant="left">
+              <div className="space-y-6">
+                <p className="eyebrow">Service Pro</p>
+                <h1 className="section-title">{service.title}</h1>
+                <p className="text-text-secondary text-base md:text-lg leading-relaxed">{service.heroPain}</p>
+                <p className="text-text-primary text-base md:text-lg leading-relaxed">
+                  <span className="copper-text">Promesse:</span> {service.heroPromise}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="primary" href={buildAuditHref(service.auditContext)}>
+                    Demander un audit contextuel
+                  </Button>
+                  <Button variant="secondary" href="/services">Retour routeur services</Button>
+                </div>
               </div>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                {service.title}
-              </h1>
-              <p className="text-text-secondary text-lg">
-                {service.summary || stripHtml(service.description || "")}
-              </p>
-              <div className="flex flex-wrap gap-4 mt-8">
-                <Button variant="metal" size="md" href="/pro#contact-pro">
-                  Demander un audit
+            </ScrollReveal>
+            <ScrollReveal variant="right" delay={100}>
+              <div className="panel rounded-3xl p-5">
+                <div className="relative h-72 rounded-2xl overflow-hidden border border-border-soft">
+                  <Image src={service.image} alt={service.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 42vw" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-deep/75 via-bg-deep/20 to-transparent" />
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="py-20 section-shell">
+          <div className="max-w-7xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="section-title mb-10">Problèmes -&gt; solutions</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {service.problems.map((item, index) => (
+                <ScrollReveal key={item.problem} delay={index * 80}>
+                  <Card variant="service" className="h-full">
+                    <p className="accent-label text-[0.58rem] text-ember-300 mb-3">Douleur</p>
+                    <p className="font-heading text-lg text-text-primary mb-4">{item.problem}</p>
+                    <p className="accent-label text-[0.58rem] text-copper-400 mb-2">Réponse</p>
+                    <CardDescription>{item.solution}</CardDescription>
+                  </Card>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 section-shell bg-bg-section/55">
+          <div className="max-w-7xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="section-title mb-10">Packs + Sur-mesure</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {service.packs.map((pack, index) => (
+                <ScrollReveal key={pack.name} delay={index * 80}>
+                  <Card variant={pack.highlighted ? "pricing" : "service"} className="h-full flex flex-col">
+                    <p className="accent-label text-[0.58rem] text-copper-400 mb-2">{pack.name}</p>
+                    <CardTitle className="text-lg">{pack.label}</CardTitle>
+                    <p className="text-sm text-ember-300 mb-4">{pack.price}</p>
+                    <ul className="space-y-2 text-sm text-text-secondary mt-auto">
+                      {pack.details.map((detail) => (
+                        <li key={detail} className="flex items-start gap-2">
+                          <span className="text-copper mt-0.5">✓</span>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                </ScrollReveal>
+              ))}
+            </div>
+            <ScrollReveal delay={120}>
+              <div className="panel mt-6 rounded-2xl p-6">
+                <p className="accent-label text-[0.58rem] text-copper-400 mb-2">Sur-mesure</p>
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-text-secondary">
+                  {service.bespoke.map((item) => (
+                    <li key={item} className="panel-soft p-4">{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="py-20 section-shell">
+          <div className="max-w-7xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="section-title mb-10">Méthode</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+              {service.method.map((step, index) => (
+                <ScrollReveal key={step} delay={index * 70}>
+                  <div className="panel-soft p-6 h-full">
+                    <p className="accent-label text-[0.58rem] text-copper-400 mb-2">Étape {index + 1}</p>
+                    <p className="text-sm text-text-secondary">{step}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 section-shell bg-bg-section/55">
+          <div className="max-w-7xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="section-title mb-10">Preuves / réalisations liées</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedCases.map((caseStudy, index) => (
+                <ScrollReveal key={caseStudy.slug} delay={index * 80}>
+                  <Card variant="caseStudy" className="h-full flex flex-col">
+                    <CardTitle className="text-lg">{caseStudy.title}</CardTitle>
+                    <CardDescription className="mb-4">{caseStudy.summary}</CardDescription>
+                    <p className="text-sm text-copper mb-4">{caseStudy.impact}</p>
+                    <Link href={`/realisations/${caseStudy.slug}`} className="accent-label text-[0.62rem] text-copper hover:text-copper-400 mt-auto">
+                      Voir le cas
+                    </Link>
+                  </Card>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 section-shell">
+          <div className="max-w-4xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="section-title mb-8">FAQ</h2>
+            </ScrollReveal>
+            <ScrollReveal>
+              <Accordion items={service.faq} />
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="py-20 section-shell bg-bg-section/55">
+          <div className="max-w-7xl mx-auto px-6 space-y-8">
+            <ScrollReveal>
+              <h2 className="section-title">Tu as plutôt besoin de...</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {crossLinks.map((item, index) => (
+                <ScrollReveal key={item.slug} delay={index * 80}>
+                  <Card variant="service" className="h-full">
+                    <CardTitle className="text-lg">{item.title}</CardTitle>
+                    <CardDescription className="mb-5">{item.shortDescription}</CardDescription>
+                    <Button variant="secondary" href={`/services/${item.slug}`}>Voir ce service</Button>
+                  </Card>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            <ScrollReveal delay={140}>
+              <div className="panel wow-glow rounded-3xl p-8 md:p-10 flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
+                <div>
+                  <p className="eyebrow mb-2">Audit contextuel</p>
+                  <h3 className="font-heading text-3xl text-text-primary">Décision rapide, plan clair.</h3>
+                </div>
+                <Button variant="primary" href={buildAuditHref(service.auditContext)}>
+                  Demander un audit {service.menuLabel}
                 </Button>
-                <Button variant="outline" size="md" href="/services">
-                  Tous les services
-                </Button>
               </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        <section className="py-20 bg-surface-1 section-shell">
-          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ScrollReveal>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Durée estimée
-                </h3>
-                <p className="text-text-primary text-lg font-semibold">
-                  {service.duration_estimate || "Sur mesure"}
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Prix
-                </h3>
-                <p className="text-text-primary text-lg font-semibold">
-                  {service.starting_price_text || "Sur devis"}
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={160}>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Accompagnement
-                </h3>
-                <p className="text-text-primary text-lg font-semibold">Local + distanciel</p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        <section className="py-20 bg-surface-0">
-          <div className="max-w-5xl mx-auto px-6">
-            <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-6">
-                Livrables
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {(service.deliverables || []).map((item) => (
-                  <li
-                    key={item}
-                    className="panel-soft p-5 text-text-secondary text-sm"
-                  >
-                    <span className="text-metal mr-2">✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              {(!service.deliverables || service.deliverables.length === 0) && (
-                <p className="text-text-muted text-sm">
-                  Les livrables précis seront définis après audit.
-                </p>
-              )}
-            </ScrollReveal>
-          </div>
-        </section>
-
-        <section id="contact-pro" className="py-20 bg-surface-1 section-shell">
-          <div className="max-w-3xl mx-auto px-6">
-            <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
-                Parlons de votre besoin
-              </h2>
-              <p className="text-text-muted mb-8 text-center">
-                Décrivez votre contexte et vos objectifs, nous revenons vers vous avec une proposition claire.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal>
-              <div className="panel rounded-2xl p-8 md:p-9">
-                <LeadB2BForm />
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        <section className="py-20 bg-surface-1 section-shell">
-          <div className="max-w-3xl mx-auto px-6">
-            <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
-                Questions fréquentes
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal>
-              <Accordion items={faqItems} />
             </ScrollReveal>
           </div>
         </section>
       </main>
-      <MobileB2BBar phone={location.phone} auditHref="#contact-pro" />
       <Footer />
     </>
   );
 }
-

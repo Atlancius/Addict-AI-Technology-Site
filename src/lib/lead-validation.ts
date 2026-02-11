@@ -112,7 +112,22 @@ export function validateB2B(input: Partial<LeadB2BInput>) {
     errors.problem = "Décrivez votre problème (20 caractères minimum)";
   if (data.company_size && !["1-10", "11-50", "51-200", "200+"].includes(data.company_size))
     errors.company_size = "Taille invalide";
-  if (data.goal && !["automation", "web", "training", "audit", "other"].includes(data.goal))
+  if (
+    data.goal &&
+    ![
+      "marketing",
+      "ia",
+      "crm",
+      "transition",
+      "formation-pro",
+      "formation-particulier",
+      "automation",
+      "web",
+      "training",
+      "audit",
+      "other",
+    ].includes(data.goal)
+  )
     errors.goal = "Objectif invalide";
   if (data.budget && !["unknown", "<2k", "2k-5k", "5k-10k", "10k+"].includes(data.budget))
     errors.budget = "Budget invalide";

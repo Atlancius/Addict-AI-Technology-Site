@@ -3,58 +3,61 @@ import { type InputHTMLAttributes, type TextareaHTMLAttributes, forwardRef } fro
 interface BaseInputProps {
   label?: string;
   error?: string;
-  tone?: "flame" | "metal";
+  tone?: "ember" | "copper" | "flame" | "metal";
   className?: string;
 }
 
 type InputProps = BaseInputProps & InputHTMLAttributes<HTMLInputElement>;
-type TextareaProps = BaseInputProps & TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
+type TextareaProps = BaseInputProps &
+  TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
 const baseClasses =
   "w-full input-shell text-text-primary placeholder:text-text-3/80 rounded-xl px-4 py-3.5 text-sm font-body transition-all duration-200 focus:outline-none";
 
 const focusClasses: Record<NonNullable<BaseInputProps["tone"]>, string> = {
-  flame: "focus:border-flame focus:ring-2 focus:ring-flame/25",
-  metal: "focus:border-metal focus:ring-2 focus:ring-metal/25",
+  ember: "focus:border-ember focus:ring-2 focus:ring-ember/30",
+  copper: "focus:border-copper focus:ring-2 focus:ring-copper/28",
+  flame: "focus:border-ember focus:ring-2 focus:ring-ember/30",
+  metal: "focus:border-copper focus:ring-2 focus:ring-copper/28",
 };
 
-const errorClasses =
-  "!border-ember focus:!border-ember focus:ring-ember/30";
+const errorClasses = "!border-ember focus:!border-ember focus:ring-ember/35";
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  function Input({ label, error, tone = "flame", className = "", ...props }, ref) {
-    const errorId = props.id ? `${props.id}-error` : undefined;
-    const describedBy = error ? errorId : props["aria-describedby"];
+export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+  { label, error, tone = "ember", className = "", ...props },
+  ref
+) {
+  const errorId = props.id ? `${props.id}-error` : undefined;
+  const describedBy = error ? errorId : props["aria-describedby"];
 
-    return (
-      <div className="space-y-1.5">
-        {label && (
-          <label
-            htmlFor={props.id}
-            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary"
-          >
-            {label}
-          </label>
-        )}
-        <input
-          ref={ref}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={describedBy}
-          className={`${baseClasses} ${focusClasses[tone]} ${error ? errorClasses : ""} ${className}`}
-          {...props}
-        />
-        {error && (
-          <p id={errorId} className="text-xs text-ember mt-1">
-            {error}
-          </p>
-        )}
-      </div>
-    );
-  }
-);
+  return (
+    <div className="space-y-1.5">
+      {label && (
+        <label
+          htmlFor={props.id}
+          className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
+        >
+          {label}
+        </label>
+      )}
+      <input
+        ref={ref}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy}
+        className={`${baseClasses} ${focusClasses[tone]} ${error ? errorClasses : ""} ${className}`}
+        {...props}
+      />
+      {error && (
+        <p id={errorId} className="text-xs text-ember mt-1">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+});
 
 export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "multiline">>(
-  function Textarea({ label, error, tone = "flame", className = "", ...props }, ref) {
+  function Textarea({ label, error, tone = "ember", className = "", ...props }, ref) {
     const errorId = props.id ? `${props.id}-error` : undefined;
     const describedBy = error ? errorId : props["aria-describedby"];
 
@@ -63,7 +66,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "mul
         {label && (
           <label
             htmlFor={props.id}
-            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary"
+            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
           >
             {label}
           </label>

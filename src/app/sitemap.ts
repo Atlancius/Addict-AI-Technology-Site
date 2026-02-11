@@ -1,9 +1,5 @@
 import type { MetadataRoute } from "next";
-import {
-  getCaseStudiesWithFallback,
-  getServicesWithFallback,
-  getTrainingsWithFallback,
-} from "@/lib/content";
+import { CASE_STUDIES, PRO_SERVICES } from "@/lib/hub-data";
 
 function parseDate(value?: string) {
   if (!value) return undefined;
@@ -17,39 +13,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes = [
     "",
-    "/addict-2-0",
-    "/pro",
+    "/services",
+    "/formations",
+    "/realisations",
+    "/boutique",
+    "/a-propos",
     "/contact",
     "/mentions-legales",
     "/confidentialite",
+    "/pro",
+    "/addict-2-0",
     "/reparations",
-    "/services",
-    "/realisations",
-    "/formations",
     "/evenements",
   ];
-
-  const services = await getServicesWithFallback();
-  const caseStudies = await getCaseStudiesWithFallback();
-  const trainings = await getTrainingsWithFallback();
 
   const staticEntries = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: staticLastModified,
   }));
 
-  const serviceRoutes = services.map((service) => ({
+  const serviceEntries = PRO_SERVICES.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
-    lastModified: parseDate(service.updatedAt) || staticLastModified,
-  }));
-  const caseRoutes = caseStudies.map((item) => ({
-    url: `${baseUrl}/realisations/${item.slug}`,
-    lastModified: parseDate(item.updatedAt) || staticLastModified,
-  }));
-  const trainingRoutes = trainings.map((training) => ({
-    url: `${baseUrl}/formations/${training.slug}`,
-    lastModified: parseDate(training.updatedAt) || staticLastModified,
+    lastModified: staticLastModified,
   }));
 
-  return [...staticEntries, ...serviceRoutes, ...caseRoutes, ...trainingRoutes];
+  const caseEntries = CASE_STUDIES.map((item) => ({
+    url: `${baseUrl}/realisations/${item.slug}`,
+    lastModified: staticLastModified,
+  }));
+
+  return [...staticEntries, ...serviceEntries, ...caseEntries];
 }
