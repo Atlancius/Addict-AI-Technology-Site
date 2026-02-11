@@ -9,7 +9,7 @@ const CONTENT_SECURITY_POLICY = [
   "font-src 'self' data: https:",
   "style-src 'self' 'unsafe-inline'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
-  "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com",
+  "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com",
   "frame-src 'self' https://www.google.com",
   "upgrade-insecure-requests",
 ].join("; ");
