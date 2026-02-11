@@ -68,7 +68,7 @@ export default async function ReparationsPage() {
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-6xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
@@ -91,7 +91,7 @@ export default async function ReparationsPage() {
                 },
               ].map((item, i) => (
                 <ScrollReveal key={item.title} delay={i * 80}>
-                  <div className="card-sheen rounded-sm border border-stroke-subtle bg-surface-2/80 p-6">
+                  <div className="card-sheen panel-soft p-6">
                     <h3 className="font-heading text-lg text-text-primary mb-2">
                       {item.title}
                     </h3>
@@ -103,7 +103,7 @@ export default async function ReparationsPage() {
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-t border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">

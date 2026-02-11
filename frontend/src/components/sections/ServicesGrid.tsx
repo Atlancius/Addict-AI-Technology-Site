@@ -36,10 +36,10 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
             key={category}
             type="button"
             onClick={() => setActiveCategory(category)}
-            className={`px-3 py-1.5 text-xs font-heading uppercase tracking-wider rounded-sm border transition-colors ${
+            className={`px-4 py-2 text-[0.64rem] font-heading uppercase tracking-[0.14em] rounded-full border transition-colors ${
               activeCategory === category
-                ? "bg-surface-3 text-metal border-metal/40 shadow-[0_0_1.125rem_rgba(65,90,119,0.3)]"
-                : "bg-surface-2/70 text-text-secondary border-stroke-subtle hover:text-text-primary"
+                ? "bg-surface-3/95 text-metal border-metal/50 shadow-[0_0_1.2rem_rgba(93,134,178,0.3)]"
+                : "bg-surface-2/70 text-text-secondary border-stroke-subtle hover:text-text-primary hover:border-stroke-medium"
             }`}
           >
             {categoryLabels[category] || category}
@@ -57,7 +57,7 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
             <div className="mt-auto">
               <Link
                 href={`/services/${service.slug}`}
-                className="text-xs font-heading uppercase tracking-wider text-metal hover:text-metal-hover transition-colors"
+                className="text-[0.68rem] font-heading uppercase tracking-[0.14em] text-metal hover:text-metal-hover transition-colors"
               >
                 Voir le service →
               </Link>

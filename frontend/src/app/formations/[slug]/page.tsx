@@ -146,10 +146,10 @@ export default async function TrainingDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Audience
                 </h3>
@@ -159,7 +159,7 @@ export default async function TrainingDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Format
                 </h3>
@@ -169,7 +169,7 @@ export default async function TrainingDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Durée
                 </h3>
@@ -194,7 +194,7 @@ export default async function TrainingDetailPage({
                   {(training.objectives || []).map((item) => (
                     <li
                       key={item}
-                      className="border border-stroke-subtle rounded-sm p-4 text-text-secondary text-sm"
+                      className="panel-soft p-4 text-text-secondary text-sm"
                     >
                       <span className="text-metal mr-2">✓</span>
                       {item}
@@ -214,7 +214,7 @@ export default async function TrainingDetailPage({
                   {(training.prerequisites || []).map((item) => (
                     <li
                       key={item}
-                      className="border border-stroke-subtle rounded-sm p-4 text-text-secondary text-sm"
+                      className="panel-soft p-4 text-text-secondary text-sm"
                     >
                       <span className="text-metal mr-2">✓</span>
                       {item}
@@ -226,7 +226,7 @@ export default async function TrainingDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-5xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-6">
@@ -234,14 +234,14 @@ export default async function TrainingDetailPage({
               </h2>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-8 text-text-secondary text-sm leading-relaxed">
+              <div className="panel rounded-2xl p-8 text-text-secondary text-sm leading-relaxed">
                 {stripHtml(training.program_outline || training.description || "")}
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        <section id="contact-pro" className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section id="contact-pro" className="py-20 bg-surface-1 section-shell">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
@@ -252,7 +252,7 @@ export default async function TrainingDetailPage({
               </p>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-8">
+              <div className="panel rounded-2xl p-8">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>

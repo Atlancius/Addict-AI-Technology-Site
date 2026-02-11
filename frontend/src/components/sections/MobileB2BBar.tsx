@@ -16,7 +16,7 @@ export default function MobileB2BBar({
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 md:hidden">
-      <div className="glass-panel border-t border-stroke-subtle">
+      <div className="bg-surface-0/86 backdrop-blur-xl border-t border-stroke-subtle">
         <div className="mx-auto max-w-7xl px-4 py-3 flex gap-2">
           <Button
             variant="metal"

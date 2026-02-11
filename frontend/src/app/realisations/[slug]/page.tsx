@@ -95,7 +95,7 @@ export default async function RealisationDetailPage({
                 {(caseStudy.tools || []).map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs font-heading uppercase tracking-wider px-3 py-1 border border-stroke-subtle rounded-sm text-text-secondary"
+                    className="text-[0.64rem] font-heading uppercase tracking-[0.14em] px-3 py-1 border border-stroke-subtle rounded-full text-text-secondary"
                   >
                     {tool}
                   </span>
@@ -109,7 +109,7 @@ export default async function RealisationDetailPage({
             </ScrollReveal>
             {coverUrl && (
               <ScrollReveal delay={80}>
-                <div className="mt-10 overflow-hidden rounded-sm border border-stroke-subtle">
+                <div className="mt-10 overflow-hidden rounded-2xl border border-stroke-subtle">
                   <Image
                     src={coverUrl}
                     alt={caseStudy.title}
@@ -123,10 +123,10 @@ export default async function RealisationDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Problème
                 </h3>
@@ -136,7 +136,7 @@ export default async function RealisationDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Solution
                 </h3>
@@ -146,7 +146,7 @@ export default async function RealisationDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Résultat
                 </h3>
@@ -177,7 +177,7 @@ export default async function RealisationDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="glass-panel rounded-sm p-8 mt-10 max-w-3xl mx-auto">
+              <div className="panel rounded-2xl p-8 mt-10 max-w-3xl mx-auto">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>

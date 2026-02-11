@@ -167,7 +167,7 @@ export default async function AddictB2C() {
         </section>
 
         {/* 3 Piliers */}
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {PILLARS.map((pillar, i) => (
@@ -242,7 +242,7 @@ export default async function AddictB2C() {
                 },
               ].map((item, i) => (
                 <ScrollReveal key={item.title} delay={i * 80}>
-                  <div className="card-sheen rounded-sm border border-stroke-subtle bg-surface-2/80 p-6">
+                  <div className="card-sheen panel-soft p-6">
                     <h3 className="font-heading text-lg text-text-primary mb-2">
                       {item.title}
                     </h3>
@@ -255,7 +255,7 @@ export default async function AddictB2C() {
         </section>
 
         {/* Tarifs */}
-        <section id="tarifs" className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section id="tarifs" className="py-20 bg-surface-1 section-shell">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4">
@@ -287,7 +287,7 @@ export default async function AddictB2C() {
         </section>
 
         {/* Contact express */}
-        <section id="contact-b2c" className="py-20 bg-surface-1 border-t border-stroke-subtle">
+        <section id="contact-b2c" className="py-20 bg-surface-1 section-shell">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
@@ -299,7 +299,7 @@ export default async function AddictB2C() {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-8">
+              <div className="panel rounded-2xl p-8">
                 <LeadB2CForm />
               </div>
             </ScrollReveal>

@@ -6,19 +6,19 @@ type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
   flame:
-    "btn-sheen bg-gradient-to-r from-ember-deep via-ember to-flame text-white border border-ember/40 shadow-[0_0_1.5rem_rgba(230,57,70,0.25)] hover:shadow-[0_0_2.625rem_rgba(255,90,31,0.35)] hover:-translate-y-0.5",
+    "btn-sheen bg-[linear-gradient(115deg,var(--ember-deep)_0%,var(--ember)_45%,var(--flame)_100%)] text-white border border-ember/45 shadow-[0_0.875rem_2.375rem_rgba(239,68,86,0.34)] hover:shadow-[0_1.125rem_2.875rem_rgba(255,115,50,0.42)] hover:-translate-y-0.5",
   metal:
-    "btn-sheen bg-gradient-to-r from-metal/30 via-surface-2 to-surface-3 text-text-primary border border-stroke-subtle hover:text-text-primary hover:border-stroke-medium hover:shadow-[0_0_1.75rem_rgba(65,90,119,0.35)] hover:-translate-y-0.5",
+    "btn-sheen bg-[linear-gradient(120deg,rgba(93,134,178,0.25)_0%,rgba(18,27,43,0.92)_58%,rgba(27,37,53,0.95)_100%)] text-text-primary border border-metal/35 shadow-[0_0.875rem_2.2rem_rgba(73,108,145,0.28)] hover:text-text-primary hover:border-metal/60 hover:shadow-[0_1.125rem_2.75rem_rgba(93,134,178,0.35)] hover:-translate-y-0.5",
   outline:
-    "bg-transparent text-text-primary border border-stroke-medium hover:bg-surface-2/60 hover:border-flame",
+    "bg-surface-1/20 text-text-primary border border-stroke-medium hover:bg-surface-2/70 hover:border-flame/70 hover:text-text-primary hover:-translate-y-0.5",
   ghost:
-    "bg-transparent text-text-secondary hover:text-text-primary hover:bg-surface-2/70",
+    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-surface-2/70 hover:border-stroke-subtle",
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-4 py-2 text-xs",
-  md: "px-6 py-2.5 text-sm",
-  lg: "px-8 py-4 text-sm",
+  sm: "px-4 py-2.5 text-[0.65rem]",
+  md: "px-6 py-3 text-[0.7rem]",
+  lg: "px-8 py-4 text-xs",
 };
 
 type BaseProps = {
@@ -47,9 +47,11 @@ export default function Button({
 }: ButtonProps) {
   const isDisabled = "disabled" in props && props.disabled;
   const classes = [
-    "inline-flex items-center justify-center gap-2 relative overflow-hidden",
-    "font-heading font-semibold uppercase tracking-wider",
-    "rounded-sm transition-all duration-300 cursor-pointer",
+    "inline-flex items-center justify-center gap-2 relative isolate overflow-hidden",
+    "font-heading font-semibold uppercase tracking-[0.14em]",
+    "rounded-full transition-[transform,box-shadow,border-color,background,color] duration-300 cursor-pointer",
+    "active:translate-y-0.5",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flame/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-0",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     variantClasses[variant],
     sizeClasses[size],

@@ -112,7 +112,7 @@ export default async function ProPage() {
         </section>
 
         {/* Offres packagées */}
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4">
@@ -202,7 +202,7 @@ export default async function ProPage() {
               {STACK.map((tool) => (
                 <span
                   key={tool}
-                  className="px-4 py-2 border border-stroke-subtle rounded-sm text-xs font-heading uppercase tracking-wider text-text-secondary"
+                  className="px-4 py-2 border border-stroke-subtle rounded-full text-[0.64rem] font-heading uppercase tracking-[0.14em] text-text-secondary"
                 >
                   {tool}
                 </span>
@@ -212,7 +212,7 @@ export default async function ProPage() {
         </section>
 
         {/* Cas / Réalisations */}
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4">
@@ -242,7 +242,7 @@ export default async function ProPage() {
                     <div className="mt-4">
                       <Link
                         href={`/realisations/${caseStudy.slug}`}
-                        className="text-xs font-heading uppercase tracking-wider text-metal hover:text-metal-hover transition-colors"
+                        className="text-[0.68rem] font-heading uppercase tracking-[0.14em] text-metal hover:text-metal-hover transition-colors"
                       >
                         Voir le cas →
                       </Link>
@@ -269,7 +269,7 @@ export default async function ProPage() {
         </section>
 
         {/* Formulaire qualifié */}
-        <section id="contact-pro" className="py-20 bg-surface-1 border-t border-stroke-subtle">
+        <section id="contact-pro" className="py-20 bg-surface-1 section-shell">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
@@ -281,7 +281,7 @@ export default async function ProPage() {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-8">
+              <div className="panel rounded-2xl p-8">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>

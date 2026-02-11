@@ -40,44 +40,44 @@ export default function HeroSplit() {
 
       tl.fromTo(
         leftRef.current,
-        { opacity: 0, x: -16 },
-        { opacity: 1, x: 0, duration: 0.9 },
+        { opacity: 0, x: -22 },
+        { opacity: 1, x: 0, duration: 0.85 },
         0
       )
         .fromTo(
           rightRef.current,
-          { opacity: 0, x: 16 },
-          { opacity: 1, x: 0, duration: 0.9 },
-          0.1
+          { opacity: 0, x: 22 },
+          { opacity: 1, x: 0, duration: 0.85 },
+          0.08
         )
         .fromTo(
           pivotRef.current,
-          { opacity: 0, scale: 0.98 },
-          { opacity: 1, scale: 1, duration: 0.8 },
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.7 },
           0.2
         )
         .fromTo(
           centerCopyRef.current,
-          { opacity: 0, y: 12 },
+          { opacity: 0, y: 15 },
           { opacity: 1, y: 0, duration: 0.8 },
-          0.3
+          0.28
         );
 
       if (leftCtasRef.current) {
         tl.fromTo(
           leftCtasRef.current.children,
-          { opacity: 0, y: 8 },
-          { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 },
-          0.45
+          { opacity: 0, y: 9 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+          0.4
         );
       }
 
       if (rightCtasRef.current) {
         tl.fromTo(
           rightCtasRef.current.children,
-          { opacity: 0, y: 8 },
-          { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 },
-          0.5
+          { opacity: 0, y: 9 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+          0.44
         );
       }
     }, root);
@@ -94,13 +94,13 @@ export default function HeroSplit() {
         side === "left" ? pivotGlowFlameRef.current : pivotGlowMetalRef.current;
 
       if (glow) {
-        gsap.to(glow, { opacity: 1, duration: 0.35, ease: "power2.out" });
+        gsap.to(glow, { opacity: 1, duration: 0.32, ease: "power2.out" });
       }
       if (ctas) {
-        gsap.to(ctas, { scale: 1.02, duration: 0.35, ease: "power2.out" });
+        gsap.to(ctas, { scale: 1.015, duration: 0.32, ease: "power2.out" });
       }
       if (pivotGlow) {
-        gsap.to(pivotGlow, { opacity: 0.9, duration: 0.35, ease: "power2.out" });
+        gsap.to(pivotGlow, { opacity: 0.9, duration: 0.32, ease: "power2.out" });
       }
     };
 
@@ -111,13 +111,13 @@ export default function HeroSplit() {
         side === "left" ? pivotGlowFlameRef.current : pivotGlowMetalRef.current;
 
       if (glow) {
-        gsap.to(glow, { opacity: 0, duration: 0.35, ease: "power2.out" });
+        gsap.to(glow, { opacity: 0, duration: 0.32, ease: "power2.out" });
       }
       if (ctas) {
-        gsap.to(ctas, { scale: 1, duration: 0.35, ease: "power2.out" });
+        gsap.to(ctas, { scale: 1, duration: 0.32, ease: "power2.out" });
       }
       if (pivotGlow) {
-        gsap.to(pivotGlow, { opacity: 0, duration: 0.35, ease: "power2.out" });
+        gsap.to(pivotGlow, { opacity: 0, duration: 0.32, ease: "power2.out" });
       }
     };
 
@@ -154,72 +154,78 @@ export default function HeroSplit() {
   return (
     <section
       ref={rootRef}
-      className="min-h-screen flex items-center relative overflow-hidden pt-24 surface-grid"
+      className="min-h-screen flex items-center relative overflow-hidden pt-24 pb-14 surface-grid"
     >
-      {/* Background */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
-          <div className="absolute -top-32 -left-40 w-[45rem] h-[45rem] bg-metal/20 rounded-full blur-[8.75rem] aurora" />
-          <div className="absolute top-0 -right-40 w-[45rem] h-[45rem] bg-flame/20 rounded-full blur-[10rem] aurora" />
-          <div className="absolute bottom-[-20%] left-[20%] w-[50rem] h-[50rem] bg-ember/20 rounded-full blur-[12.5rem] aurora" />
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
+        <div className="ambient-orb -left-44 top-[-14%] w-[40rem] h-[40rem] bg-metal/70 aurora" />
+        <div className="ambient-orb -right-44 top-[2%] w-[43rem] h-[43rem] bg-flame/65 aurora" />
+        <div className="ambient-orb left-[20%] -bottom-[28%] w-[50rem] h-[50rem] bg-ember/55 aurora" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 w-full py-14 relative">
+        <div className="text-center mb-8">
+          <div className="hero-pill">
+            <span className="h-1.5 w-1.5 rounded-full bg-flame animate-pulse" />
+            <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
+              Folelli, Corse · Boutique physique + studio digital
+            </span>
+          </div>
         </div>
 
-      <div className="max-w-7xl mx-auto px-6 w-full py-16 relative">
-        {/* Central pivot logo */}
         <div className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none">
           <div
             ref={pivotRef}
-            className="relative w-24 h-24 rounded-md border border-stroke-medium bg-surface-2/70 backdrop-blur flex items-center justify-center shadow-[0_0_2.5rem_rgba(65,90,119,0.2)]"
+            className="relative w-24 h-24 rounded-2xl border border-stroke-medium bg-surface-2/75 backdrop-blur-xl flex items-center justify-center shadow-[0_0_2.8rem_rgba(93,134,178,0.25)]"
           >
             <span
               ref={pivotGlowFlameRef}
-              className="absolute inset-0 rounded-md bg-[radial-gradient(circle_at_50%_40%,rgba(255,90,31,0.45),transparent_65%)] opacity-0 pointer-events-none"
+              className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_40%,rgba(255,115,50,0.52),transparent_65%)] opacity-0 pointer-events-none"
             />
             <span
               ref={pivotGlowMetalRef}
-              className="absolute inset-0 rounded-md bg-[radial-gradient(circle_at_50%_40%,rgba(65,90,119,0.45),transparent_65%)] opacity-0 pointer-events-none"
+              className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_40%,rgba(93,134,178,0.52),transparent_65%)] opacity-0 pointer-events-none"
             />
             <span className="font-heading font-bold text-3xl metal-text">A</span>
           </div>
         </div>
 
-        <div className="hidden lg:block absolute -top-10 right-10 pointer-events-none">
+        <div className="hidden lg:block absolute -top-16 right-12 pointer-events-none">
           <div className="sigil flex items-center justify-center">
             <span className="relative z-10 font-heading font-bold text-4xl metal-text">A</span>
             <span className="pulse-glow" />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
-          {/* B2C — Left panel */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 lg:gap-16 items-stretch">
           <div
             ref={leftRef}
-            className="hero-panel-left relative space-y-6 lg:pr-6 relief-panel card-sheen rounded-md p-8 lg:p-10 backdrop-blur"
+            className="relative space-y-7 lg:pr-6 relief-panel card-sheen rounded-3xl p-7 md:p-9"
           >
             <div
               ref={leftGlowRef}
               className="absolute inset-0 opacity-0 pointer-events-none"
             >
-              <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_0%,rgba(255,90,31,0.35),transparent_60%)] blur-3xl" />
+              <div className="absolute -inset-12 bg-[radial-gradient(circle_at_26%_0%,rgba(255,115,50,0.38),transparent_60%)] blur-3xl" />
             </div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60">
-              <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
-                Réparation &bull; Boutique &bull; Café Manga
+            <div className="hero-pill w-fit">
+              <span className="text-[0.62rem] font-heading font-medium tracking-[0.18em] text-flame uppercase">
+                Réparation · Boutique · Café Manga
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-tight">
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-[1.06]">
               Votre QG Tech
               <br />
-              <span className="ember-text">à Folelli</span>
+              <span className="ember-text">en Corse</span>
             </h2>
 
-            <p className="text-text-secondary text-base leading-relaxed max-w-md">
-              Réparation rapide, boutique high-tech et espace café manga.
-              Le spot local pour les passionnés.
+            <p className="text-text-secondary text-base leading-relaxed max-w-xl">
+              Diagnostic immédiat, réparation soignée et espace de détente sur place.
+              Une expérience locale sérieuse, rapide et agréable.
             </p>
 
-            <div ref={leftCtasRef} className="flex flex-wrap gap-3 pt-2">
+            <div ref={leftCtasRef} className="flex flex-wrap gap-3 pt-1">
               <Button variant="flame" size="lg" href="/addict-2-0">
                 Entrer au QG
               </Button>
@@ -228,101 +234,93 @@ export default function HeroSplit() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 pt-4 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-center">
               {[
-                { label: "Diagnostic", value: "Gratuit" },
+                { label: "Diagnostic", value: "Offert" },
                 { label: "Garantie", value: "6 mois" },
-                { label: "Délai", value: "Express" },
+                { label: "Délais", value: "Express" },
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-sm border border-stroke-subtle bg-surface-3/60 px-3 py-2"
+                  className="panel-soft px-3 py-3"
                 >
-                  <p className="text-[0.625rem] uppercase tracking-wider text-text-muted font-heading">
+                  <p className="text-[0.62rem] uppercase tracking-[0.16em] text-text-muted font-heading">
                     {item.label}
                   </p>
-                  <p className="text-sm font-heading text-text-primary">{item.value}</p>
+                  <p className="text-sm font-heading text-text-primary mt-1">{item.value}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* B2B — Right panel */}
           <div
             ref={rightRef}
-            className="hero-panel-right relative space-y-6 lg:pl-6 relief-panel card-sheen rounded-md p-8 lg:p-10 backdrop-blur"
+            className="relative space-y-7 lg:pl-6 relief-panel card-sheen rounded-3xl p-7 md:p-9"
           >
             <div
               ref={rightGlowRef}
               className="absolute inset-0 opacity-0 pointer-events-none"
             >
-              <div className="absolute -inset-10 bg-[radial-gradient(circle_at_70%_0%,rgba(65,90,119,0.35),transparent_60%)] blur-3xl" />
+              <div className="absolute -inset-12 bg-[radial-gradient(circle_at_75%_0%,rgba(93,134,178,0.4),transparent_60%)] blur-3xl" />
             </div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60">
-              <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
-                Automatisation &bull; IA &bull; Formation
+            <div className="hero-pill w-fit">
+              <span className="text-[0.62rem] font-heading font-medium tracking-[0.18em] text-metal uppercase">
+                IA · Automatisation · Formation
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-tight">
-              Solutions Pros
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-[1.06]">
+              Accélération
               <br />
-              <span className="metal-text">sur-mesure</span>
+              <span className="metal-text">de vos process</span>
             </h2>
 
-            <p className="text-text-secondary text-base leading-relaxed max-w-md">
-              Accompagnement digital, automatisation IA et formation pour
-              transformer vos process métier.
+            <p className="text-text-secondary text-base leading-relaxed max-w-xl">
+              Audit digital, workflows intelligents et formation d&apos;équipe:
+              un cadre opérationnel pour générer un ROI mesurable.
             </p>
 
-            <div ref={rightCtasRef} className="flex flex-wrap gap-3 pt-2">
+            <div ref={rightCtasRef} className="flex flex-wrap gap-3 pt-1">
               <Button variant="metal" size="lg" href="/pro">
-                Solutions pros
+                Voir les offres pro
               </Button>
               <Button variant="outline" size="lg" href="/pro#audit">
                 Demander un audit
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 pt-4 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-center">
               {[
                 { label: "Roadmap", value: "90 jours" },
-                { label: "ROI", value: "Mesuré" },
+                { label: "Pilotage", value: "KPI clairs" },
                 { label: "Support", value: "Continu" },
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-sm border border-stroke-subtle bg-surface-3/60 px-3 py-2"
+                  className="panel-soft px-3 py-3"
                 >
-                  <p className="text-[0.625rem] uppercase tracking-wider text-text-muted font-heading">
+                  <p className="text-[0.62rem] uppercase tracking-[0.16em] text-text-muted font-heading">
                     {item.label}
                   </p>
-                  <p className="text-sm font-heading text-text-primary">{item.value}</p>
+                  <p className="text-sm font-heading text-text-primary mt-1">{item.value}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Central info */}
-        <div ref={centerCopyRef} className="text-center mt-14 space-y-3 hero-center-copy">
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary">
-            Deux univers.{" "}
-            <span className="ember-text">Une seule adresse.</span>
+        <div ref={centerCopyRef} className="text-center mt-14 space-y-4 hero-center-copy">
+          <h1 className="font-heading text-[2rem] md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight">
+            Deux expertises.
+            <span className="block ember-text">Une seule maison.</span>
           </h1>
-          <p className="text-text-muted text-sm font-heading tracking-wider uppercase">
-            20213 Folelli – Corse
+          <p className="text-text-muted text-[0.72rem] font-heading tracking-[0.18em] uppercase">
+            20213 Folelli · Corse
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3 text-xs font-heading uppercase tracking-wider text-text-muted">
-            <span className="px-3 py-1 rounded-sm border border-stroke-subtle bg-surface-2/60">
-              Diagnostic gratuit
-            </span>
-            <span className="px-3 py-1 rounded-sm border border-stroke-subtle bg-surface-2/60">
-              Garantie 6 mois
-            </span>
-            <span className="px-3 py-1 rounded-sm border border-stroke-subtle bg-surface-2/60">
-              Local &amp; humain
-            </span>
+          <div className="mt-5 flex flex-wrap justify-center gap-3 text-[0.64rem] font-heading uppercase tracking-[0.14em] text-text-muted">
+            <span className="hero-pill">Diagnostic offert</span>
+            <span className="hero-pill">Plan d&apos;action sur mesure</span>
+            <span className="hero-pill">Équipe locale et engagée</span>
           </div>
         </div>
       </div>

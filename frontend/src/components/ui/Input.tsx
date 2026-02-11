@@ -11,15 +11,15 @@ type InputProps = BaseInputProps & InputHTMLAttributes<HTMLInputElement>;
 type TextareaProps = BaseInputProps & TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
 const baseClasses =
-  "w-full bg-surface-2/80 border border-stroke-subtle text-text-primary placeholder:text-text-3/80 rounded-sm px-4 py-3 text-sm font-body transition-all duration-200 focus:outline-none";
+  "w-full input-shell text-text-primary placeholder:text-text-3/80 rounded-xl px-4 py-3.5 text-sm font-body transition-all duration-200 focus:outline-none";
 
 const focusClasses: Record<NonNullable<BaseInputProps["tone"]>, string> = {
-  flame: "focus:border-flame focus:ring-1 focus:ring-flame/30",
-  metal: "focus:border-metal focus:ring-1 focus:ring-metal/30",
+  flame: "focus:border-flame focus:ring-2 focus:ring-flame/25",
+  metal: "focus:border-metal focus:ring-2 focus:ring-metal/25",
 };
 
 const errorClasses =
-  "border-ember focus:border-ember focus:ring-ember/30";
+  "!border-ember focus:!border-ember focus:ring-ember/30";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   function Input({ label, error, tone = "flame", className = "", ...props }, ref) {
@@ -28,7 +28,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={props.id}
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary"
           >
             {label}
           </label>
@@ -53,7 +53,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "mul
         {label && (
           <label
             htmlFor={props.id}
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary"
           >
             {label}
           </label>

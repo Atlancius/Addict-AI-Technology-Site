@@ -72,14 +72,14 @@ export default function LocationMap({ location }: { location?: Location }) {
   const hours = formatHours(data);
 
   return (
-    <section className="py-24 bg-surface-0 border-t border-stroke-subtle surface-grid">
+    <section className="py-24 bg-surface-0 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <p className="text-xs font-heading uppercase tracking-[0.3em] text-text-muted mb-3">
+            <p className="text-[0.65rem] font-heading uppercase tracking-[0.24em] text-text-muted mb-3">
               Sur place
             </p>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold text-text-primary mb-2 leading-tight">
               Retrouvez-nous
             </h2>
             <p className="text-text-muted">
@@ -92,8 +92,8 @@ export default function LocationMap({ location }: { location?: Location }) {
           {/* Info */}
           <div className="space-y-4">
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-6 space-y-4">
-                <h3 className="font-heading font-semibold text-sm text-text-primary uppercase tracking-wider">
+              <div className="panel p-6 space-y-4">
+                <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Adresse
                 </h3>
                 <p className="text-text-muted text-sm">
@@ -107,8 +107,8 @@ export default function LocationMap({ location }: { location?: Location }) {
             </ScrollReveal>
 
             <ScrollReveal delay={80}>
-              <div className="glass-panel rounded-sm p-6 space-y-4">
-                <h3 className="font-heading font-semibold text-sm text-text-primary uppercase tracking-wider">
+              <div className="panel p-6 space-y-4">
+                <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Horaires
                 </h3>
                 <div className="text-text-muted text-sm space-y-1">
@@ -120,8 +120,8 @@ export default function LocationMap({ location }: { location?: Location }) {
             </ScrollReveal>
 
             <ScrollReveal delay={160}>
-              <div className="glass-panel rounded-sm p-6 space-y-4 border border-ember/20">
-                <h3 className="font-heading font-semibold text-sm text-text-primary uppercase tracking-wider">
+              <div className="panel p-6 space-y-4 border border-ember/25">
+                <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Contact
                 </h3>
                 <p className="text-text-muted text-sm">
@@ -161,7 +161,7 @@ export default function LocationMap({ location }: { location?: Location }) {
           {/* Map */}
           <div className="lg:col-span-2">
             <ScrollReveal>
-              <div className="w-full h-80 lg:h-full min-h-80 rounded-sm border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
+              <div className="w-full h-80 lg:h-full min-h-80 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
                 <iframe
                   src={mapEmbed}
                   width="100%"

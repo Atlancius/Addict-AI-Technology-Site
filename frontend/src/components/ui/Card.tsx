@@ -10,15 +10,15 @@ interface CardProps {
 
 const variantClasses: Record<CardVariant, string> = {
   service:
-    "bg-gradient-to-b from-surface-2/90 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-ember/35 hover:-translate-y-1 hover:shadow-[0_1.125rem_3rem_rgba(0,0,0,0.4)] transition-all duration-300 group",
+    "panel hover:border-ember/45 hover:-translate-y-1.5 hover:shadow-[0_1.25rem_3.4rem_rgba(0,0,0,0.42)] transition-all duration-300 group",
   bento:
-    "bg-gradient-to-b from-surface-2/90 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-flame/40 hover:shadow-[0_0_2.25rem_rgba(255,90,31,0.18)] hover:-translate-y-1 transition-all duration-300 group",
+    "panel hover:border-flame/50 hover:shadow-[0_1.2rem_3.25rem_rgba(255,115,50,0.2)] hover:-translate-y-1.5 transition-all duration-300 group",
   pricing:
-    "bg-gradient-to-b from-surface-2 to-surface-1 border border-stroke-subtle hover:border-metal/40 hover:shadow-[0_1.125rem_3rem_rgba(0,0,0,0.35)] transition-all duration-300",
+    "panel hover:border-metal/55 hover:shadow-[0_1.125rem_3rem_rgba(16,30,49,0.45)] hover:-translate-y-1 transition-all duration-300",
   caseStudy:
-    "bg-gradient-to-b from-surface-2/90 via-surface-1/80 to-surface-0 border border-stroke-subtle hover:border-metal/40 hover:shadow-[0_1.125rem_3rem_rgba(0,0,0,0.45)] transition-all duration-300 group",
+    "panel hover:border-metal/55 hover:shadow-[0_1.2rem_3.25rem_rgba(16,30,49,0.48)] hover:-translate-y-1 transition-all duration-300 group",
   repair:
-    "bg-gradient-to-b from-surface-2 to-surface-1 border border-stroke-subtle hover:border-flame/40 hover:shadow-[0_1.125rem_3rem_rgba(0,0,0,0.45)] transition-all duration-300",
+    "panel hover:border-flame/50 hover:shadow-[0_1.2rem_3.25rem_rgba(255,115,50,0.2)] hover:-translate-y-1 transition-all duration-300",
 };
 
 export default function Card({
@@ -27,7 +27,7 @@ export default function Card({
   children,
 }: CardProps) {
   return (
-    <div className={`rounded-sm p-6 card-sheen ${variantClasses[variant]} ${className}`}>
+    <div className={`rounded-2xl p-6 card-sheen ${variantClasses[variant]} ${className}`}>
       {children}
     </div>
   );
@@ -36,7 +36,7 @@ export default function Card({
 // Subcomponents for structured card content
 export function CardIcon({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`text-3xl text-text-primary mb-4 group-hover:text-flame transition-colors ${className}`}>
+    <div className={`text-3xl text-text-primary mb-4 group-hover:text-flame transition-colors duration-300 ${className}`}>
       {children}
     </div>
   );
@@ -44,7 +44,7 @@ export function CardIcon({ children, className = "" }: { children: ReactNode; cl
 
 export function CardTitle({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <h3 className={`font-heading font-semibold text-lg text-text-primary mb-2 ${className}`}>
+    <h3 className={`font-heading font-semibold text-xl text-text-primary mb-2 leading-tight ${className}`}>
       {children}
     </h3>
   );

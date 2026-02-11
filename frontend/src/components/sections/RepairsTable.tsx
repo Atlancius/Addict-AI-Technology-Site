@@ -52,15 +52,15 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="panel p-4 md:p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label
             htmlFor="repairs-brand"
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Marque
           </label>
-          <div className="rounded-full border border-stroke-subtle bg-surface-2/70 px-3 py-1">
+          <div className="input-shell rounded-xl px-3 py-2">
             <select
               id="repairs-brand"
               value={filters.brand}
@@ -82,11 +82,11 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
         <div>
           <label
             htmlFor="repairs-type"
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Type de réparation
           </label>
-          <div className="rounded-full border border-stroke-subtle bg-surface-2/70 px-3 py-1">
+          <div className="input-shell rounded-xl px-3 py-2">
             <select
               id="repairs-type"
               value={filters.type}
@@ -113,13 +113,13 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
           onChange={(event) =>
             setFilters((prev) => ({ ...prev, model: event.target.value }))
           }
-          className="rounded-full bg-surface-2/70"
+          className="bg-surface-2/70"
         />
       </div>
 
-      <div className="overflow-x-auto border border-stroke-subtle rounded-sm bg-surface-2/60">
+      <div className="table-shell overflow-x-auto">
         <table className="min-w-full text-left text-sm" aria-label="Tableau des tarifs de réparation">
-          <thead className="sticky top-0 z-10 bg-surface-3/90 backdrop-blur text-text-secondary uppercase text-xs font-heading tracking-wider">
+          <thead className="sticky top-0 z-10 bg-surface-3/90 backdrop-blur text-text-secondary uppercase text-[0.63rem] font-heading tracking-[0.14em]">
             <tr>
               <th className="px-4 py-3">Marque</th>
               <th className="px-4 py-3">Modèle</th>
@@ -138,7 +138,7 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
               return (
                 <tr
                   key={item.id}
-                  className="odd:bg-surface-1/40 even:bg-surface-2/40 hover:bg-surface-3/60"
+                  className="odd:bg-surface-1/35 even:bg-surface-2/30 hover:bg-surface-3/62 transition-colors"
                 >
                   <td className="px-4 py-3 text-text-primary">
                     {item.device_brand}
