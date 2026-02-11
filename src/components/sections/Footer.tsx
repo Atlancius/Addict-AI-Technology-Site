@@ -58,7 +58,7 @@ export default async function Footer() {
   const email = location.email || "contact@addictai.tech";
 
   return (
-    <footer className="bg-surface-1/85 section-shell pt-12 pb-8 relative overflow-hidden">
+    <footer className="bg-surface-1/85 section-shell pt-12 pb-28 md:pb-8 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 space-y-12">

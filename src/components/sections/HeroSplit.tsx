@@ -32,7 +32,7 @@ const PATH_CARDS = [
 
 export default function HeroSplit() {
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden pt-24 pb-14 surface-grid">
+    <section className="min-h-[92vh] md:min-h-screen flex items-center relative overflow-hidden pt-[5.5rem] md:pt-24 pb-12 md:pb-14 surface-grid">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
         <div className="ambient-orb -left-44 top-[-14%] w-[40rem] h-[40rem] bg-metal/70 aurora" />
@@ -40,7 +40,7 @@ export default function HeroSplit() {
         <div className="ambient-orb left-[20%] -bottom-[28%] w-[50rem] h-[50rem] bg-ember/55 aurora" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 w-full py-14 relative space-y-14">
+      <div className="max-w-7xl mx-auto px-6 w-full py-10 md:py-14 relative space-y-10 md:space-y-14">
         <ScrollReveal className="text-center" variant="soft" distance={18}>
           <div className="hero-pill">
             <span className="h-1.5 w-1.5 rounded-full bg-flame animate-pulse" />
@@ -50,7 +50,7 @@ export default function HeroSplit() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-10 items-center">
           <ScrollReveal className="space-y-7" variant="left">
             <h1 className="font-heading text-[2.15rem] md:text-6xl font-bold text-text-primary leading-[0.98]">
               Le QG local qui
