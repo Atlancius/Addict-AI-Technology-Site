@@ -51,7 +51,7 @@ export default function Navbar() {
       }`}
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/45 to-transparent pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 h-20 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[4.5rem] md:h-20 flex items-center justify-between gap-3 md:gap-4">
         <Link href="/" className="flex items-center gap-3 group" onClick={closeMobile}>
           <div className="relative">
             <div className="absolute -inset-3 rounded-full bg-ember/25 blur-2xl opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -65,7 +65,7 @@ export default function Navbar() {
             <span className="font-heading font-bold text-sm leading-none tracking-tight metal-text uppercase">
               ADDICT
             </span>
-            <span className="font-heading font-medium text-[0.58rem] leading-tight tracking-[0.2em] text-text-muted uppercase">
+            <span className="max-[380px]:hidden font-heading font-medium text-[0.58rem] leading-tight tracking-[0.2em] text-text-muted uppercase">
               AI TECHNOLOGY
             </span>
           </div>
@@ -101,7 +101,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="md:hidden text-text-primary p-2.5 rounded-xl border border-stroke-subtle bg-surface-2/60"
+          className="md:hidden text-text-primary p-2.5 rounded-xl border border-stroke-subtle bg-surface-2/60 shadow-[0_0.7rem_1.8rem_rgba(0,0,0,0.25)]"
           onClick={() => setMobileOpen((value) => !value)}
           aria-label="Menu"
           aria-expanded={mobileOpen}
@@ -139,20 +139,20 @@ export default function Navbar() {
         }`}
       >
         <div className="absolute inset-0 bg-surface-0/85 backdrop-blur-2xl" onClick={closeMobile} />
-        <div className="relative px-5 pt-24 pb-8 h-full">
+        <div className="relative px-4 pt-[5.5rem] pb-6 h-full">
           <div
-            className={`panel h-full p-7 flex flex-col transition-transform duration-300 ${
+            className={`panel h-full p-5 sm:p-6 flex flex-col transition-transform duration-300 ${
               mobileOpen ? "translate-y-0" : "translate-y-3"
             }`}
           >
-            <nav className="flex flex-col gap-2">
+            <nav className="flex flex-col gap-2.5">
               {NAV_LINKS.map((link) => {
                 const isActive = isActivePath(link.href);
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-4 py-3 rounded-xl text-sm font-heading font-medium uppercase tracking-[0.14em] transition-colors ${
+                    className={`px-4 py-3.5 rounded-xl text-[0.82rem] font-heading font-medium uppercase tracking-[0.12em] transition-colors ${
                       isActive
                         ? "bg-surface-2/85 border border-stroke-medium text-text-primary"
                         : "bg-surface-2/45 text-text-secondary hover:text-flame"

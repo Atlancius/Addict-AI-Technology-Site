@@ -54,7 +54,7 @@ export default function CinematicHero({
   const defaultButtonVariant = tone === "flame" ? "flame" : "metal";
 
   return (
-    <section className={`pt-28 pb-20 relative overflow-hidden surface-grid ${className}`}>
+    <section className={`pt-24 md:pt-28 pb-14 md:pb-20 relative overflow-hidden surface-grid ${className}`}>
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
       <div
         className={`ambient-orb top-[-18%] left-[-14%] w-[34rem] h-[34rem] ${
@@ -64,9 +64,9 @@ export default function CinematicHero({
       <div className="ambient-orb right-[-14%] bottom-[-24%] w-[40rem] h-[40rem] bg-ember/48 aurora" />
 
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 md:gap-10 items-center">
           <ScrollReveal variant="left" distance={26}>
-            <div className="space-y-7">
+            <div className="space-y-6 md:space-y-7">
               <div className="hero-pill">
                 <span className={`h-1.5 w-1.5 rounded-full ${markerClass} animate-pulse`} />
                 <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
@@ -74,7 +74,7 @@ export default function CinematicHero({
                 </span>
               </div>
 
-              <h1 className="font-heading text-[2.15rem] md:text-6xl font-bold text-text-primary leading-[0.98]">
+              <h1 className="font-heading text-[1.95rem] sm:text-[2.2rem] md:text-6xl font-bold text-text-primary leading-[0.98]">
                 {title}
                 {accent && <span className={`block ${accentClass}`}>{accent}</span>}
               </h1>
@@ -84,7 +84,7 @@ export default function CinematicHero({
               </p>
 
               {actions.length > 0 && (
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-3 md:gap-4">
                   {actions.map((action) => (
                     <Button
                       key={`${action.label}-${action.href}`}

@@ -757,6 +757,38 @@ body::after {
   filter: blur(2px);
 }
 
+@media (max-width: 768px) {
+  .reveal-up.reveal-hidden,
+  .reveal-down.reveal-hidden,
+  .reveal-left.reveal-hidden,
+  .reveal-right.reveal-hidden,
+  .reveal-zoom.reveal-hidden,
+  .reveal-soft.reveal-hidden {
+    filter: none;
+  }
+
+  .reveal-up.reveal-hidden,
+  .reveal-soft.reveal-hidden {
+    transform: translate3d(0, calc(var(--reveal-distance, 28px) * 0.5), 0);
+  }
+
+  .reveal-down.reveal-hidden {
+    transform: translate3d(0, calc(var(--reveal-distance, 28px) * -0.5), 0);
+  }
+
+  .reveal-left.reveal-hidden {
+    transform: translate3d(calc(var(--reveal-distance, 28px) * -0.45), 0, 0);
+  }
+
+  .reveal-right.reveal-hidden {
+    transform: translate3d(calc(var(--reveal-distance, 28px) * 0.45), 0, 0);
+  }
+
+  .reveal-zoom.reveal-hidden {
+    transform: translate3d(0, calc(var(--reveal-distance, 28px) * 0.32), 0) scale(0.985);
+  }
+}
+
 /* ============================================
    Reduced Motion
    ============================================ */
