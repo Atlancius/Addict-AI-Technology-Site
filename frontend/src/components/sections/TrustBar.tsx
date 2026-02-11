@@ -1,5 +1,6 @@
 import Badge from "@/components/ui/Badge";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 
 const TRUST_ITEMS = [
   { label: "Local — Corse", variant: "local" as const },
@@ -28,7 +29,7 @@ export default function TrustBar() {
     <section className="py-12 bg-surface-0">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal variant="soft" distance={18}>
-          <div className="panel rounded-2xl p-8 md:p-9 space-y-7">
+          <MouseTilt className="panel rounded-2xl p-8 md:p-9 space-y-7" maxTilt={4.5} scale={1.004}>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <p className="eyebrow mb-2">Crédibilité opérationnelle</p>
@@ -66,7 +67,7 @@ export default function TrustBar() {
                 </div>
               </div>
             </div>
-          </div>
+          </MouseTilt>
         </ScrollReveal>
       </div>
     </section>

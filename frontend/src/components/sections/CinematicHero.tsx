@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 import Button from "@/components/ui/Button";
 
 type HeroTone = "flame" | "metal";
@@ -116,47 +117,49 @@ export default function CinematicHero({
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={120} className="panel card-sheen rounded-3xl p-5 md:p-6 space-y-5" variant="right">
-            <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
-              <Image
-                src={mainImage.src}
-                alt={mainImage.alt}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 42vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="relative h-32 rounded-2xl overflow-hidden border border-stroke-subtle bg-surface-2/65">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/12 to-transparent pointer-events-none" />
-                <div className="h-full w-full flex flex-col justify-end p-3.5">
-                  <p className="text-[0.6rem] uppercase tracking-[0.14em] text-text-muted font-heading">
-                    Expérience
-                  </p>
-                  <p className="font-heading text-sm text-text-primary mt-1">
-                    Parcours premium fluide
-                  </p>
+          <ScrollReveal delay={120} variant="right">
+            <MouseTilt className="panel card-sheen rounded-3xl p-5 md:p-6 space-y-5" maxTilt={6} scale={1.008}>
+              <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
+                <Image
+                  src={mainImage.src}
+                  alt={mainImage.alt}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="relative h-32 rounded-2xl overflow-hidden border border-stroke-subtle bg-surface-2/65">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/12 to-transparent pointer-events-none" />
+                  <div className="h-full w-full flex flex-col justify-end p-3.5">
+                    <p className="text-[0.6rem] uppercase tracking-[0.14em] text-text-muted font-heading">
+                      Expérience
+                    </p>
+                    <p className="font-heading text-sm text-text-primary mt-1">
+                      Parcours premium fluide
+                    </p>
+                  </div>
+                </div>
+                <div className="relative h-32 rounded-2xl overflow-hidden border border-stroke-subtle bg-surface-2/65">
+                  {sideImage ? (
+                    <>
+                      <Image
+                        src={sideImage.src}
+                        alt={sideImage.alt}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 22vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/12 to-transparent" />
+                  )}
                 </div>
               </div>
-              <div className="relative h-32 rounded-2xl overflow-hidden border border-stroke-subtle bg-surface-2/65">
-                {sideImage ? (
-                  <>
-                    <Image
-                      src={sideImage.src}
-                      alt={sideImage.alt}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 22vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
-                  </>
-                ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/12 to-transparent" />
-                )}
-              </div>
-            </div>
+            </MouseTilt>
           </ScrollReveal>
         </div>
       </div>

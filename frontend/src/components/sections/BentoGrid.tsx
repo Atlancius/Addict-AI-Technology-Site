@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 import Button from "@/components/ui/Button";
 
 type OfferTone = "flame" | "metal";
@@ -239,7 +240,7 @@ export default function BentoGrid() {
         <div className="md:hidden grid grid-cols-1 gap-7">
           {OFFER_CARDS.map((offer, index) => (
             <ScrollReveal key={offer.title} delay={index * 80} variant="zoom" distance={20}>
-              <article className="panel rounded-2xl p-5 space-y-5">
+              <MouseTilt className="panel rounded-2xl p-5 space-y-5" maxTilt={5} scale={1.006}>
                 <div className="relative h-40 rounded-xl overflow-hidden border border-stroke-subtle">
                   <Image
                     src={offer.image}
@@ -270,7 +271,7 @@ export default function BentoGrid() {
                 <Button variant={offer.tone} size="md" href={offer.href} className="w-full">
                   {offer.cta}
                 </Button>
-              </article>
+              </MouseTilt>
             </ScrollReveal>
           ))}
         </div>

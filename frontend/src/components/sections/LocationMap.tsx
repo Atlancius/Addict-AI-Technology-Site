@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 import Button from "@/components/ui/Button";
 import type { Location } from "@/lib/types";
 import { trackEvent } from "@/lib/analytics";
@@ -90,7 +91,7 @@ export default function LocationMap({ location }: { location?: Location }) {
         <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10">
           <div className="space-y-6">
             <ScrollReveal variant="left">
-              <div className="panel rounded-2xl p-7 space-y-5">
+              <MouseTilt className="panel rounded-2xl p-7 space-y-5" maxTilt={5} scale={1.005}>
                 <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Adresse
                 </h3>
@@ -103,16 +104,16 @@ export default function LocationMap({ location }: { location?: Location }) {
                 </p>
                 <div className="split-divider" />
                 <div className="flex gap-4">
-                  <Button
-                    variant="flame"
-                    size="sm"
-                    href={mapHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("click_directions_location", { placement: "location_map" })}
-                  >
-                    Itinéraire
-                  </Button>
+                    <Button
+                      variant="flame"
+                      size="sm"
+                      href={mapHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEvent("click_directions_location", { placement: "location_map" })}
+                    >
+                      Itinéraire
+                    </Button>
                   {data.phone && (
                     <Button
                       variant="outline"
@@ -124,7 +125,7 @@ export default function LocationMap({ location }: { location?: Location }) {
                     </Button>
                   )}
                 </div>
-              </div>
+              </MouseTilt>
             </ScrollReveal>
 
             <ScrollReveal delay={80} variant="left" distance={22}>
@@ -141,7 +142,7 @@ export default function LocationMap({ location }: { location?: Location }) {
             </ScrollReveal>
 
             <ScrollReveal delay={140} variant="zoom" distance={18}>
-              <div className="relative h-40 rounded-2xl overflow-hidden border border-stroke-subtle">
+              <MouseTilt className="relative h-40 rounded-2xl overflow-hidden border border-stroke-subtle" maxTilt={5} scale={1.005}>
                 <Image
                   src="/images/stock/repair-workbench.jpg"
                   alt="Atelier Addict à Folelli"
@@ -155,13 +156,17 @@ export default function LocationMap({ location }: { location?: Location }) {
                     Accueil atelier + conseil sur place
                   </p>
                 </div>
-              </div>
+              </MouseTilt>
             </ScrollReveal>
           </div>
 
           <div className="lg:col-span-1">
             <ScrollReveal variant="right">
-              <div className="w-full h-96 lg:h-full min-h-96 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
+              <MouseTilt
+                className="w-full h-96 lg:h-full min-h-96 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]"
+                maxTilt={4}
+                scale={1.004}
+              >
                 <iframe
                   src={mapEmbed}
                   width="100%"
@@ -172,7 +177,7 @@ export default function LocationMap({ location }: { location?: Location }) {
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Addict AI Technology – Folelli"
                 />
-              </div>
+              </MouseTilt>
             </ScrollReveal>
           </div>
         </div>

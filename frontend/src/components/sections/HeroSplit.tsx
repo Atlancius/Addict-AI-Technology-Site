@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 
 const PATH_CARDS = [
   {
@@ -87,40 +88,42 @@ export default function HeroSplit() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={120} className="panel rounded-3xl p-5 md:p-6 space-y-5" variant="right">
-            <div className="relative h-60 rounded-2xl overflow-hidden border border-stroke-subtle">
-              <Image
-                src="/images/stock/repair-workbench.jpg"
-                alt="Réparation smartphone en atelier"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 45vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
-            </div>
-            <div className="grid grid-cols-2 gap-5">
-              <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
+          <ScrollReveal delay={120} variant="right">
+            <MouseTilt className="panel rounded-3xl p-5 md:p-6 space-y-5" maxTilt={6} scale={1.008}>
+              <div className="relative h-60 rounded-2xl overflow-hidden border border-stroke-subtle">
                 <Image
-                  src="/images/stock/cafe-cozy.jpg"
-                  alt="Ambiance café manga cosy"
+                  src="/images/stock/repair-workbench.jpg"
+                  alt="Réparation smartphone en atelier"
                   fill
+                  priority
                   className="object-cover"
-                  sizes="(max-width: 1024px) 50vw, 22vw"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
               </div>
-              <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
-                <Image
-                  src="/images/stock/team-meeting.jpg"
-                  alt="Réunion stratégie digitale"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 50vw, 22vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+              <div className="grid grid-cols-2 gap-5">
+                <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
+                  <Image
+                    src="/images/stock/cafe-cozy.jpg"
+                    alt="Ambiance café manga cosy"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 50vw, 22vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                </div>
+                <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
+                  <Image
+                    src="/images/stock/team-meeting.jpg"
+                    alt="Réunion stratégie digitale"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 50vw, 22vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                </div>
               </div>
-            </div>
+            </MouseTilt>
           </ScrollReveal>
         </div>
 
@@ -132,7 +135,7 @@ export default function HeroSplit() {
               variant={index % 2 === 0 ? "left" : "right"}
               distance={22}
             >
-              <article className="panel rounded-2xl p-8 md:p-9 h-full">
+              <MouseTilt className="panel rounded-2xl p-8 md:p-9 h-full" maxTilt={5} scale={1.006}>
                 <p
                   className={`text-[0.64rem] font-heading uppercase tracking-[0.18em] ${
                     card.tone === "flame" ? "text-flame" : "text-metal"
@@ -162,7 +165,7 @@ export default function HeroSplit() {
                     {card.cta}
                   </Button>
                 </div>
-              </article>
+              </MouseTilt>
             </ScrollReveal>
           ))}
         </div>
