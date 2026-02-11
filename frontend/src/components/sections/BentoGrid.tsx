@@ -79,7 +79,8 @@ const OFFER_CARDS: OfferCard[] = [
 type StackState = {
   y: number;
   scale: number;
-  opacity: number;
+  blur: number;
+  brightness: number;
   zIndex: number;
   interactive: boolean;
 };
@@ -95,45 +96,57 @@ function computeStackState(
   between: number
 ): StackState {
   if (count <= 1) {
-    return { y: 0, scale: 1, opacity: 1, zIndex: 10, interactive: true };
+    return {
+      y: 0,
+      scale: 1,
+      blur: 0,
+      brightness: 1,
+      zIndex: 10,
+      interactive: true,
+    };
   }
 
   if (index < active) {
     const depth = active - index;
     return {
-      y: -depth * 14 - between * 6,
-      scale: 1 - Math.min(0.18, depth * 0.045 + between * 0.012),
-      opacity: 0.64,
-      zIndex: count - depth,
+      y: -depth * 18 - between * 10,
+      scale: 1 - Math.min(0.2, depth * 0.05 + between * 0.02),
+      blur: Math.min(1.15, depth * 0.34 + between * 0.14),
+      brightness: Math.max(0.72, 0.95 - depth * 0.08 - between * 0.03),
+      zIndex: count - depth - 1,
       interactive: false,
     };
   }
 
   if (index === active) {
     return {
-      y: -between * 12,
-      scale: 1 - between * 0.03,
-      opacity: 1,
-      zIndex: count + 5,
+      y: -between * 8,
+      scale: 1 - between * 0.018,
+      blur: 0,
+      brightness: 1,
+      zIndex: count + 10,
       interactive: true,
     };
   }
 
   if (index === active + 1) {
     return {
-      y: 76 - between * 76,
+      y: 92 - between * 92,
       scale: 0.93 + between * 0.07,
-      opacity: 0.74 + between * 0.26,
-      zIndex: count + 4,
-      interactive: between > 0.82,
+      blur: Math.max(0, 0.58 - between * 0.58),
+      brightness: 0.9 + between * 0.1,
+      zIndex: count + 9,
+      interactive: between > 0.88,
     };
   }
 
+  const depth = index - active - 1;
   return {
-    y: 92 + (index - active - 1) * 30,
-    scale: 0.9,
-    opacity: 0,
-    zIndex: count - index,
+    y: 120 + depth * 24,
+    scale: Math.max(0.8, 0.9 - depth * 0.028),
+    blur: Math.min(1.55, 0.88 + depth * 0.22),
+    brightness: Math.max(0.64, 0.84 - depth * 0.055),
+    zIndex: count - depth - 2,
     interactive: false,
   };
 }
@@ -191,10 +204,9 @@ export default function BentoGrid() {
 
   const stackStates = useMemo(() => {
     const count = OFFER_CARDS.length;
-    const step = count > 1 ? 1 / (count - 1) : 1;
     const activeFloat = effectiveProgress * (count - 1);
     const active = Math.min(count - 1, Math.max(0, Math.floor(activeFloat)));
-    const between = clamp((activeFloat - active) / Math.max(step, 0.0001), 0, 1);
+    const between = clamp(activeFloat - active, 0, 1);
 
     return OFFER_CARDS.map((_, index) =>
       computeStackState(index, count, active, between)
@@ -258,9 +270,9 @@ export default function BentoGrid() {
         </div>
 
         <div ref={stageRef} className="hidden md:block stack-stage">
-          <div className="h-[185vh]">
+          <div className="h-[205vh]">
             <div className="sticky top-28 h-[33rem]">
-              <div className="relative h-full">
+              <div className="relative h-full stack-deck">
                 {OFFER_CARDS.map((offer, index) => {
                   const state = stackStates[index];
                   return (
@@ -269,7 +281,7 @@ export default function BentoGrid() {
                       className="stack-card absolute inset-0 panel rounded-3xl p-5 md:p-6 grid grid-cols-[0.95fr_1.05fr] gap-6"
                       style={{
                         transform: `translate3d(0, ${state.y}px, 0) scale(${state.scale})`,
-                        opacity: state.opacity,
+                        filter: `blur(${state.blur}px) brightness(${state.brightness})`,
                         zIndex: state.zIndex,
                         pointerEvents: state.interactive ? "auto" : "none",
                       }}
