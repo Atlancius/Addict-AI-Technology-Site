@@ -419,19 +419,24 @@ body::after {
 
 .stack-card {
   transform-origin: 50% 0%;
-  will-change: transform, filter;
+  will-change: transform;
   transition:
     box-shadow 0.24s ease,
     border-color 0.24s ease;
-  border-color: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.18);
   background:
-    linear-gradient(172deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 34%, rgba(0, 0, 0, 0.4) 100%),
-    rgba(9, 14, 23, 0.88);
-  backdrop-filter: blur(0.3rem);
-  -webkit-backdrop-filter: blur(0.3rem);
+    linear-gradient(172deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 34%, rgba(0, 0, 0, 0.26) 100%),
+    #0b1321;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow:
-    0 1.75rem 3.75rem rgba(0, 0, 0, 0.5),
+    0 1.75rem 4rem rgba(0, 0, 0, 0.56),
+    0 0.25rem 0.9rem rgba(0, 0, 0, 0.28),
     inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1);
+}
+
+.stack-card::after {
+  opacity: 0.2;
 }
 
 .panel-soft {
