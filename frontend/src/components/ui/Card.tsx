@@ -10,15 +10,15 @@ interface CardProps {
 
 const variantClasses: Record<CardVariant, string> = {
   service:
-    "panel hover:border-ember/45 hover:-translate-y-1.5 hover:shadow-[0_1.25rem_3.4rem_rgba(0,0,0,0.42)] transition-all duration-300 group",
+    "panel hover:border-ember/55 hover:bg-[linear-gradient(170deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.04)_36%,rgba(0,0,0,0.36)_100%),rgba(74,68,66,0.9)]",
   bento:
-    "panel hover:border-flame/50 hover:shadow-[0_1.2rem_3.25rem_rgba(255,115,50,0.2)] hover:-translate-y-1.5 transition-all duration-300 group",
+    "panel hover:border-copper/55 hover:shadow-[0_1.2rem_3.2rem_rgba(122,50,51,0.24)]",
   pricing:
-    "panel hover:border-metal/55 hover:shadow-[0_1.125rem_3rem_rgba(16,30,49,0.45)] hover:-translate-y-1 transition-all duration-300",
+    "panel hover:border-copper/60 hover:shadow-[0_1.2rem_3.4rem_rgba(122,50,51,0.26)]",
   caseStudy:
-    "panel hover:border-metal/55 hover:shadow-[0_1.2rem_3.25rem_rgba(16,30,49,0.48)] hover:-translate-y-1 transition-all duration-300 group",
+    "panel hover:border-copper/65 hover:shadow-[0_1.3rem_3.6rem_rgba(122,50,51,0.28)]",
   repair:
-    "panel hover:border-flame/50 hover:shadow-[0_1.2rem_3.25rem_rgba(255,115,50,0.2)] hover:-translate-y-1 transition-all duration-300",
+    "panel hover:border-ember/55 hover:shadow-[0_1.1rem_3rem_rgba(91,36,39,0.3)]",
 };
 
 export default function Card({
@@ -27,16 +27,15 @@ export default function Card({
   children,
 }: CardProps) {
   return (
-    <div className={`rounded-2xl p-7 md:p-8 card-sheen ${variantClasses[variant]} ${className}`}>
+    <div className={`rounded-2xl p-7 md:p-8 card-sheen transition-all duration-300 ${variantClasses[variant]} ${className}`}>
       {children}
     </div>
   );
 }
 
-// Subcomponents for structured card content
 export function CardIcon({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`text-3xl text-text-primary mb-4 group-hover:text-flame transition-colors duration-300 ${className}`}>
+    <div className={`text-3xl text-copper mb-4 group-hover:text-copper-400 transition-colors duration-300 ${className}`}>
       {children}
     </div>
   );
@@ -51,9 +50,5 @@ export function CardTitle({ children, className = "" }: { children: ReactNode; c
 }
 
 export function CardDescription({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <p className={`text-text-muted text-sm leading-relaxed ${className}`}>
-      {children}
-    </p>
-  );
+  return <p className={`text-text-secondary text-sm leading-relaxed ${className}`}>{children}</p>;
 }

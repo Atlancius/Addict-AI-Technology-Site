@@ -166,7 +166,18 @@ export interface LeadB2BPayload {
   email: string;
   phone?: string;
   company_size?: "1-10" | "11-50" | "51-200" | "200+";
-  goal?: "automation" | "web" | "training" | "audit" | "other";
+  goal?:
+    | "marketing"
+    | "ia"
+    | "crm"
+    | "transition"
+    | "formation-pro"
+    | "formation-particulier"
+    | "automation"
+    | "web"
+    | "training"
+    | "audit"
+    | "other";
   problem: string;
   budget?: "unknown" | "<2k" | "2k-5k" | "5k-10k" | "10k+";
   consent: boolean;

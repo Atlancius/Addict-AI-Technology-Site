@@ -3,13 +3,14 @@ import { revalidatePath } from "next/cache";
 
 const DEFAULT_PATHS = [
   "/",
-  "/addict-2-0",
-  "/pro",
-  "/contact",
-  "/reparations",
   "/services",
-  "/realisations",
   "/formations",
+  "/realisations",
+  "/boutique",
+  "/a-propos",
+  "/contact",
+  "/mentions-legales",
+  "/confidentialite",
 ];
 
 const MAX_PATHS = 25;

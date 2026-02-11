@@ -1,24 +1,38 @@
 import Link from "next/link";
-import { type ButtonHTMLAttributes, type AnchorHTMLAttributes } from "react";
+import { type AnchorHTMLAttributes, type ButtonHTMLAttributes } from "react";
 
-type Variant = "flame" | "metal" | "outline" | "ghost";
+type Variant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "flame"
+  | "metal"
+  | "outline"
+  | "ghost";
+
 type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
+  primary:
+    "btn-sheen bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-700)_48%,var(--ember-500)_100%)] text-white border border-ember/45 shadow-[0_14px_34px_rgba(63,21,24,0.42)] hover:bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-500)_50%,var(--ember-400)_100%)] hover:shadow-[0_18px_40px_rgba(91,36,39,0.5)] hover:-translate-y-0.5",
+  secondary:
+    "bg-[linear-gradient(172deg,rgba(231,166,133,0.12)_0%,rgba(63,57,56,0.88)_100%)] text-copper border border-copper/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_30px_rgba(0,0,0,0.32)] hover:text-copper-400 hover:border-copper-400 hover:bg-[linear-gradient(172deg,rgba(231,166,133,0.18)_0%,rgba(63,57,56,0.95)_100%)] hover:-translate-y-0.5",
+  tertiary:
+    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-[linear-gradient(172deg,rgba(255,255,255,0.07)_0%,rgba(0,0,0,0.16)_100%)] hover:border-stroke-subtle",
   flame:
-    "btn-sheen bg-[linear-gradient(115deg,var(--ember-deep)_0%,var(--ember)_45%,var(--flame)_100%)] text-white border border-ember/45 shadow-[0_0.875rem_2.375rem_rgba(239,68,86,0.34)] hover:shadow-[0_1.125rem_2.875rem_rgba(255,115,50,0.42)] hover:-translate-y-0.5",
+    "btn-sheen bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-700)_48%,var(--ember-500)_100%)] text-white border border-ember/45 shadow-[0_14px_34px_rgba(63,21,24,0.42)] hover:bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-500)_50%,var(--ember-400)_100%)] hover:shadow-[0_18px_40px_rgba(91,36,39,0.5)] hover:-translate-y-0.5",
   metal:
-    "btn-sheen bg-[linear-gradient(120deg,rgba(93,134,178,0.25)_0%,rgba(18,27,43,0.92)_58%,rgba(27,37,53,0.95)_100%)] text-text-primary border border-metal/35 shadow-[0_0.875rem_2.2rem_rgba(73,108,145,0.28)] hover:text-text-primary hover:border-metal/60 hover:shadow-[0_1.125rem_2.75rem_rgba(93,134,178,0.35)] hover:-translate-y-0.5",
+    "bg-[linear-gradient(172deg,rgba(231,166,133,0.12)_0%,rgba(63,57,56,0.88)_100%)] text-copper border border-copper/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_30px_rgba(0,0,0,0.32)] hover:text-copper-400 hover:border-copper-400 hover:bg-[linear-gradient(172deg,rgba(231,166,133,0.18)_0%,rgba(63,57,56,0.95)_100%)] hover:-translate-y-0.5",
   outline:
-    "bg-[linear-gradient(175deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.02)_45%,rgba(0,0,0,0.28)_100%)] text-text-primary border border-stroke-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0.75rem_1.8rem_rgba(0,0,0,0.28)] hover:bg-[linear-gradient(175deg,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.03)_45%,rgba(0,0,0,0.32)_100%)] hover:border-flame/70 hover:text-text-primary hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1rem_2.2rem_rgba(0,0,0,0.34)] hover:-translate-y-0.5",
+    "bg-[linear-gradient(172deg,rgba(231,166,133,0.12)_0%,rgba(63,57,56,0.88)_100%)] text-copper border border-copper/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_30px_rgba(0,0,0,0.32)] hover:text-copper-400 hover:border-copper-400 hover:bg-[linear-gradient(172deg,rgba(231,166,133,0.18)_0%,rgba(63,57,56,0.95)_100%)] hover:-translate-y-0.5",
   ghost:
-    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-[linear-gradient(175deg,rgba(255,255,255,0.07)_0%,rgba(255,255,255,0.02)_48%,rgba(0,0,0,0.22)_100%)] hover:border-stroke-subtle hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0.7rem_1.7rem_rgba(0,0,0,0.26)]",
+    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-[linear-gradient(172deg,rgba(255,255,255,0.07)_0%,rgba(0,0,0,0.16)_100%)] hover:border-stroke-subtle",
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-4 py-2.5 text-[0.65rem]",
+  sm: "px-4 py-2.5 text-[0.66rem]",
   md: "px-6 py-3 text-[0.7rem]",
-  lg: "px-8 py-4 text-xs",
+  lg: "px-8 py-3.5 text-[0.74rem]",
 };
 
 type BaseProps = {
@@ -40,7 +54,7 @@ type ButtonAsLink = BaseProps &
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 export default function Button({
-  variant = "flame",
+  variant = "primary",
   size = "md",
   className = "",
   ...props
@@ -51,7 +65,7 @@ export default function Button({
     "font-heading font-semibold uppercase tracking-[0.14em]",
     "rounded-full transition-[transform,box-shadow,border-color,background,color] duration-300 cursor-pointer",
     "active:translate-y-0.5",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flame/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-0",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     variantClasses[variant],
     sizeClasses[size],
@@ -63,11 +77,7 @@ export default function Button({
     const isInternal = href.startsWith("/");
 
     if (isDisabled) {
-      return (
-        <span className={`${classes} opacity-50 pointer-events-none`}>
-          {children}
-        </span>
-      );
+      return <span className={`${classes} opacity-50 pointer-events-none`}>{children}</span>;
     }
 
     if (isInternal) {

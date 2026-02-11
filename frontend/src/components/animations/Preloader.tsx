@@ -61,7 +61,7 @@ export default function Preloader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] bg-[radial-gradient(circle_at_20%_10%,rgba(93,134,178,0.28),transparent_45%),radial-gradient(circle_at_80%_90%,rgba(255,115,50,0.28),transparent_50%),linear-gradient(180deg,#080d14,#070b11)] flex items-center justify-center transition-opacity duration-400 ease-out ${
+      className={`fixed inset-0 z-[100] bg-[radial-gradient(circle_at_20%_10%,rgba(167,111,99,0.28),transparent_45%),radial-gradient(circle_at_80%_90%,rgba(122,50,51,0.28),transparent_50%),linear-gradient(180deg,#2a2020,#221b1b)] flex items-center justify-center transition-opacity duration-400 ease-out ${
         closing ? "opacity-0" : "opacity-100"
       }`}
       aria-live="polite"
@@ -84,7 +84,7 @@ export default function Preloader() {
           Addict AI Technology
         </p>
         <div className="w-40 h-1 rounded-full bg-surface-3/70 overflow-hidden border border-stroke-subtle">
-          <span className="block h-full w-1/2 preloader-bar bg-[linear-gradient(90deg,var(--metal)_0%,var(--flame)_100%)]" />
+          <span className="block h-full w-1/2 preloader-bar bg-[linear-gradient(90deg,var(--ember-700)_0%,var(--copper-500)_100%)]" />
         </div>
       </div>
     </div>

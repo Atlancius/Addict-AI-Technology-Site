@@ -1,29 +1,16 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
-import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import LeadB2BForm from "@/components/forms/LeadB2BForm";
 import JsonLd from "@/components/seo/JsonLd";
-import {
-  buildBreadcrumbJsonLd,
-  buildCaseStudyJsonLd,
-} from "@/lib/jsonld";
-import {
-  getCaseStudiesWithFallback,
-  getCaseStudyBySlugWithFallback,
-  getLocationWithFallback,
-} from "@/lib/content";
-import { extractMediaUrl } from "@/lib/media";
-import { stripHtml } from "@/lib/text";
 import { canonicalFor } from "@/lib/seo";
+import { CASE_STUDIES, buildAuditHref, getCaseStudyBySlug } from "@/lib/hub-data";
 
 export async function generateStaticParams() {
-  const cases = await getCaseStudiesWithFallback();
-  return cases.map((item) => ({ slug: item.slug }));
+  return CASE_STUDIES.map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({
@@ -31,162 +18,84 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const caseStudy = await getCaseStudyBySlugWithFallback(params.slug);
+  const caseStudy = getCaseStudyBySlug(params.slug);
   if (!caseStudy) return { title: "Réalisation" };
 
-  const title = caseStudy.seo_title || caseStudy.title;
-  const description =
-    caseStudy.seo_description || stripHtml(caseStudy.problem || caseStudy.solution || "");
-  const canonical = canonicalFor(`/realisations/${caseStudy.slug}`);
-  const image = extractMediaUrl(caseStudy.cover_image) || "/opengraph-image";
-
   return {
-    title,
-    description,
+    title: caseStudy.title,
+    description: caseStudy.summary,
     alternates: {
-      canonical,
+      canonical: canonicalFor(`/realisations/${caseStudy.slug}`),
     },
     openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: image }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [image],
+      title: caseStudy.title,
+      description: caseStudy.summary,
+      url: canonicalFor(`/realisations/${caseStudy.slug}`),
+      images: [{ url: caseStudy.image }],
     },
   };
 }
 
-export default async function RealisationDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const caseStudy = await getCaseStudyBySlugWithFallback(params.slug);
-  const location = await getLocationWithFallback();
+export default function RealisationDetailPage({ params }: { params: { slug: string } }) {
+  const caseStudy = getCaseStudyBySlug(params.slug);
   if (!caseStudy) notFound();
-  const coverUrl = extractMediaUrl(caseStudy.cover_image);
-  const caseStudyJsonLd = buildCaseStudyJsonLd(caseStudy);
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: "Accueil", path: "/" },
-    { name: "Réalisations", path: "/realisations" },
-    { name: caseStudy.title, path: `/realisations/${caseStudy.slug}` },
-  ]);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: caseStudy.title,
+    description: caseStudy.summary,
+    abstract: caseStudy.impact,
+    creator: {
+      "@type": "Organization",
+      name: "Addict Hub",
+    },
+    url: canonicalFor(`/realisations/${caseStudy.slug}`),
+    keywords: caseStudy.tags.join(", "),
+  };
 
   return (
     <>
-      <JsonLd data={[caseStudyJsonLd, breadcrumbJsonLd]} />
+      <JsonLd data={jsonLd} />
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0">
-          <div className="max-w-5xl mx-auto px-6">
-            <ScrollReveal>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                {caseStudy.title}
-              </h1>
-              <p className="text-text-secondary text-lg">
-                {stripHtml(caseStudy.problem || "")}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {(caseStudy.tools || []).map((tool) => (
-                  <span
-                    key={tool}
-                    className="text-[0.64rem] font-heading uppercase tracking-[0.14em] px-3 py-1 border border-stroke-subtle rounded-full text-text-secondary"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-8">
-                <Button variant="outline" href="/realisations">
-                  Retour aux réalisations
-                </Button>
-              </div>
-            </ScrollReveal>
-            {coverUrl && (
-              <ScrollReveal delay={80}>
-                <div className="mt-10 overflow-hidden rounded-2xl border border-stroke-subtle">
-                  <Image
-                    src={coverUrl}
-                    alt={caseStudy.title}
-                    width={1200}
-                    height={680}
-                    className="w-full h-auto object-cover"
-                  />
+        <section className="pt-28 pb-20 md:pt-32 md:pb-24 surface-grid relative overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-deep via-bg-main to-bg-section" />
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.02fr_0.98fr] gap-10 items-center">
+            <ScrollReveal variant="left">
+              <div className="space-y-6">
+                <p className="eyebrow">Étude de cas</p>
+                <h1 className="section-title">{caseStudy.title}</h1>
+                <p className="section-lead">{caseStudy.summary}</p>
+                <p className="text-copper text-lg">{caseStudy.impact}</p>
+                <div className="flex flex-wrap gap-2">
+                  {caseStudy.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-border-soft bg-bg-main/55 px-3 py-1 accent-label text-[0.54rem] text-text-secondary"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </section>
-
-        <section className="py-20 bg-surface-1 section-shell">
-          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ScrollReveal>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Problème
-                </h3>
-                <p className="text-text-primary text-sm">
-                  {stripHtml(caseStudy.problem || "")}
-                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="primary" href={buildAuditHref("general")}>Demander un audit</Button>
+                  <Button variant="secondary" href="/realisations">Retour aux réalisations</Button>
+                </div>
               </div>
             </ScrollReveal>
-            <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Solution
-                </h3>
-                <p className="text-text-primary text-sm">
-                  {stripHtml(caseStudy.solution || "")}
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={160}>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Résultat
-                </h3>
-                <p className="text-text-primary text-sm">
-                  {stripHtml(caseStudy.results || "")}
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        <section id="contact-pro" className="py-20 bg-surface-0">
-          <div className="max-w-5xl mx-auto px-6">
-            <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
-                Un projet similaire ?
-              </h2>
-              <p className="text-text-muted mb-8 text-center">
-                On vous aide à cadrer, prioriser et livrer une solution claire.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button variant="metal" href="/pro#contact-pro">
-                  Demander un audit
-                </Button>
-                <Button variant="outline" href="/services">
-                  Voir les services
-                </Button>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-8 md:p-9 mt-10 max-w-3xl mx-auto">
-                <LeadB2BForm />
+            <ScrollReveal variant="right" delay={100}>
+              <div className="panel rounded-3xl p-5">
+                <div className="relative h-80 rounded-2xl overflow-hidden border border-border-soft">
+                  <Image src={caseStudy.image} alt={caseStudy.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-deep/78 to-transparent" />
+                </div>
               </div>
             </ScrollReveal>
           </div>
         </section>
       </main>
-      <MobileB2BBar phone={location.phone} auditHref="#contact-pro" />
       <Footer />
     </>
   );
 }
-
