@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
@@ -136,33 +137,61 @@ export default async function AddictB2C() {
           <div className="absolute -bottom-24 left-24 w-[32.5rem] h-[32.5rem] bg-ember/15 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
-            <ScrollReveal>
-              <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60 mb-6">
-                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
-                  B2C • Folelli • Corse
-                </span>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+              <ScrollReveal>
+                <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60 mb-6">
+                  <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
+                    B2C • Folelli • Corse
+                  </span>
+                </div>
 
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight mb-6">
-                Réparation rapide,
-                <br />
-                <span className="ember-text">boutique tech, café manga</span>
-              </h1>
+                <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight mb-6">
+                  Réparation rapide,
+                  <br />
+                  <span className="ember-text">boutique tech, café manga</span>
+                </h1>
 
-              <p className="text-text-secondary text-lg max-w-2xl mb-8 leading-relaxed">
-                Votre appareil a un problème ? On le diagnostique, on le répare,
-                et vous repartez tranquille. Avec garantie.
-              </p>
+                <p className="text-text-secondary text-lg max-w-2xl mb-8 leading-relaxed">
+                  Votre appareil a un problème ? On le diagnostique, on le répare,
+                  et vous repartez tranquille. Avec garantie.
+                </p>
 
-              <div className="flex flex-wrap gap-4">
-                <Button variant="flame" size="lg" href="#contact-b2c">
-                  Demander un devis
-                </Button>
-                <Button variant="outline" size="lg" href="#tarifs">
-                  Voir les tarifs
-                </Button>
-              </div>
-            </ScrollReveal>
+                <div className="flex flex-wrap gap-4">
+                  <Button variant="flame" size="lg" href="#contact-b2c">
+                    Demander un devis
+                  </Button>
+                  <Button variant="outline" size="lg" href="#tarifs">
+                    Voir les tarifs
+                  </Button>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={120}>
+                <div className="panel rounded-3xl p-4 space-y-4">
+                  <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
+                    <Image
+                      src="/images/stock/repair-workbench.jpg"
+                      alt="Réparation de smartphone en atelier"
+                      fill
+                      priority
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 38vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                  </div>
+                  <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
+                    <Image
+                      src="/images/stock/cafe-cozy.jpg"
+                      alt="Ambiance café cosy"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 38vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </section>
 

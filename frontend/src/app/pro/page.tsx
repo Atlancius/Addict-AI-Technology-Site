@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import MobileB2BBar from "@/components/sections/MobileB2BBar";
@@ -81,33 +82,61 @@ export default async function ProPage() {
           <div className="absolute -bottom-24 right-24 w-[32.5rem] h-[32.5rem] bg-ember/10 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
-            <ScrollReveal>
-              <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60 mb-6">
-                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
-                  B2B • Digital • Automatisation
-                </span>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+              <ScrollReveal>
+                <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60 mb-6">
+                  <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
+                    B2B • Digital • Automatisation
+                  </span>
+                </div>
 
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight mb-6">
-                Gagnez du temps,
-                <br />
-                <span className="metal-text">automatisez vos process</span>
-              </h1>
+                <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight mb-6">
+                  Gagnez du temps,
+                  <br />
+                  <span className="metal-text">automatisez vos process</span>
+                </h1>
 
-              <p className="text-text-secondary text-lg max-w-2xl mb-8 leading-relaxed">
-                Accompagnement digital complet : audit, automatisation IA, formation.
-                On transforme vos process pour que vous puissiez vous concentrer sur votre métier.
-              </p>
+                <p className="text-text-secondary text-lg max-w-2xl mb-8 leading-relaxed">
+                  Accompagnement digital complet : audit, automatisation IA, formation.
+                  On transforme vos process pour que vous puissiez vous concentrer sur votre métier.
+                </p>
 
-              <div className="flex flex-wrap gap-4">
-                <Button variant="metal" size="lg" href="#audit">
-                  Demander un audit
-                </Button>
-                <Button variant="outline" size="lg" href="#contact-pro">
-                  Planifier un RDV
-                </Button>
-              </div>
-            </ScrollReveal>
+                <div className="flex flex-wrap gap-4">
+                  <Button variant="metal" size="lg" href="#audit">
+                    Demander un audit
+                  </Button>
+                  <Button variant="outline" size="lg" href="#contact-pro">
+                    Planifier un RDV
+                  </Button>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={120}>
+                <div className="panel rounded-3xl p-4 space-y-4">
+                  <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
+                    <Image
+                      src="/images/stock/team-meeting.jpg"
+                      alt="Réunion d'équipe en entreprise"
+                      fill
+                      priority
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 38vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                  </div>
+                  <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
+                    <Image
+                      src="/images/stock/data-center.jpg"
+                      alt="Infrastructure data et automatisation"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 38vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </section>
 
