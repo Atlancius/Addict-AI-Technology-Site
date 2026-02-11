@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 
 export default function HeroSplit() {
@@ -214,6 +215,18 @@ export default function HeroSplit() {
               </span>
             </div>
 
+            <div className="relative h-40 sm:h-44 rounded-2xl overflow-hidden border border-stroke-subtle">
+              <Image
+                src="/images/stock/repair-phone.jpg"
+                alt="Technicien en réparation de smartphone"
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/10 to-transparent" />
+            </div>
+
             <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-[1.06]">
               Votre QG Tech
               <br />
@@ -267,6 +280,18 @@ export default function HeroSplit() {
               <span className="text-[0.62rem] font-heading font-medium tracking-[0.18em] text-metal uppercase">
                 IA · Automatisation · Formation
               </span>
+            </div>
+
+            <div className="relative h-40 sm:h-44 rounded-2xl overflow-hidden border border-stroke-subtle">
+              <Image
+                src="/images/stock/pro-workspace.jpg"
+                alt="Espace de travail professionnel pour projets digitaux"
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/10 to-transparent" />
             </div>
 
             <h2 className="font-heading text-4xl lg:text-5xl font-bold text-text-primary leading-[1.06]">
