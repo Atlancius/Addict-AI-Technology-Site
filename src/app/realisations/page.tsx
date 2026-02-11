@@ -6,6 +6,7 @@ import Footer from "@/components/sections/Footer";
 import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import CinematicHero from "@/components/sections/CinematicHero";
 import { getCaseStudiesWithFallback, getLocationWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
 import { extractMediaUrl } from "@/lib/media";
@@ -40,26 +41,38 @@ export default async function RealisationsPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0 surface-grid">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                Réalisations <span className="metal-text">Premium</span>
-              </h1>
-              <p className="text-text-secondary text-lg max-w-3xl">
-                Projets concrets, gains mesurables et solutions sur-mesure.
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+        <CinematicHero
+          eyebrow="Études de cas · B2B"
+          title="Réalisations"
+          accent="avec impact mesurable."
+          description="Explorez des projets livrés de bout en bout: cadrage, déploiement, adoption et résultats opérationnels."
+          tone="metal"
+          mainImage={{
+            src: "/images/stock/data-center.jpg",
+            alt: "Vue abstraite d'une infrastructure numérique moderne",
+          }}
+          sideImage={{
+            src: "/images/stock/pro-workspace.jpg",
+            alt: "Poste de travail orienté productivité",
+          }}
+          actions={[
+            { label: "Démarrer un projet", href: "/pro#contact-pro", variant: "metal" },
+            { label: "Parcourir les services", href: "/services", variant: "outline" },
+          ]}
+          metrics={[
+            { label: "Livrables", value: "Clairs et documentés" },
+            { label: "Pilotage", value: "Indicateurs avant/après" },
+            { label: "Adoption", value: "Formation + support" },
+          ]}
+        />
 
-        <section className="pb-20">
+        <section className="pb-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {caseStudies.map((caseStudy, i) => {
                 const coverUrl = extractMediaUrl(caseStudy.cover_image);
                 return (
-                  <ScrollReveal key={caseStudy.id} delay={i * 80}>
+                  <ScrollReveal key={caseStudy.id} delay={i * 80} variant={i % 2 === 0 ? "up" : "zoom"} distance={20}>
                     <Card variant="caseStudy" className="h-full flex flex-col">
                       {coverUrl && (
                         <div className="mb-4 overflow-hidden rounded-xl border border-stroke-subtle">

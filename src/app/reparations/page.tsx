@@ -5,6 +5,7 @@ import RepairsTable from "@/components/sections/RepairsTable";
 import Accordion from "@/components/ui/Accordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import MobileB2CBar from "@/components/sections/MobileB2CBar";
+import CinematicHero from "@/components/sections/CinematicHero";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd } from "@/lib/jsonld";
 import { getFaqsWithFallback, getLocationWithFallback, getRepairsWithFallback } from "@/lib/content";
@@ -47,22 +48,34 @@ export default async function ReparationsPage() {
       {faqJsonLd && <JsonLd data={faqJsonLd} />}
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0 surface-grid">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
-                <span className="ember-text">Réparations</span>
-              </h1>
-              <p className="text-text-secondary text-lg max-w-3xl">
-                Tarifs indicatifs &quot;à partir de&quot;. Pour un devis précis, contactez-nous ou passez au shop.
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+        <CinematicHero
+          eyebrow="Atelier B2C · Folelli"
+          title="Réparations"
+          accent="rapides et garanties."
+          description="Consultez les tarifs indicatifs, filtrez par modèle et obtenez un devis précis en quelques minutes."
+          tone="flame"
+          mainImage={{
+            src: "/images/stock/repair-workbench.jpg",
+            alt: "Technicien en intervention sur smartphone",
+          }}
+          sideImage={{
+            src: "/images/stock/repair-phone.jpg",
+            alt: "Détail d'une réparation de téléphone",
+          }}
+          actions={[
+            { label: "Demander un devis", href: "/contact#contact-b2c", variant: "flame" },
+            { label: "Voir Addict 2.0", href: "/addict-2-0", variant: "outline" },
+          ]}
+          metrics={[
+            { label: "Diagnostic", value: "Offert au comptoir" },
+            { label: "Garantie", value: "6 mois pièces & main d'œuvre" },
+            { label: "Délai", value: "Express selon stock" },
+          ]}
+        />
 
-        <section className="pb-20">
+        <section className="pb-24">
           <div className="max-w-7xl mx-auto px-6">
-            <ScrollReveal>
+            <ScrollReveal variant="up" distance={20}>
               <RepairsTable items={repairs} />
             </ScrollReveal>
           </div>
