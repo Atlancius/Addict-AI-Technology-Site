@@ -43,8 +43,6 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./cms:/srv/app
-      - strapi_node_modules:/srv/app/node_modules
       - strapi_uploads:/srv/app/public/uploads
     labels:
       - "traefik.enable=true"
@@ -85,7 +83,6 @@ services:
 
 volumes:
   pgdata:
-  strapi_node_modules:
   strapi_uploads:
 
 networks:

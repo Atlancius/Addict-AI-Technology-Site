@@ -1,5 +1,10 @@
 node_modules
 .tmp
 .cache
+dist
+build
+.strapi
+exports
+public/uploads
 .env
 .DS_Store

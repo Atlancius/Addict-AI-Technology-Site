@@ -5,7 +5,7 @@ RUN apk add --no-cache build-base python3 vips-dev
 WORKDIR /srv/app
 
 COPY package.json package-lock.json* ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 RUN npm run build

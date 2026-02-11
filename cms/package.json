@@ -34,6 +34,9 @@
     "node": ">=20.0.0 <=24.x.x",
     "npm": ">=6.0.0"
   },
+  "overrides": {
+    "axios": "1.13.5"
+  },
   "strapi": {
     "uuid": "c0423abb-7705-441a-b74a-0a81149f3f9e",
     "installId": "621ff2c65857259130864e68fb3955bc51be19b005b47daef4fa6eeba542437b"
