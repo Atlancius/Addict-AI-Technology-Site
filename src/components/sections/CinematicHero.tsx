@@ -67,11 +67,22 @@ export default function CinematicHero({
         <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 md:gap-10 items-center">
           <ScrollReveal variant="left" distance={26}>
             <div className="space-y-6 md:space-y-7">
-              <div className="hero-pill">
-                <span className={`h-1.5 w-1.5 rounded-full ${markerClass} animate-pulse`} />
-                <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
-                  {eyebrow}
-                </span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="relative h-14 w-14 rounded-xl border border-ember/45 bg-surface-2/85 overflow-hidden shadow-[0_0_1.6rem_rgba(239,68,86,0.28)]">
+                  <Image
+                    src="/images/brand/addict-mark-96.png"
+                    alt="Logo Addict"
+                    fill
+                    className="object-cover"
+                    sizes="56px"
+                  />
+                </div>
+                <div className="hero-pill">
+                  <span className={`h-1.5 w-1.5 rounded-full ${markerClass} animate-pulse`} />
+                  <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
+                    {eyebrow}
+                  </span>
+                </div>
               </div>
 
               <h1 className="font-heading text-[1.95rem] sm:text-[2.2rem] md:text-6xl font-bold text-text-primary leading-[0.98]">

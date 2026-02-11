@@ -115,9 +115,9 @@ html {
 body {
   background-color: var(--surface-0);
   background-image:
-    radial-gradient(56.25rem 37.5rem at 8% -10%, rgba(93, 134, 178, 0.28), transparent 65%),
-    radial-gradient(62.5rem 40.625rem at 94% 110%, rgba(255, 115, 50, 0.26), transparent 64%),
-    linear-gradient(180deg, #09101b 0%, #070b11 44%, #06090e 100%);
+    radial-gradient(58rem 40rem at 8% -10%, rgba(85, 117, 155, 0.2), transparent 66%),
+    radial-gradient(66rem 44rem at 94% 112%, rgba(255, 101, 41, 0.22), transparent 66%),
+    linear-gradient(180deg, #05070b 0%, #070a10 36%, #090d14 100%);
   color: var(--text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -133,7 +133,7 @@ body::before {
   background-image: url("/noise.svg");
   background-repeat: repeat;
   background-size: 18rem 18rem;
-  opacity: 0.07;
+  opacity: 0.05;
   pointer-events: none;
   mix-blend-mode: overlay;
   z-index: 0;
@@ -146,7 +146,7 @@ body::after {
   background:
     radial-gradient(circle at 55% -8%, rgba(255, 255, 255, 0.18), transparent 42%),
     radial-gradient(circle at 45% 115%, rgba(0, 0, 0, 0.8), transparent 55%);
-  opacity: 0.55;
+  opacity: 0.42;
   pointer-events: none;
   z-index: 0;
 }
@@ -271,7 +271,7 @@ body::after {
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 3.75rem 3.75rem;
-  opacity: 0.26;
+  opacity: 0.17;
   pointer-events: none;
   mask-image: radial-gradient(circle at 45% 22%, rgba(0, 0, 0, 0.92), transparent 72%);
   z-index: 0;
@@ -625,7 +625,7 @@ body::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 18% -12%, rgba(255, 255, 255, 0.08), transparent 42%);
+  background: radial-gradient(circle at 18% -12%, rgba(255, 255, 255, 0.05), transparent 44%);
   pointer-events: none;
   z-index: 0;
 }
