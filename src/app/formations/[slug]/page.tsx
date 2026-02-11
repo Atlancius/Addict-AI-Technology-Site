@@ -149,7 +149,7 @@ export default async function TrainingDetailPage({
         <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal>
-              <div className="panel rounded-2xl p-6">
+              <div className="panel rounded-2xl p-7">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Audience
                 </h3>
@@ -159,7 +159,7 @@ export default async function TrainingDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-6">
+              <div className="panel rounded-2xl p-7">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Format
                 </h3>
@@ -169,7 +169,7 @@ export default async function TrainingDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <div className="panel rounded-2xl p-6">
+              <div className="panel rounded-2xl p-7">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Durée
                 </h3>
@@ -194,7 +194,7 @@ export default async function TrainingDetailPage({
                   {(training.objectives || []).map((item) => (
                     <li
                       key={item}
-                      className="panel-soft p-4 text-text-secondary text-sm"
+                      className="panel-soft p-5 text-text-secondary text-sm"
                     >
                       <span className="text-metal mr-2">✓</span>
                       {item}
@@ -214,7 +214,7 @@ export default async function TrainingDetailPage({
                   {(training.prerequisites || []).map((item) => (
                     <li
                       key={item}
-                      className="panel-soft p-4 text-text-secondary text-sm"
+                      className="panel-soft p-5 text-text-secondary text-sm"
                     >
                       <span className="text-metal mr-2">✓</span>
                       {item}
@@ -234,7 +234,7 @@ export default async function TrainingDetailPage({
               </h2>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="panel rounded-2xl p-8 text-text-secondary text-sm leading-relaxed">
+              <div className="panel rounded-2xl p-8 md:p-9 text-text-secondary text-sm leading-relaxed">
                 {stripHtml(training.program_outline || training.description || "")}
               </div>
             </ScrollReveal>
@@ -252,7 +252,7 @@ export default async function TrainingDetailPage({
               </p>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="panel rounded-2xl p-8">
+              <div className="panel rounded-2xl p-8 md:p-9">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>

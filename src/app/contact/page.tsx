@@ -58,9 +58,9 @@ export default async function ContactPage() {
               </p>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <ScrollReveal>
-                <div className="panel rounded-2xl p-6 text-center space-y-3">
+                <div className="panel rounded-2xl p-7 text-center space-y-3">
                   <div className="inline-flex justify-center text-flame">
                     <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
                       <path d="M6 3h4l1 5-2.5 1.8a16 16 0 0 0 5.7 5.7L16 13l5 1v4l-2.2 2A18 18 0 0 1 4 5.2L6 3Z" />
@@ -79,7 +79,7 @@ export default async function ContactPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={100}>
-                <div className="panel rounded-2xl p-6 text-center space-y-3">
+                <div className="panel rounded-2xl p-7 text-center space-y-3">
                   <div className="inline-flex justify-center text-metal">
                     <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
                       <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -103,7 +103,7 @@ export default async function ContactPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={200}>
-                <div className="panel rounded-2xl p-6 text-center space-y-3">
+                <div className="panel rounded-2xl p-7 text-center space-y-3">
                   <div className="inline-flex justify-center text-text-primary">
                     <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
                       <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
@@ -139,7 +139,7 @@ export default async function ContactPage() {
                 </p>
               </ScrollReveal>
               <ScrollReveal>
-                <div className="panel rounded-2xl p-8">
+                <div className="panel rounded-2xl p-8 md:p-9">
                   <LeadB2CForm />
                 </div>
               </ScrollReveal>
@@ -155,7 +155,7 @@ export default async function ContactPage() {
                 </p>
               </ScrollReveal>
               <ScrollReveal>
-                <div className="panel rounded-2xl p-8">
+                <div className="panel rounded-2xl p-8 md:p-9">
                   <LeadB2BForm />
                 </div>
               </ScrollReveal>

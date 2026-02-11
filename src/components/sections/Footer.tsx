@@ -60,9 +60,9 @@ export default async function Footer() {
     <footer className="bg-surface-1/85 section-shell pt-12 pb-8 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 space-y-10">
-        <div className="panel rounded-2xl p-6 md:p-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div className="space-y-2">
+      <div className="max-w-7xl mx-auto px-6 space-y-12">
+        <div className="panel rounded-2xl p-8 md:p-9 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div className="space-y-3">
             <p className="eyebrow">Dernière étape</p>
             <h3 className="font-heading text-2xl md:text-3xl text-text-primary">
               Besoin d&apos;un diagnostic ou d&apos;un cadrage projet ?
@@ -72,7 +72,7 @@ export default async function Footer() {
               réparation ou transformation digitale.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-4">
             <Button variant="flame" href="/contact#contact-b2c">
               Réparation B2C
             </Button>
@@ -82,7 +82,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative">

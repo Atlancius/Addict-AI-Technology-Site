@@ -137,7 +137,7 @@ export default async function AddictB2C() {
           <div className="absolute -bottom-24 left-24 w-[32.5rem] h-[32.5rem] bg-ember/15 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
               <ScrollReveal>
                 <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60 mb-6">
                   <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
@@ -167,7 +167,7 @@ export default async function AddictB2C() {
               </ScrollReveal>
 
               <ScrollReveal delay={120}>
-                <div className="panel rounded-3xl p-4 space-y-4">
+                <div className="panel rounded-3xl p-5 md:p-6 space-y-5">
                   <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
                     <Image
                       src="/images/stock/repair-workbench.jpg"
@@ -198,7 +198,7 @@ export default async function AddictB2C() {
         {/* 3 Piliers */}
         <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {PILLARS.map((pillar, i) => (
                 <ScrollReveal key={pillar.title} delay={i * 100}>
                   <Card variant="service" className="h-full text-center">
@@ -227,7 +227,7 @@ export default async function AddictB2C() {
               </h2>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {PROCESS_STEPS.map((step, i) => (
                 <ScrollReveal key={step.step} delay={i * 100}>
                   <div className="text-center space-y-3">
@@ -255,7 +255,7 @@ export default async function AddictB2C() {
                 Réassurance & garantie
               </h2>
             </ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
                   title: "Garantie 6 mois",
@@ -271,7 +271,7 @@ export default async function AddictB2C() {
                 },
               ].map((item, i) => (
                 <ScrollReveal key={item.title} delay={i * 80}>
-                  <div className="card-sheen panel-soft p-6">
+                  <div className="card-sheen panel-soft p-7">
                     <h3 className="font-heading text-lg text-text-primary mb-2">
                       {item.title}
                     </h3>
@@ -328,7 +328,7 @@ export default async function AddictB2C() {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="panel rounded-2xl p-8">
+              <div className="panel rounded-2xl p-8 md:p-9">
                 <LeadB2CForm />
               </div>
             </ScrollReveal>

@@ -82,7 +82,7 @@ export default async function ProPage() {
           <div className="absolute -bottom-24 right-24 w-[32.5rem] h-[32.5rem] bg-ember/10 rounded-full blur-3xl -z-10" />
 
           <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
               <ScrollReveal>
                 <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60 mb-6">
                   <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
@@ -112,7 +112,7 @@ export default async function ProPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={120}>
-                <div className="panel rounded-3xl p-4 space-y-4">
+                <div className="panel rounded-3xl p-5 md:p-6 space-y-5">
                   <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
                     <Image
                       src="/images/stock/team-meeting.jpg"
@@ -152,7 +152,7 @@ export default async function ProPage() {
               </p>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {services.map((service, i) => (
                 <ScrollReveal key={service.id} delay={i * 100}>
                   <Card variant="pricing" className="h-full flex flex-col">
@@ -195,7 +195,7 @@ export default async function ProPage() {
               </h2>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {METHODOLOGY.map((step, i) => (
                 <ScrollReveal key={step.step} delay={i * 100}>
                   <div className="text-center space-y-3">
@@ -252,7 +252,7 @@ export default async function ProPage() {
               </p>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {caseStudies.map((caseStudy, i) => (
                 <ScrollReveal key={caseStudy.id} delay={i * 100}>
                   <Card variant="caseStudy" className="h-full">
@@ -310,7 +310,7 @@ export default async function ProPage() {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="panel rounded-2xl p-8">
+              <div className="panel rounded-2xl p-8 md:p-9">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>

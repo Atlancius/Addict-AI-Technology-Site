@@ -75,7 +75,7 @@ export default async function ReparationsPage() {
                 Réassurance
               </h2>
             </ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
                   title: "Garantie 6 mois",
@@ -91,7 +91,7 @@ export default async function ReparationsPage() {
                 },
               ].map((item, i) => (
                 <ScrollReveal key={item.title} delay={i * 80}>
-                  <div className="card-sheen panel-soft p-6">
+                  <div className="card-sheen panel-soft p-7">
                     <h3 className="font-heading text-lg text-text-primary mb-2">
                       {item.title}
                     </h3>

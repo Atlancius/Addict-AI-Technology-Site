@@ -47,7 +47,7 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {filtered.map((service) => (
           <Card key={service.id} variant="service" className="h-full flex flex-col">
             <CardTitle>{service.title}</CardTitle>
