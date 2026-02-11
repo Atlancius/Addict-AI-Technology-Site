@@ -1,159 +1,332 @@
-import Image from "next/image";
-import Link from "next/link";
-import Card, { CardIcon, CardTitle, CardDescription } from "@/components/ui/Card";
-import ScrollReveal from "@/components/animations/ScrollReveal";
+"use client";
 
-const BENTO_ITEMS = [
+import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import ScrollReveal from "@/components/animations/ScrollReveal";
+import Button from "@/components/ui/Button";
+
+type OfferTone = "flame" | "metal";
+
+type OfferCard = {
+  label: string;
+  title: string;
+  description: string;
+  points: string[];
+  href: string;
+  cta: string;
+  tone: OfferTone;
+  image: string;
+};
+
+const OFFER_CARDS: OfferCard[] = [
   {
-    accent: "flame",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M5 12h14M12 5v14" />
-        <circle cx="12" cy="12" r="9" />
-      </svg>
-    ),
-    title: "Réparation Express",
+    label: "B2C",
+    title: "Réparation Premium",
     description:
-      "Écran, batterie, connecteur — diagnostic gratuit, réparation rapide avec pièces testées.",
-    href: "/addict-2-0",
-    span: "lg:col-span-2",
+      "Interventions rapides en atelier avec diagnostic offert et procédure de test complète.",
+    points: ["Écran, batterie, connecteur", "Devis validé avant action", "Garantie 6 mois"],
+    href: "/addict-2-0#tarifs",
+    cta: "Voir les tarifs réparation",
+    tone: "flame",
     image: "/images/stock/repair-phone.jpg",
   },
   {
-    accent: "flame",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M4 8h12a4 4 0 0 1 0 8H6a4 4 0 0 1-2-8Z" />
-        <path d="M16 8h2a3 3 0 0 1 0 6h-2" />
-      </svg>
-    ),
-    title: "Café Manga",
+    label: "B2C",
+    title: "Boutique & Café Manga",
     description:
-      "Espace détente avec boissons et mangas. Attendez sur place ou faites un stop plaisir.",
+      "Un espace local agréable pour patienter, découvrir les accessoires tech et échanger avec l’équipe.",
+    points: ["Accessoires sélectionnés", "Conseil en boutique", "Ambiance café manga"],
     href: "/addict-2-0",
-    span: "",
+    cta: "Découvrir l’univers Addict 2.0",
+    tone: "flame",
     image: "/images/stock/cafe-cozy.jpg",
   },
   {
-    accent: "metal",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M7 7h10v10H7z" />
-        <path d="M4 12h3M17 12h3M12 4v3M12 17v3" />
-      </svg>
-    ),
-    title: "Automatisation IA",
+    label: "B2B",
+    title: "Audit & Roadmap 90 jours",
     description:
-      "Workflows connectés et agents IA pour réduire les tâches manuelles et accélérer l’exécution.",
-    href: "/pro",
-    span: "",
-    image: "/images/stock/data-center.jpg",
-  },
-  {
-    accent: "metal",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M4 19h16" />
-        <path d="M6 7h12l-6 8z" />
-      </svg>
-    ),
-    title: "Formations",
-    description:
-      "Parcours no-code, IA et automatisation. Objectifs clairs, exercices pratiques, support.",
-    href: "/formations",
-    span: "lg:col-span-2",
+      "Un cadrage opérationnel pour prioriser vos gains rapides et structurer votre transformation.",
+    points: ["Cartographie process", "Priorisation ROI", "Plan d’action concret"],
+    href: "/pro#audit",
+    cta: "Demander un audit",
+    tone: "metal",
     image: "/images/stock/team-meeting.jpg",
   },
   {
-    accent: "metal",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M6 6h12v12H6z" />
-        <path d="M9 9h6v6H9z" />
-      </svg>
-    ),
-    title: "Cas clients",
+    label: "B2B",
+    title: "Automatisation IA",
     description:
-      "KPIs concrets, gains de temps mesurés, documentation claire et transfert de compétences.",
-    href: "/realisations",
-    span: "",
-    image: "/images/stock/pro-workspace.jpg",
+      "Conception de workflows robustes pour réduire les tâches répétitives et accélérer vos équipes.",
+    points: ["Workflows no-code/API", "Agents IA utiles", "Suivi & amélioration continue"],
+    href: "/services",
+    cta: "Voir les services pro",
+    tone: "metal",
+    image: "/images/stock/data-center.jpg",
   },
   {
-    accent: "flame",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M4 7h16" />
-        <path d="M6 7v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7" />
-        <path d="M9 11h6" />
-      </svg>
-    ),
-    title: "Tarifs transparents",
+    label: "B2B",
+    title: "Formations Actionnables",
     description:
-      "Grille claire “à partir de”, délais annoncés, garantie et conseil avant toute décision.",
-    href: "/reparations",
-    span: "",
-    image: "/images/stock/repair-workbench.jpg",
+      "Montée en compétence interne sur no-code, IA et automatisation pour rendre vos équipes autonomes.",
+    points: ["Parcours adaptés", "Mises en situation", "Support post-formation"],
+    href: "/formations",
+    cta: "Voir les formations",
+    tone: "metal",
+    image: "/images/stock/pro-workspace.jpg",
   },
 ];
 
+type StackState = {
+  y: number;
+  scale: number;
+  opacity: number;
+  zIndex: number;
+  interactive: boolean;
+};
+
+function clamp(value: number, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function computeStackState(
+  index: number,
+  count: number,
+  active: number,
+  between: number
+): StackState {
+  if (count <= 1) {
+    return { y: 0, scale: 1, opacity: 1, zIndex: 10, interactive: true };
+  }
+
+  if (index < active) {
+    const depth = active - index;
+    return {
+      y: -depth * 14 - between * 6,
+      scale: 1 - Math.min(0.18, depth * 0.045 + between * 0.012),
+      opacity: 0.64,
+      zIndex: count - depth,
+      interactive: false,
+    };
+  }
+
+  if (index === active) {
+    return {
+      y: -between * 12,
+      scale: 1 - between * 0.03,
+      opacity: 1,
+      zIndex: count + 5,
+      interactive: true,
+    };
+  }
+
+  if (index === active + 1) {
+    return {
+      y: 76 - between * 76,
+      scale: 0.93 + between * 0.07,
+      opacity: 0.74 + between * 0.26,
+      zIndex: count + 4,
+      interactive: between > 0.82,
+    };
+  }
+
+  return {
+    y: 92 + (index - active - 1) * 30,
+    scale: 0.9,
+    opacity: 0,
+    zIndex: count - index,
+    interactive: false,
+  };
+}
+
 export default function BentoGrid() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      return;
+    }
+
+    let raf = 0;
+    const update = () => {
+      const node = stageRef.current;
+      if (!node) return;
+
+      const rect = node.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const startOffset = vh * 0.18;
+      const scrollDistance = Math.max(rect.height - vh * 0.55, 1);
+      const rawProgress = (startOffset - rect.top) / scrollDistance;
+      setProgress(clamp(rawProgress, 0, 1));
+    };
+
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        update();
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
+  }, [reducedMotion]);
+
+  const effectiveProgress = reducedMotion ? 1 : progress;
+
+  const stackStates = useMemo(() => {
+    const count = OFFER_CARDS.length;
+    const step = count > 1 ? 1 / (count - 1) : 1;
+    const activeFloat = effectiveProgress * (count - 1);
+    const active = Math.min(count - 1, Math.max(0, Math.floor(activeFloat)));
+    const between = clamp((activeFloat - active) / Math.max(step, 0.0001), 0, 1);
+
+    return OFFER_CARDS.map((_, index) =>
+      computeStackState(index, count, active, between)
+    );
+  }, [effectiveProgress]);
+
   return (
     <section className="py-24 bg-surface-1 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12 space-y-3">
-            <p className="eyebrow">Expertises & services</p>
+            <p className="eyebrow">Offres animées</p>
             <h2 className="section-title">
-              Des offres concrètes,
-              <span className="block metal-text">structurées pour agir vite.</span>
+              Cartes d’offres en
+              <span className="block ember-text">empilement au scroll.</span>
             </h2>
             <p className="section-lead">
-              Côté particulier comme côté entreprise, chaque service est pensé
-              pour un résultat clair, mesurable et durable.
+              Descends: chaque offre vient au premier plan, pendant que les
+              précédentes se replient proprement en arrière-plan.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {BENTO_ITEMS.map((item, index) => (
-            <ScrollReveal key={item.title} delay={index * 70} className={item.span}>
-              <Card variant="bento" className="h-full flex flex-col p-4 md:p-5">
-                <div className="relative h-36 rounded-xl overflow-hidden border border-stroke-subtle mb-5">
+        <div className="md:hidden grid grid-cols-1 gap-5">
+          {OFFER_CARDS.map((offer, index) => (
+            <ScrollReveal key={offer.title} delay={index * 80}>
+              <article className="panel rounded-2xl p-4 space-y-4">
+                <div className="relative h-40 rounded-xl overflow-hidden border border-stroke-subtle">
                   <Image
-                    src={item.image}
-                    alt={item.title}
+                    src={offer.image}
+                    alt={offer.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    sizes="100vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
                 </div>
-                <CardIcon>
-                  <span className={`text-2xl ${item.accent === "metal" ? "text-metal" : "text-flame"}`}>
-                    {item.icon}
-                  </span>
-                </CardIcon>
-                <CardTitle>{item.title}</CardTitle>
-                <CardDescription>{item.description}</CardDescription>
-                <div className="mt-6">
-                  <Link
-                    href={item.href}
-                    className="text-[0.68rem] font-heading uppercase tracking-[0.16em] text-flame hover:text-ember transition-colors"
-                  >
-                    Découvrir →
-                  </Link>
-                </div>
-              </Card>
+                <p
+                  className={`text-[0.64rem] font-heading uppercase tracking-[0.18em] ${
+                    offer.tone === "flame" ? "text-flame" : "text-metal"
+                  }`}
+                >
+                  {offer.label}
+                </p>
+                <h3 className="font-heading text-2xl text-text-primary leading-tight">{offer.title}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">{offer.description}</p>
+                <ul className="space-y-1.5 text-sm text-text-secondary">
+                  {offer.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2">
+                      <span className={offer.tone === "flame" ? "text-flame" : "text-metal"}>✓</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant={offer.tone} size="md" href={offer.href} className="w-full">
+                  {offer.cta}
+                </Button>
+              </article>
             </ScrollReveal>
           ))}
         </div>
 
+        <div ref={stageRef} className="hidden md:block stack-stage">
+          <div className="h-[185vh]">
+            <div className="sticky top-28 h-[33rem]">
+              <div className="relative h-full">
+                {OFFER_CARDS.map((offer, index) => {
+                  const state = stackStates[index];
+                  return (
+                    <article
+                      key={offer.title}
+                      className="stack-card absolute inset-0 panel rounded-3xl p-5 md:p-6 grid grid-cols-[0.95fr_1.05fr] gap-6"
+                      style={{
+                        transform: `translate3d(0, ${state.y}px, 0) scale(${state.scale})`,
+                        opacity: state.opacity,
+                        zIndex: state.zIndex,
+                        pointerEvents: state.interactive ? "auto" : "none",
+                      }}
+                    >
+                      <div className="relative rounded-2xl overflow-hidden border border-stroke-subtle">
+                        <Image
+                          src={offer.image}
+                          alt={offer.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1200px) 45vw, 36vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-surface-0/72 via-surface-0/10 to-transparent" />
+                      </div>
+                      <div className="flex flex-col">
+                        <p
+                          className={`text-[0.64rem] font-heading uppercase tracking-[0.18em] ${
+                            offer.tone === "flame" ? "text-flame" : "text-metal"
+                          }`}
+                        >
+                          {offer.label}
+                        </p>
+                        <h3 className="font-heading text-4xl text-text-primary mt-3 leading-[1.02]">
+                          {offer.title}
+                        </h3>
+                        <p className="text-base text-text-secondary leading-relaxed mt-4">
+                          {offer.description}
+                        </p>
+                        <ul className="space-y-2.5 text-sm text-text-secondary mt-5">
+                          {offer.points.map((point) => (
+                            <li key={point} className="flex items-start gap-2">
+                              <span className={offer.tone === "flame" ? "text-flame" : "text-metal"}>
+                                ✓
+                              </span>
+                              <span>{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-auto pt-6">
+                          <Button variant={offer.tone} size="md" href={offer.href}>
+                            {offer.cta}
+                          </Button>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: "Diagnostic initial", value: "Offert en boutique" },
-            { label: "Garantie atelier", value: "6 mois pièces & main d'œuvre" },
-            { label: "Tarification", value: "Devis validé avant intervention" },
+            { label: "Expérience animation", value: "Empilement progressif" },
+            { label: "Parcours mobile", value: "Cards verticales fluides" },
+            { label: "Parcours desktop", value: "Stack sticky immersif" },
           ].map((item, index) => (
             <ScrollReveal key={item.label} delay={index * 60}>
               <div className="metric-chip h-full text-center">
