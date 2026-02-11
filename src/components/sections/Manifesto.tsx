@@ -1,4 +1,5 @@
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 
 const PRINCIPLES = [
   {
@@ -27,7 +28,7 @@ export default function Manifesto() {
       <div className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 items-start">
           <ScrollReveal variant="left">
-            <div className="panel rounded-2xl p-8 md:p-9 space-y-6">
+            <MouseTilt className="panel rounded-2xl p-8 md:p-9 space-y-6" maxTilt={4.5} scale={1.004}>
               <p className="eyebrow">Manifeste Addict</p>
               <h2 className="section-title">
                 Un atelier local,
@@ -42,7 +43,7 @@ export default function Manifesto() {
               <p className="text-xs uppercase tracking-[0.16em] text-text-muted font-heading">
                 &quot;Simple à comprendre. Solide à l&apos;usage.&quot;
               </p>
-            </div>
+            </MouseTilt>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
@@ -53,7 +54,7 @@ export default function Manifesto() {
                 variant="zoom"
                 distance={20}
               >
-                <article className="panel-soft h-full p-7">
+                <MouseTilt className="panel-soft h-full p-7" maxTilt={4} scale={1.004}>
                   <p className="font-heading text-[0.64rem] tracking-[0.18em] uppercase text-text-muted">
                     Axe {item.id}
                   </p>
@@ -63,7 +64,7 @@ export default function Manifesto() {
                   <p className="text-sm text-text-secondary leading-relaxed">
                     {item.description}
                   </p>
-                </article>
+                </MouseTilt>
               </ScrollReveal>
             ))}
           </div>

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import MouseTilt from "@/components/animations/MouseTilt";
 import type { Service } from "@/lib/types";
 import { stripHtml } from "@/lib/text";
 
@@ -32,7 +33,7 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
   return (
     <div className="space-y-8">
       <ScrollReveal variant="soft" distance={14}>
-        <div className="panel rounded-2xl p-4">
+        <MouseTilt className="panel rounded-2xl p-4" maxTilt={4} scale={1.003}>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
@@ -49,7 +50,7 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
               </button>
             ))}
           </div>
-        </div>
+        </MouseTilt>
       </ScrollReveal>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

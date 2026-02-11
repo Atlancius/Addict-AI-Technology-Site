@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import MouseTilt from "@/components/animations/MouseTilt";
 import { getLocationWithFallback } from "@/lib/content";
 import type { Location } from "@/lib/types";
 
@@ -61,7 +62,11 @@ export default async function Footer() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 space-y-12">
-        <div className="panel rounded-2xl p-8 md:p-9 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <MouseTilt
+          className="panel rounded-2xl p-8 md:p-9 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8"
+          maxTilt={4}
+          scale={1.003}
+        >
           <div className="space-y-3">
             <p className="eyebrow">Dernière étape</p>
             <h3 className="font-heading text-2xl md:text-3xl text-text-primary">
@@ -80,7 +85,7 @@ export default async function Footer() {
               Projet B2B
             </Button>
           </div>
-        </div>
+        </MouseTilt>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-4">
