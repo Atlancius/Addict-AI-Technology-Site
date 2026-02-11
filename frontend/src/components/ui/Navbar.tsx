@@ -6,7 +6,7 @@ import Link from "next/link";
 import Button from "./Button";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "Accueil" },
   { href: "/addict-2-0", label: "Addict 2.0" },
   { href: "/pro", label: "Pro" },
   { href: "/services", label: "Services" },
@@ -18,6 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuId = "mobile-navigation";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -28,41 +29,63 @@ export default function Navbar() {
 
   useEffect(() => {
     const menu = menuRef.current;
-    if (!mobileOpen || !menu) return;
+    if (!menu) return;
 
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
     if (prefersReduced) {
-      gsap.set(menu, { opacity: 1 });
+      gsap.set(menu, { opacity: mobileOpen ? 1 : 0 });
       gsap.set(menu.querySelectorAll("[data-menu-item]"), {
-        opacity: 1,
+        opacity: mobileOpen ? 1 : 0,
         y: 0,
       });
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        menu,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: "power2.out" }
-      );
-      gsap.fromTo(
-        menu.querySelectorAll("[data-menu-item]"),
-        { opacity: 0, y: 12 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power3.out",
-        }
-      );
+      if (mobileOpen) {
+        gsap.fromTo(
+          menu,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.28, ease: "power2.out" }
+        );
+        gsap.fromTo(
+          menu.querySelectorAll("[data-menu-item]"),
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.07,
+            ease: "power3.out",
+          }
+        );
+      } else {
+        gsap.to(menu.querySelectorAll("[data-menu-item]"), {
+          opacity: 0,
+          y: 10,
+          duration: 0.2,
+          stagger: { each: 0.03, from: "end" },
+          ease: "power2.in",
+        });
+        gsap.to(menu, {
+          opacity: 0,
+          duration: 0.22,
+          ease: "power2.in",
+        });
+      }
     }, menu);
 
     return () => ctx.revert();
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [mobileOpen]);
 
   return (
@@ -124,6 +147,8 @@ export default function Navbar() {
           className="md:hidden text-text-primary p-2"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
+          aria-expanded={mobileOpen}
+          aria-controls={menuId}
         >
           {mobileOpen ? (
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -138,35 +163,49 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <div
-          ref={menuRef}
-          className="md:hidden fixed inset-0 z-40 glass-panel border-t border-stroke-subtle"
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-surface-0/80 via-surface-1/70 to-surface-0/90" />
-          <nav className="relative flex flex-col px-6 pt-28 pb-10 gap-6 h-full">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                data-menu-item
-                className="text-base font-heading font-medium uppercase tracking-wider text-text-secondary hover:text-flame transition-colors py-2"
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="flex flex-col gap-3 pt-6 border-t border-stroke-subtle" data-menu-item>
-              <Button variant="flame" size="md" href="/addict-2-0" className="w-full">
-                Réparer
-              </Button>
-              <Button variant="metal" size="md" href="/pro" className="w-full">
-                Audit
-              </Button>
-            </div>
-          </nav>
-        </div>
-      )}
+      <div
+        id={menuId}
+        ref={menuRef}
+        aria-hidden={!mobileOpen}
+        className={`md:hidden fixed inset-0 z-40 glass-panel border-t border-stroke-subtle transition-opacity duration-200 ${
+          mobileOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-surface-0/80 via-surface-1/70 to-surface-0/90" />
+        <nav className="relative flex flex-col px-6 pt-28 pb-10 gap-6 h-full">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              data-menu-item
+              className="text-base font-heading font-medium uppercase tracking-wider text-text-secondary hover:text-flame transition-colors py-2"
+              onClick={() => setMobileOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="flex flex-col gap-3 pt-6 border-t border-stroke-subtle" data-menu-item>
+            <Button
+              variant="flame"
+              size="md"
+              href="/addict-2-0"
+              className="w-full"
+              onClick={() => setMobileOpen(false)}
+            >
+              Réparer
+            </Button>
+            <Button
+              variant="metal"
+              size="md"
+              href="/pro"
+              className="w-full"
+              onClick={() => setMobileOpen(false)}
+            >
+              Audit
+            </Button>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }

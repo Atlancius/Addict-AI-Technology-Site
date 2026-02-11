@@ -31,16 +31,18 @@ export default function TrustBar() {
                   {item.label}
                 </Badge>
               ))}
-              <Badge variant="default">Qualiopi : en cours</Badge>
+              <Badge variant="default">Devis clair avant intervention</Badge>
             </div>
 
-            {/* Tool logos (text-based for now) */}
-            <div className="relative overflow-hidden max-w-full">
+            <div className="relative overflow-hidden max-w-full space-y-2">
+              <p className="text-[0.6875rem] font-heading uppercase tracking-[0.18em] text-text-3 text-center">
+                Outils maîtrisés
+              </p>
               <div className="flex flex-wrap items-center gap-6 justify-center">
                 {TOOLS.map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs font-heading font-medium text-text-muted/50 uppercase tracking-wider"
+                    className="text-xs font-heading font-medium text-text-2/80 uppercase tracking-wider"
                   >
                     {tool}
                   </span>

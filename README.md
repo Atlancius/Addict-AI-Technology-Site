@@ -67,6 +67,8 @@ docker compose restart frontend
 - `REVALIDATE_SECRET`
 - `NEXT_PUBLIC_STRAPI_URL`
 - `STRAPI_API_TOKEN`
+- `NEXT_PUBLIC_GA_ID` (optionnel, GA4)
+- `SITE_BUILD_DATE` (optionnel, ISO date pour sitemap)
 - `FRONT_DOMAIN` / `CMS_DOMAIN` / `CADDY_EMAIL`
 
 ## Démarrage rapide (Frontend local)
@@ -96,7 +98,14 @@ Configurer `.env` pour pointer vers PostgreSQL.
 - `POST /api/leads/b2c`
 - `POST /api/leads/b2b`
 
-Anti-spam : honeypot + rate limit en mémoire.
+Anti-spam : honeypot + validation renforcée + rate limit en mémoire (IP + User-Agent).
+
+## Analytics (optionnel)
+Si vous utilisez GA4, ajoutez :
+```bash
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+Sinon, laissez la variable vide pour désactiver le tracking.
 
 ## Revalidation (webhook)
 `POST /api/revalidate` avec header `x-revalidate-secret` ou query `?secret=`
@@ -135,3 +144,17 @@ Si TLS ne répond pas :
 - Vérifier l’entrypoint Traefik utilisé (ex: `websecure`).
 - Vérifier qu’un `certResolver` est configuré côté Traefik.
 - Vérifier que Traefik écoute bien sur 80/443.
+
+## Mise à jour VPS
+```bash
+cd /chemin/vers/le/repo
+git pull origin <votre-branche>
+docker compose up -d --build frontend
+docker compose up -d --build strapi
+docker compose ps
+```
+Puis vérifier :
+```bash
+curl -I https://addictai.tech
+curl -I https://cms.addictai.tech
+```

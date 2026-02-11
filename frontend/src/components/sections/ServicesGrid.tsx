@@ -68,7 +68,7 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
 
       {filtered.length === 0 && (
         <div className="text-center text-text-muted text-sm">
-          Aucun service pour cette categorie.
+          Aucun service pour cette catégorie.
         </div>
       )}
     </div>

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Chakra_Petch, Plus_Jakarta_Sans } from "next/font/google";
+import AnalyticsScripts from "@/components/analytics/AnalyticsScripts";
+import ScrollDepthTracker from "@/components/analytics/ScrollDepthTracker";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
@@ -37,12 +39,21 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: siteUrl,
     siteName: "Addict AI Technology",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Addict AI Technology - Réparation et solutions digitales",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Addict — Tech, Réparation & Innovation | Folelli, Corse",
     description:
       "Réparation mobile & PC, boutique tech, café manga. Accompagnement digital, IA et automatisation pour les pros. Folelli, Corse.",
+    images: ["/twitter-image"],
   },
   robots: {
     index: true,
@@ -60,6 +71,8 @@ export default function RootLayout({
       <body
         className={`${chakraPetch.variable} ${plusJakarta.variable} antialiased`}
       >
+        <AnalyticsScripts />
+        <ScrollDepthTracker />
         {children}
       </body>
     </html>

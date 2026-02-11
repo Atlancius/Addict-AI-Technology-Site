@@ -10,6 +10,8 @@ Frontend (`frontend/.env.local` ou `.env`):
 - `NEXT_PUBLIC_STRAPI_URL`
 - `STRAPI_API_TOKEN`
 - `REVALIDATE_SECRET`
+- `NEXT_PUBLIC_GA_ID` (optionnel)
+- `SITE_BUILD_DATE` (optionnel, format ISO)
 
 CMS (`cms/.env`):
 - `DATABASE_CLIENT=postgres`
@@ -37,6 +39,21 @@ npm run develop
 ## Docker Compose
 ```bash
 docker compose up -d --build
+```
+
+## Mise à jour production (VPS)
+```bash
+cd /chemin/vers/le/repo
+git pull origin <votre-branche>
+docker compose up -d --build frontend
+docker compose up -d --build strapi
+docker compose ps
+```
+
+Contrôles rapides :
+```bash
+curl -I https://addictai.tech
+curl -I https://cms.addictai.tech
 ```
 
 ## Seed Strapi (auto)

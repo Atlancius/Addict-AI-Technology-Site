@@ -2,13 +2,20 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import Accordion from "@/components/ui/Accordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import LeadB2BForm from "@/components/forms/LeadB2BForm";
 import JsonLd from "@/components/seo/JsonLd";
-import { buildFaqJsonLd } from "@/lib/jsonld";
+import {
+  buildBreadcrumbJsonLd,
+  buildCourseJsonLd,
+  buildFaqJsonLd,
+} from "@/lib/jsonld";
 import {
   getFaqsWithFallback,
+  getLocationWithFallback,
   getTrainingBySlugWithFallback,
   getTrainingsWithFallback,
 } from "@/lib/content";
@@ -53,7 +60,7 @@ export async function generateMetadata({
       url: canonical,
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
     },
@@ -67,6 +74,7 @@ export default async function TrainingDetailPage({
 }) {
   let training: TrainingWithFaqs | null = null;
   let faqItems: Array<{ question: string; answer: string }> = [];
+  const location = await getLocationWithFallback();
 
   try {
     const res = await getTrainingBySlug(params.slug);
@@ -99,10 +107,17 @@ export default async function TrainingDetailPage({
   }
 
   const faqJsonLd = faqItems.length ? buildFaqJsonLd(faqItems) : null;
+  const courseJsonLd = buildCourseJsonLd(training);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Accueil", path: "/" },
+    { name: "Formations", path: "/formations" },
+    { name: training.title, path: `/formations/${training.slug}` },
+  ]);
+  const jsonLdPayload = [courseJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 
   return (
     <>
-      {faqJsonLd && <JsonLd data={faqJsonLd} />}
+      <JsonLd data={jsonLdPayload} />
       <Navbar />
       <main>
         <section className="pt-28 pb-16 bg-surface-0 surface-grid">
@@ -226,11 +241,29 @@ export default async function TrainingDetailPage({
           </div>
         </section>
 
+        <section id="contact-pro" className="py-20 bg-surface-1 border-y border-stroke-subtle">
+          <div className="max-w-3xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
+                Réserver une session
+              </h2>
+              <p className="text-text-muted mb-8 text-center">
+                Partagez votre contexte d&apos;équipe, vos objectifs et vos contraintes.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal>
+              <div className="glass-panel rounded-sm p-8">
+                <LeadB2BForm />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
         <section className="py-20 bg-surface-0">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
-                Questions frequentes
+                Questions fréquentes
               </h2>
             </ScrollReveal>
             <ScrollReveal>
@@ -239,7 +272,9 @@ export default async function TrainingDetailPage({
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} auditHref="#contact-pro" />
       <Footer />
     </>
   );
 }
+

@@ -417,7 +417,7 @@ export const fallbackFaqsB2B: Faq[] = [
     scope: "b2b",
     question: "Proposez-vous du financement pour les formations ?",
     answer:
-      "Nos formations sont en cours de certification Qualiopi. Contactez-nous pour discuter des options.",
+      "Selon votre situation, plusieurs dispositifs de prise en charge peuvent être étudiés. Contactez-nous pour en discuter.",
     sort_order: 5,
     createdAt: timestamp,
     updatedAt: timestamp,
@@ -467,8 +467,8 @@ export const fallbackServices: Service[] = [
       "Workflows robustes, intégrations API et automatisations IA pour gagner des heures.",
     description: "",
     deliverables: [
-      "Workflows automatises",
-      "Integrations API",
+      "Workflows automatisés",
+      "Intégrations API",
       "Documentation & formation",
     ],
     duration_estimate: "2-6 semaines",
@@ -516,7 +516,7 @@ export const fallbackCaseStudies: CaseStudy[] = [
       "Reporting manuel dispersé entre plusieurs outils et trop chronophage.",
     solution:
       "Automatisation des flux via Make + Airtable, consolidation des KPIs.",
-    results: "10h/semaine économisées et meilleure fiabilite des données.",
+    results: "10h/semaine économisées et meilleure fiabilité des données.",
     tools: ["Make", "Airtable", "Google Sheets"],
     cover_image: undefined,
     sort_order: 1,
@@ -531,9 +531,9 @@ export const fallbackCaseStudies: CaseStudy[] = [
     slug: "crm-agence",
     client_type: "Agence",
     problem:
-      "Perte d'informations client et absence de suivi des opportunites.",
+      "Perte d'informations client et absence de suivi des opportunités.",
     solution: "Mise en place d'un CRM sur mesure et automatisations emails.",
-    results: "Suivi unifie et cycle de vente accelere.",
+    results: "Suivi unifié et cycle de vente accéléré.",
     tools: ["Notion", "Zapier"],
     cover_image: undefined,
     sort_order: 2,

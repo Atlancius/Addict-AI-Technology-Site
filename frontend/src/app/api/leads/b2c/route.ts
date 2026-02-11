@@ -5,6 +5,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW = 60_000;
+const SPAM_LINK_REGEX = /(https?:\/\/|www\.)/i;
 
 function getClientIp(request: NextRequest) {
   const realIp = request.headers.get("x-real-ip");
@@ -12,6 +13,23 @@ function getClientIp(request: NextRequest) {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
   return "unknown";
+}
+
+function getClientFingerprint(request: NextRequest) {
+  const ip = getClientIp(request);
+  const ua = request.headers.get("user-agent") || "unknown";
+  const stableId = ip !== "unknown" ? ip : ua.slice(0, 120);
+  return { stableId, ua };
+}
+
+function withRateHeaders(
+  response: NextResponse,
+  rate: { remaining: number; resetAt: number }
+) {
+  response.headers.set("X-RateLimit-Limit", String(RATE_LIMIT_MAX));
+  response.headers.set("X-RateLimit-Remaining", String(rate.remaining));
+  response.headers.set("X-RateLimit-Reset", String(rate.resetAt));
+  return response;
 }
 
 export async function POST(request: NextRequest) {
@@ -27,29 +45,32 @@ export async function POST(request: NextRequest) {
 
   const validation = validateB2C(body as Record<string, unknown>);
   if (!validation.ok || !validation.data) {
-    return NextResponse.json(
-      { ok: false, message: "Validation echouee.", errors: validation.errors },
+    return withRateHeaders(NextResponse.json(
+      { ok: false, message: "Validation échouée.", errors: validation.errors },
       { status: 400 }
-    );
+    ), { remaining: RATE_LIMIT_MAX, resetAt: Date.now() + RATE_LIMIT_WINDOW });
   }
 
   const data = validation.data;
-  const ip = getClientIp(request);
-  const rateKey = `b2c:${ip}`;
+  const fingerprint = getClientFingerprint(request);
+  const rateKey = `b2c:${fingerprint.stableId}:${fingerprint.ua.slice(0, 40)}`;
   const rate = checkRateLimit(rateKey, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW);
 
   if (!rate.allowed) {
-    return NextResponse.json(
-      { ok: false, message: "Trop de requetes. Reessayez plus tard." },
+    return withRateHeaders(NextResponse.json(
+      { ok: false, message: "Trop de requêtes. Réessayez plus tard." },
       { status: 429 }
-    );
+    ), rate);
   }
 
-  if (data.website && data.website.trim().length > 0) {
-    return NextResponse.json({
+  const honeypotTriggered = data.website && data.website.trim().length > 0;
+  const containsLink = SPAM_LINK_REGEX.test(data.issue || "");
+
+  if (honeypotTriggered || containsLink) {
+    return withRateHeaders(NextResponse.json({
       ok: true,
-      message: "Merci, on te recontacte rapidement.",
-    });
+      message: "Merci, nous vous recontactons rapidement.",
+    }), rate);
   }
 
   try {
@@ -67,14 +88,14 @@ export async function POST(request: NextRequest) {
       source_page: data.source_page,
     });
 
-    return NextResponse.json({
+    return withRateHeaders(NextResponse.json({
       ok: true,
-      message: "Merci, on te recontacte rapidement.",
-    });
+      message: "Merci, nous vous recontactons rapidement.",
+    }), rate);
   } catch {
-    return NextResponse.json(
-      { ok: false, message: "Erreur serveur. Reessayez." },
+    return withRateHeaders(NextResponse.json(
+      { ok: false, message: "Erreur serveur. Réessayez." },
       { status: 502 }
-    );
+    ), rate);
   }
 }

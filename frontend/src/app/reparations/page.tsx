@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: canonicalFor("/reparations"),
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Réparations — Tarifs & Devis",
     description:
       "Consultez nos tarifs de réparation mobile et PC à Folelli. Filtres par marque, modèle et type de réparation.",
@@ -107,7 +107,7 @@ export default async function ReparationsPage() {
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
-                Questions frequentes
+                Questions fréquentes
               </h2>
             </ScrollReveal>
             <ScrollReveal>

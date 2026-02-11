@@ -2,13 +2,20 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import Accordion from "@/components/ui/Accordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import LeadB2BForm from "@/components/forms/LeadB2BForm";
 import JsonLd from "@/components/seo/JsonLd";
-import { buildFaqJsonLd } from "@/lib/jsonld";
+import {
+  buildBreadcrumbJsonLd,
+  buildFaqJsonLd,
+  buildServiceJsonLd,
+} from "@/lib/jsonld";
 import {
   getFaqsWithFallback,
+  getLocationWithFallback,
   getServiceBySlugWithFallback,
   getServicesWithFallback,
 } from "@/lib/content";
@@ -53,7 +60,7 @@ export async function generateMetadata({
       url: canonical,
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
     },
@@ -67,6 +74,7 @@ export default async function ServiceDetailPage({
 }) {
   let service: ServiceWithFaqs | null = null;
   let faqItems: Array<{ question: string; answer: string }> = [];
+  const location = await getLocationWithFallback();
 
   try {
     const res = await getServiceBySlug(params.slug);
@@ -101,10 +109,17 @@ export default async function ServiceDetailPage({
   }
 
   const faqJsonLd = faqItems.length ? buildFaqJsonLd(faqItems) : null;
+  const serviceJsonLd = buildServiceJsonLd(service);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Accueil", path: "/" },
+    { name: "Services", path: "/services" },
+    { name: service.title, path: `/services/${service.slug}` },
+  ]);
+  const jsonLdPayload = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 
   return (
     <>
-      {faqJsonLd && <JsonLd data={faqJsonLd} />}
+      <JsonLd data={jsonLdPayload} />
       <Navbar />
       <main>
         <section className="pt-28 pb-16 bg-surface-0">
@@ -138,7 +153,7 @@ export default async function ServiceDetailPage({
             <ScrollReveal>
               <div className="glass-panel rounded-sm p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
-                  Duree estimee
+                  Durée estimée
                 </h3>
                 <p className="text-text-primary text-lg font-semibold">
                   {service.duration_estimate || "Sur mesure"}
@@ -160,7 +175,7 @@ export default async function ServiceDetailPage({
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Accompagnement
                 </h3>
-                <p className="text-text-primary text-lg font-semibold">Local + Remote</p>
+                <p className="text-text-primary text-lg font-semibold">Local + distanciel</p>
               </div>
             </ScrollReveal>
           </div>
@@ -187,9 +202,27 @@ export default async function ServiceDetailPage({
               </ul>
               {(!service.deliverables || service.deliverables.length === 0) && (
                 <p className="text-text-muted text-sm">
-                  Les livrables precis seront definis apres audit.
+                  Les livrables précis seront définis après audit.
                 </p>
               )}
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section id="contact-pro" className="py-20 bg-surface-1 border-y border-stroke-subtle">
+          <div className="max-w-3xl mx-auto px-6">
+            <ScrollReveal>
+              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
+                Parlons de votre besoin
+              </h2>
+              <p className="text-text-muted mb-8 text-center">
+                Décrivez votre contexte et vos objectifs, nous revenons vers vous avec une proposition claire.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal>
+              <div className="glass-panel rounded-sm p-8">
+                <LeadB2BForm />
+              </div>
             </ScrollReveal>
           </div>
         </section>
@@ -198,7 +231,7 @@ export default async function ServiceDetailPage({
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
-                Questions frequentes
+                Questions fréquentes
               </h2>
             </ScrollReveal>
             <ScrollReveal>
@@ -207,7 +240,9 @@ export default async function ServiceDetailPage({
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} auditHref="#contact-pro" />
       <Footer />
     </>
   );
 }
+

@@ -20,6 +20,7 @@ export default function Accordion({ items, className = "" }: AccordionProps) {
       {items.map((item, index) => (
         <AccordionRow
           key={index}
+          index={index}
           question={item.question}
           answer={item.answer}
           isOpen={openIndex === index}
@@ -31,23 +32,30 @@ export default function Accordion({ items, className = "" }: AccordionProps) {
 }
 
 function AccordionRow({
+  index,
   question,
   answer,
   isOpen,
   onToggle,
 }: {
+  index: number;
   question: string;
   answer: string;
   isOpen: boolean;
   onToggle: () => void;
 }) {
+  const buttonId = `accordion-button-${index}`;
+  const panelId = `accordion-panel-${index}`;
+
   return (
     <div className="border border-stroke-subtle rounded-sm overflow-hidden bg-surface-2/60">
       <button
+        id={buttonId}
         type="button"
         onClick={onToggle}
         className="w-full flex items-center justify-between px-5 py-4 text-left bg-surface-2/70 hover:bg-surface-3/80 transition-colors cursor-pointer"
         aria-expanded={isOpen}
+        aria-controls={panelId}
       >
         <span className="font-heading font-medium text-sm text-text-primary pr-4">
           {question}
@@ -55,6 +63,9 @@ function AccordionRow({
         <ChevronIcon isOpen={isOpen} />
       </button>
       <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
         className={`overflow-hidden transition-all duration-300 ${
           isOpen ? "max-h-96" : "max-h-0"
         }`}

@@ -133,9 +133,9 @@ export default function BentoGrid() {
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: "Réparations / mois", value: "100+" },
-            { label: "Satisfaction clients", value: "4,9/5" },
-            { label: "Délai moyen", value: "< 48h" },
+            { label: "Diagnostic initial", value: "Offert en boutique" },
+            { label: "Garantie atelier", value: "6 mois pièces & main d'œuvre" },
+            { label: "Tarification", value: "Devis validé avant intervention" },
           ].map((item) => (
             <div
               key={item.label}

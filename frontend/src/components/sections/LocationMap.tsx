@@ -1,7 +1,35 @@
+"use client";
+
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Button from "@/components/ui/Button";
 import type { Location } from "@/lib/types";
-import { fallbackLocation } from "@/lib/fallback-data";
+import { trackEvent } from "@/lib/analytics";
+
+const defaultLocation: Location = {
+  id: 0,
+  name: "Addict AI Technology",
+  address_line1: "Immeuble les Mimosas",
+  postal_code: "20213",
+  city: "Folelli",
+  region: "Corse",
+  country: "FR",
+  phone: "+33 4 95 31 12 90",
+  email: "contact@addictai.tech",
+  geo_lat: 42.4474697,
+  geo_lng: 9.5067658,
+  google_maps_url: "https://www.google.com/maps?q=42.4474697,9.5067658",
+  opening_hours: {
+    mon: [{ open: "09:00", close: "18:00" }],
+    tue: [{ open: "09:00", close: "18:00" }],
+    wed: [{ open: "09:00", close: "18:00" }],
+    thu: [{ open: "09:00", close: "18:00" }],
+    fri: [{ open: "09:00", close: "18:00" }],
+    sat: [{ open: "10:00", close: "16:00" }],
+    sun: [],
+  },
+  createdAt: "",
+  updatedAt: "",
+};
 
 const DAY_LABELS: Record<string, string> = {
   mon: "Lun",
@@ -33,7 +61,7 @@ function formatHours(location: Location) {
 }
 
 export default function LocationMap({ location }: { location?: Location }) {
-  const data = location ?? fallbackLocation;
+  const data = location ?? defaultLocation;
   const mapQuery =
     data.geo_lat && data.geo_lng
       ? `${data.geo_lat},${data.geo_lng}`
@@ -109,7 +137,8 @@ export default function LocationMap({ location }: { location?: Location }) {
                     <Button
                       variant="outline"
                       size="sm"
-                      href={`tel:${data.phone.replace(/\\s+/g, "")}`}
+                      href={`tel:${data.phone.replace(/\s+/g, "")}`}
+                      onClick={() => trackEvent("click_call_location", { placement: "location_map" })}
                     >
                       Appeler
                     </Button>
@@ -120,6 +149,7 @@ export default function LocationMap({ location }: { location?: Location }) {
                     href={mapHref}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackEvent("click_directions_location", { placement: "location_map" })}
                   >
                     Itinéraire
                   </Button>
