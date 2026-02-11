@@ -142,9 +142,6 @@ function computeStackState(index: number, count: number, activeFloat: number): S
 
 export default function BentoGrid() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const targetProgressRef = useRef(0);
-  const renderedProgressRef = useRef(0);
-  const progressStateRef = useRef(0);
   const [reducedMotion, setReducedMotion] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -162,7 +159,6 @@ export default function BentoGrid() {
     }
 
     let scrollRaf = 0;
-    let smoothRaf = 0;
 
     const measure = () => {
       const node = stageRef.current;
@@ -171,10 +167,10 @@ export default function BentoGrid() {
       const rect = node.getBoundingClientRect();
       const vh = window.innerHeight || 1;
       const startOffset = vh * 0.16;
-      const endOffset = vh * 0.62;
-      const distance = Math.max(rect.height - endOffset, 1);
+      const endOffset = vh * 0.72;
+      const distance = Math.max(rect.height + startOffset - endOffset, 1);
       const rawProgress = (startOffset - rect.top) / distance;
-      targetProgressRef.current = clamp(rawProgress, 0, 1);
+      setProgress(clamp(rawProgress, 0, 1));
     };
 
     const onScroll = () => {
@@ -185,35 +181,13 @@ export default function BentoGrid() {
       });
     };
 
-    const smooth = () => {
-      const current = renderedProgressRef.current;
-      const target = targetProgressRef.current;
-      const next = current + (target - current) * 0.15;
-      const snapped = Math.abs(target - next) < 0.0008 ? target : next;
-
-      if (snapped !== renderedProgressRef.current) {
-        renderedProgressRef.current = snapped;
-      }
-
-      if (Math.abs(renderedProgressRef.current - progressStateRef.current) > 0.0008) {
-        progressStateRef.current = renderedProgressRef.current;
-        setProgress(renderedProgressRef.current);
-      }
-
-      smoothRaf = window.requestAnimationFrame(smooth);
-    };
-
     measure();
-    renderedProgressRef.current = targetProgressRef.current;
-    smoothRaf = window.requestAnimationFrame(smooth);
-
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (scrollRaf) window.cancelAnimationFrame(scrollRaf);
-      if (smoothRaf) window.cancelAnimationFrame(smoothRaf);
     };
   }, [reducedMotion]);
 
@@ -225,7 +199,7 @@ export default function BentoGrid() {
     return OFFER_CARDS.map((_, index) => computeStackState(index, count, activeFloat));
   }, [effectiveProgress]);
 
-  const stageHeightVh = 150 + (OFFER_CARDS.length - 1) * 38;
+  const stageHeightVh = 170 + (OFFER_CARDS.length - 1) * 45;
 
   return (
     <section className="py-24 bg-surface-1 section-shell surface-grid">
