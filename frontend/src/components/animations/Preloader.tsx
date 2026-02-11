@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const SESSION_KEY = "addict_preloader_seen";
 
@@ -68,11 +69,16 @@ export default function Preloader() {
       aria-label="Chargement du site"
     >
       <div className={`relative flex flex-col items-center gap-4 preloader-mark transition-all duration-300 ease-out ${closing ? "-translate-y-1.5 opacity-0" : "translate-y-0 opacity-100"}`}>
-        <div className="relative w-20 h-20 rounded-3xl border border-stroke-medium bg-surface-2/85 flex items-center justify-center shadow-[0_0_2rem_rgba(93,134,178,0.35)]">
+        <div className="relative w-20 h-20 rounded-3xl border border-stroke-medium bg-surface-2/85 overflow-hidden shadow-[0_0_2rem_rgba(93,134,178,0.35)]">
           <span className="absolute -inset-3 rounded-3xl bg-ember/20 blur-2xl" />
-          <span className="relative font-heading font-bold text-4xl metal-text">
-            A
-          </span>
+          <Image
+            src="/images/brand/addict-mark-160.png"
+            alt="Logo Addict"
+            fill
+            className="object-cover"
+            sizes="80px"
+            priority
+          />
         </div>
         <p className="text-[0.64rem] font-heading uppercase tracking-[0.2em] text-text-muted">
           Addict AI Technology

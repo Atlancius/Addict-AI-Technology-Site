@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 import MouseTilt from "@/components/animations/MouseTilt";
 import { getLocationWithFallback } from "@/lib/content";
@@ -92,10 +93,14 @@ export default async function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
-                <div className="relative w-10 h-10 rounded-xl border border-ember/40 bg-surface-2/75 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
-                  <span className="font-heading font-bold text-white text-lg leading-none">
-                    A
-                  </span>
+                <div className="relative w-10 h-10 rounded-xl border border-ember/40 bg-surface-2/75 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] overflow-hidden">
+                  <Image
+                    src="/images/brand/addict-mark-96.png"
+                    alt="Logo Addict"
+                    fill
+                    className="object-cover"
+                    sizes="40px"
+                  />
                 </div>
               </div>
               <div>

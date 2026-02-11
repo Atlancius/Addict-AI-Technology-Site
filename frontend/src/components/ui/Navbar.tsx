@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import Button from "./Button";
 
 const NAV_LINKS = [
@@ -55,10 +56,15 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group" onClick={closeMobile}>
           <div className="relative">
             <div className="absolute -inset-3 rounded-full bg-ember/25 blur-2xl opacity-70 group-hover:opacity-100 transition-opacity" />
-            <div className="relative w-11 h-11 rounded-2xl border border-ember/40 bg-surface-2/80 shadow-[0_0_1.25rem_rgba(239,68,86,0.3)] flex items-center justify-center">
-              <span className="font-heading font-bold text-xl leading-none metal-text">
-                A
-              </span>
+            <div className="relative w-11 h-11 rounded-2xl border border-ember/40 bg-surface-2/85 shadow-[0_0_1.25rem_rgba(239,68,86,0.3)] overflow-hidden">
+              <Image
+                src="/images/brand/addict-mark-96.png"
+                alt="Logo Addict"
+                fill
+                className="object-cover"
+                sizes="44px"
+                priority
+              />
             </div>
           </div>
           <div className="flex flex-col">

@@ -42,25 +42,37 @@ export default function HeroSplit() {
 
       <div className="max-w-7xl mx-auto px-6 w-full py-10 md:py-14 relative space-y-10 md:space-y-14">
         <ScrollReveal className="text-center" variant="soft" distance={18}>
-          <div className="hero-pill">
-            <span className="h-1.5 w-1.5 rounded-full bg-flame animate-pulse" />
-            <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
-              Folelli, Corse · Boutique physique + studio digital
-            </span>
+          <div className="inline-flex flex-col items-center gap-3">
+            <div className="relative h-20 w-20 rounded-2xl border border-ember/45 bg-surface-2/85 overflow-hidden shadow-[0_0_2.2rem_rgba(239,68,86,0.3)]">
+              <Image
+                src="/images/brand/addict-mark-160.png"
+                alt="Logo Addict"
+                fill
+                className="object-cover"
+                sizes="80px"
+                priority
+              />
+            </div>
+            <div className="hero-pill">
+              <span className="h-1.5 w-1.5 rounded-full bg-flame animate-pulse" />
+              <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
+                Folelli, Corse · Atelier premium et solutions IA
+              </span>
+            </div>
           </div>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-10 items-center">
           <ScrollReveal className="space-y-7" variant="left">
-            <h1 className="font-heading text-[2.15rem] md:text-6xl font-bold text-text-primary leading-[0.98]">
-              Le QG local qui
-              <span className="block ember-text">répare et accélère.</span>
+            <h1 className="font-heading text-[2.15rem] md:text-6xl font-bold text-text-primary leading-[0.96]">
+              Addict AI Technology:
+              <span className="block ember-text">puissance locale, rendu premium.</span>
             </h1>
 
             <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl">
-              Addict connecte deux expertises dans un même lieu: un atelier
-              tech premium pour les particuliers et un pôle transformation
-              digitale pour les entreprises.
+              Un univers visuel fort, un atelier qui répare vite, et un pôle
+              digital qui structure vos opérations. C&apos;est le même niveau d&apos;exigence
+              sur chaque parcours.
             </p>
 
             <div className="flex flex-wrap gap-3">
