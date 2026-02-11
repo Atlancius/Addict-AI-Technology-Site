@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Button from "@/components/ui/Button";
 import type { Location } from "@/lib/types";
@@ -53,9 +54,7 @@ function formatHours(location: Location) {
     const slots = opening[day];
     const label = DAY_LABELS[day] || day;
     if (!slots || slots.length === 0) return `${label} : Fermé`;
-    const ranges = slots
-      .map((slot) => `${slot.open} – ${slot.close}`)
-      .join(", ");
+    const ranges = slots.map((slot) => `${slot.open} – ${slot.close}`).join(", ");
     return `${label} : ${ranges}`;
   });
 }
@@ -75,74 +74,35 @@ export default function LocationMap({ location }: { location?: Location }) {
     <section className="py-24 bg-surface-0 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
-          <div className="mb-12">
-            <p className="text-[0.65rem] font-heading uppercase tracking-[0.24em] text-text-muted mb-3">
-              Sur place
-            </p>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-text-primary mb-2 leading-tight">
-              Retrouvez-nous
+          <div className="mb-12 space-y-3">
+            <p className="eyebrow">Visite & contact</p>
+            <h2 className="section-title">
+              Passez nous voir à
+              <span className="block metal-text">Folelli, Corse.</span>
             </h2>
-            <p className="text-text-muted">
-              Visitez notre shop à Folelli, Corse.
+            <p className="section-lead">
+              Atelier, boutique et accompagnement pro sur un seul site.
+              Nous vous recevons sur rendez-vous ou en passage direct selon vos besoins.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8">
           <div className="space-y-4">
             <ScrollReveal>
-              <div className="panel p-6 space-y-4">
+              <div className="panel rounded-2xl p-6 space-y-4">
                 <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Adresse
                 </h3>
-                <p className="text-text-muted text-sm">
+                <p className="text-text-muted text-sm leading-relaxed">
                   {data.address_line1}
                   <br />
                   {data.postal_code} {data.city}
                   <br />
                   {data.region || "Corse"}
                 </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={80}>
-              <div className="panel p-6 space-y-4">
-                <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
-                  Horaires
-                </h3>
-                <div className="text-text-muted text-sm space-y-1">
-                  {hours.map((line) => (
-                    <p key={line}>{line}</p>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={160}>
-              <div className="panel p-6 space-y-4 border border-ember/25">
-                <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
-                  Contact
-                </h3>
-                <p className="text-text-muted text-sm">
-                  <a
-                    href={`mailto:${data.email || "contact@addictai.tech"}`}
-                    className="hover:text-flame transition-colors"
-                  >
-                    {data.email || "contact@addictai.tech"}
-                  </a>
-                </p>
+                <div className="split-divider" />
                 <div className="flex gap-3">
-                  {data.phone && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      href={`tel:${data.phone.replace(/\s+/g, "")}`}
-                      onClick={() => trackEvent("click_call_location", { placement: "location_map" })}
-                    >
-                      Appeler
-                    </Button>
-                  )}
                   <Button
                     variant="flame"
                     size="sm"
@@ -153,15 +113,55 @@ export default function LocationMap({ location }: { location?: Location }) {
                   >
                     Itinéraire
                   </Button>
+                  {data.phone && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      href={`tel:${data.phone.replace(/\s+/g, "")}`}
+                      onClick={() => trackEvent("click_call_location", { placement: "location_map" })}
+                    >
+                      Appeler
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={80}>
+              <div className="panel-soft rounded-2xl p-5 space-y-3">
+                <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
+                  Horaires
+                </h3>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm text-text-muted">
+                  {hours.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={140}>
+              <div className="relative h-40 rounded-2xl overflow-hidden border border-stroke-subtle">
+                <Image
+                  src="/images/stock/repair-workbench.jpg"
+                  alt="Atelier Addict à Folelli"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <p className="text-[0.64rem] uppercase tracking-[0.14em] text-white/85 font-heading">
+                    Accueil atelier + conseil sur place
+                  </p>
                 </div>
               </div>
             </ScrollReveal>
           </div>
 
-          {/* Map */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <ScrollReveal>
-              <div className="w-full h-80 lg:h-full min-h-80 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
+              <div className="w-full h-96 lg:h-full min-h-96 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
                 <iframe
                   src={mapEmbed}
                   width="100%"

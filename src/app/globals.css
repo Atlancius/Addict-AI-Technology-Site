@@ -379,6 +379,64 @@ body::after {
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08);
 }
 
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.section-lead {
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 42rem;
+  text-wrap: pretty;
+}
+
+.split-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+}
+
+.metric-chip {
+  border: 1px solid var(--stroke-subtle);
+  border-radius: 0.875rem;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 48%,
+      rgba(0, 0, 0, 0.22) 100%
+    ),
+    rgba(11, 18, 29, 0.66);
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08);
+}
+
+.tool-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.tool-track {
+  display: flex;
+  gap: 1.5rem;
+  min-width: max-content;
+  animation: tool-marquee-scroll 22s linear infinite;
+}
+
 .section-shell {
   position: relative;
 }
@@ -446,6 +504,15 @@ body::after {
   }
 }
 
+@keyframes tool-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .preloader-mark {
   animation: preloader-mark-float 1.8s ease-in-out infinite;
 }
@@ -466,6 +533,11 @@ body::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .tool-track {
+    animation: none !important;
+    transform: translateX(0) !important;
   }
 }
 

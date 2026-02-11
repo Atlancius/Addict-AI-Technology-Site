@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { getLocationWithFallback } from "@/lib/content";
 import type { Location } from "@/lib/types";
 
@@ -56,16 +57,37 @@ export default async function Footer() {
   const email = location.email || "contact@addictai.tech";
 
   return (
-    <footer className="bg-surface-1/85 section-shell pt-16 pb-8 relative overflow-hidden">
+    <footer className="bg-surface-1/85 section-shell pt-12 pb-8 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
+
+      <div className="max-w-7xl mx-auto px-6 space-y-10">
+        <div className="panel rounded-2xl p-6 md:p-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div className="space-y-2">
+            <p className="eyebrow">Dernière étape</p>
+            <h3 className="font-heading text-2xl md:text-3xl text-text-primary">
+              Besoin d&apos;un diagnostic ou d&apos;un cadrage projet ?
+            </h3>
+            <p className="text-sm text-text-secondary max-w-2xl">
+              On vous répond rapidement avec un plan d&apos;action concret, côté
+              réparation ou transformation digitale.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="flame" href="/contact#contact-b2c">
+              Réparation B2C
+            </Button>
+            <Button variant="metal" href="/contact#contact-b2b">
+              Projet B2B
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
-                <div className="relative w-9 h-9 rounded-xl border border-ember/40 bg-surface-2/75 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
+                <div className="relative w-10 h-10 rounded-xl border border-ember/40 bg-surface-2/75 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
                   <span className="font-heading font-bold text-white text-lg leading-none">
                     A
                   </span>
@@ -81,10 +103,9 @@ export default async function Footer() {
               </div>
             </div>
             <p className="text-text-muted text-sm leading-relaxed">
-              Réparation, boutique tech, café manga &amp; solutions digitales
-              pour les pros. Folelli, Corse.
+              Réparation, boutique tech, café manga et solutions digitales
+              orientées résultats. Folelli, Corse.
             </p>
-            {/* NAP */}
             <div className="text-text-muted text-sm space-y-1">
               <p>{location.address_line1}</p>
               <p>
@@ -92,28 +113,21 @@ export default async function Footer() {
               </p>
               {location.phone && <p>{location.phone}</p>}
               <p>
-                <a
-                  href={`mailto:${email}`}
-                  className="hover:text-flame transition-colors"
-                >
+                <a href={`mailto:${email}`} className="hover:text-flame transition-colors">
                   {email}
                 </a>
               </p>
             </div>
           </div>
 
-          {/* Services */}
           <div>
-            <h4 className="font-heading font-semibold text-xs uppercase tracking-wider text-text-primary mb-4">
-              Services
+            <h4 className="font-heading font-semibold text-[0.68rem] uppercase tracking-[0.16em] text-text-primary mb-4">
+              Services B2C
             </h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.services.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-text-muted hover:text-flame transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm text-text-muted hover:text-flame transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -121,18 +135,14 @@ export default async function Footer() {
             </ul>
           </div>
 
-          {/* Pro */}
           <div>
-            <h4 className="font-heading font-semibold text-xs uppercase tracking-wider text-text-primary mb-4">
-              Pro
+            <h4 className="font-heading font-semibold text-[0.68rem] uppercase tracking-[0.16em] text-text-primary mb-4">
+              Services B2B
             </h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.pro.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-text-muted hover:text-flame transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm text-text-muted hover:text-flame transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -140,9 +150,8 @@ export default async function Footer() {
             </ul>
           </div>
 
-          {/* Horaires */}
           <div>
-            <h4 className="font-heading font-semibold text-xs uppercase tracking-wider text-text-primary mb-4">
+            <h4 className="font-heading font-semibold text-[0.68rem] uppercase tracking-[0.16em] text-text-primary mb-4">
               Horaires
             </h4>
             <div className="text-sm text-text-muted space-y-1">
@@ -153,11 +162,9 @@ export default async function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="pt-8 border-t border-stroke-subtle flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-text-3/80">
-            &copy; {new Date().getFullYear()} Addict AI Technology. Tous droits
-            réservés.
+            &copy; {new Date().getFullYear()} Addict AI Technology. Tous droits réservés.
           </p>
           <div className="flex gap-6">
             {FOOTER_LINKS.legal.map((link) => (
