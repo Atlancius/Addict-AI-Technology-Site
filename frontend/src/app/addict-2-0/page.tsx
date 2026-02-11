@@ -138,7 +138,7 @@ export default async function AddictB2C() {
 
           <div className="max-w-7xl mx-auto px-6 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
-              <ScrollReveal>
+              <ScrollReveal variant="left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-flame bg-surface-3/60 mb-6">
                   <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-flame uppercase">
                     B2C • Folelli • Corse
@@ -166,7 +166,7 @@ export default async function AddictB2C() {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={120}>
+              <ScrollReveal delay={120} variant="right">
                 <div className="panel rounded-3xl p-5 md:p-6 space-y-5">
                   <div className="relative h-56 rounded-2xl overflow-hidden border border-stroke-subtle">
                     <Image

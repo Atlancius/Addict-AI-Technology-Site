@@ -40,7 +40,7 @@ export default function HeroSplit() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full py-14 relative space-y-14">
-        <ScrollReveal className="text-center">
+        <ScrollReveal className="text-center" variant="soft" distance={18}>
           <div className="hero-pill">
             <span className="h-1.5 w-1.5 rounded-full bg-flame animate-pulse" />
             <span className="text-[0.62rem] font-heading uppercase tracking-[0.18em] text-text-secondary">
@@ -50,7 +50,7 @@ export default function HeroSplit() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
-          <ScrollReveal className="space-y-7">
+          <ScrollReveal className="space-y-7" variant="left">
             <h1 className="font-heading text-[2.15rem] md:text-6xl font-bold text-text-primary leading-[0.98]">
               Le QG local qui
               <span className="block ember-text">répare et accélère.</span>
@@ -87,7 +87,7 @@ export default function HeroSplit() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={120} className="panel rounded-3xl p-5 md:p-6 space-y-5">
+          <ScrollReveal delay={120} className="panel rounded-3xl p-5 md:p-6 space-y-5" variant="right">
             <div className="relative h-60 rounded-2xl overflow-hidden border border-stroke-subtle">
               <Image
                 src="/images/stock/repair-workbench.jpg"
@@ -126,7 +126,12 @@ export default function HeroSplit() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {PATH_CARDS.map((card, index) => (
-            <ScrollReveal key={card.title} delay={index * 90}>
+            <ScrollReveal
+              key={card.title}
+              delay={index * 90}
+              variant={index % 2 === 0 ? "left" : "right"}
+              distance={22}
+            >
               <article className="panel rounded-2xl p-8 md:p-9 h-full">
                 <p
                   className={`text-[0.64rem] font-heading uppercase tracking-[0.18em] ${

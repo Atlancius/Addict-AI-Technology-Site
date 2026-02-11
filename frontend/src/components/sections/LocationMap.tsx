@@ -73,7 +73,7 @@ export default function LocationMap({ location }: { location?: Location }) {
   return (
     <section className="py-24 bg-surface-0 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
-        <ScrollReveal>
+        <ScrollReveal variant="up">
           <div className="mb-12 space-y-3">
             <p className="eyebrow">Visite & contact</p>
             <h2 className="section-title">
@@ -89,7 +89,7 @@ export default function LocationMap({ location }: { location?: Location }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10">
           <div className="space-y-6">
-            <ScrollReveal>
+            <ScrollReveal variant="left">
               <div className="panel rounded-2xl p-7 space-y-5">
                 <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Adresse
@@ -127,7 +127,7 @@ export default function LocationMap({ location }: { location?: Location }) {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={80}>
+            <ScrollReveal delay={80} variant="left" distance={22}>
               <div className="panel-soft rounded-2xl p-6 space-y-4">
                 <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Horaires
@@ -140,7 +140,7 @@ export default function LocationMap({ location }: { location?: Location }) {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={140}>
+            <ScrollReveal delay={140} variant="zoom" distance={18}>
               <div className="relative h-40 rounded-2xl overflow-hidden border border-stroke-subtle">
                 <Image
                   src="/images/stock/repair-workbench.jpg"
@@ -160,7 +160,7 @@ export default function LocationMap({ location }: { location?: Location }) {
           </div>
 
           <div className="lg:col-span-1">
-            <ScrollReveal>
+            <ScrollReveal variant="right">
               <div className="w-full h-96 lg:h-full min-h-96 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]">
                 <iframe
                   src={mapEmbed}

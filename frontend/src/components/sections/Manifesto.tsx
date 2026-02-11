@@ -26,7 +26,7 @@ export default function Manifesto() {
     <section className="py-24 bg-surface-0 section-shell">
       <div className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 items-start">
-          <ScrollReveal>
+          <ScrollReveal variant="left">
             <div className="panel rounded-2xl p-8 md:p-9 space-y-6">
               <p className="eyebrow">Manifeste Addict</p>
               <h2 className="section-title">
@@ -47,7 +47,12 @@ export default function Manifesto() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
             {PRINCIPLES.map((item, index) => (
-              <ScrollReveal key={item.id} delay={index * 100}>
+              <ScrollReveal
+                key={item.id}
+                delay={index * 100}
+                variant="zoom"
+                distance={20}
+              >
                 <article className="panel-soft h-full p-7">
                   <p className="font-heading text-[0.64rem] tracking-[0.18em] uppercase text-text-muted">
                     Axe {item.id}
@@ -71,7 +76,7 @@ export default function Manifesto() {
             { label: "Roadmap pro", value: "90 jours" },
             { label: "Support", value: "Continu" },
           ].map((item, index) => (
-            <ScrollReveal key={item.label} delay={index * 70}>
+            <ScrollReveal key={item.label} delay={index * 70} variant="soft" distance={16}>
               <div className="metric-chip h-full">
                 <p className="text-[0.62rem] uppercase tracking-[0.14em] text-text-muted font-heading">
                   {item.label}
