@@ -1,20 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+import { useEffect, useState } from "react";
 
 const SESSION_KEY = "addict_preloader_seen";
 
 export default function Preloader() {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const markRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
+  const [closing, setClosing] = useState(false);
 
   useEffect(() => {
-    const overlay = overlayRef.current;
-    const mark = markRef.current;
-    if (!overlay || !mark) return;
-
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -37,25 +31,8 @@ export default function Preloader() {
         setVisible(false);
         return;
       }
-
-      const tl = gsap.timeline({
-        onComplete: () => setVisible(false),
-      });
-
-      tl.to(mark, {
-        y: -6,
-        opacity: 0,
-        duration: 0.28,
-        ease: "power2.in",
-      }).to(
-        overlay,
-        {
-          opacity: 0,
-          duration: 0.42,
-          ease: "power2.out",
-        },
-        "-=0.08"
-      );
+      setClosing(true);
+      window.setTimeout(() => setVisible(false), 420);
     };
 
     const closeWhenReady = () => {
@@ -83,16 +60,14 @@ export default function Preloader() {
 
   return (
     <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[100] bg-[radial-gradient(circle_at_20%_10%,rgba(93,134,178,0.28),transparent_45%),radial-gradient(circle_at_80%_90%,rgba(255,115,50,0.28),transparent_50%),linear-gradient(180deg,#080d14,#070b11)] flex items-center justify-center"
+      className={`fixed inset-0 z-[100] bg-[radial-gradient(circle_at_20%_10%,rgba(93,134,178,0.28),transparent_45%),radial-gradient(circle_at_80%_90%,rgba(255,115,50,0.28),transparent_50%),linear-gradient(180deg,#080d14,#070b11)] flex items-center justify-center transition-opacity duration-400 ease-out ${
+        closing ? "opacity-0" : "opacity-100"
+      }`}
       aria-live="polite"
       role="status"
       aria-label="Chargement du site"
     >
-      <div
-        ref={markRef}
-        className="relative flex flex-col items-center gap-4 preloader-mark"
-      >
+      <div className={`relative flex flex-col items-center gap-4 preloader-mark transition-all duration-300 ease-out ${closing ? "-translate-y-1.5 opacity-0" : "translate-y-0 opacity-100"}`}>
         <div className="relative w-20 h-20 rounded-3xl border border-stroke-medium bg-surface-2/85 flex items-center justify-center shadow-[0_0_2rem_rgba(93,134,178,0.35)]">
           <span className="absolute -inset-3 rounded-3xl bg-ember/20 blur-2xl" />
           <span className="relative font-heading font-bold text-4xl metal-text">
