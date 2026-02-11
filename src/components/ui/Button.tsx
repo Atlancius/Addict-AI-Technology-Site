@@ -10,9 +10,9 @@ const variantClasses: Record<Variant, string> = {
   metal:
     "btn-sheen bg-[linear-gradient(120deg,rgba(93,134,178,0.25)_0%,rgba(18,27,43,0.92)_58%,rgba(27,37,53,0.95)_100%)] text-text-primary border border-metal/35 shadow-[0_0.875rem_2.2rem_rgba(73,108,145,0.28)] hover:text-text-primary hover:border-metal/60 hover:shadow-[0_1.125rem_2.75rem_rgba(93,134,178,0.35)] hover:-translate-y-0.5",
   outline:
-    "bg-surface-1/20 text-text-primary border border-stroke-medium hover:bg-surface-2/70 hover:border-flame/70 hover:text-text-primary hover:-translate-y-0.5",
+    "bg-[linear-gradient(175deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.02)_45%,rgba(0,0,0,0.28)_100%)] text-text-primary border border-stroke-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0.75rem_1.8rem_rgba(0,0,0,0.28)] hover:bg-[linear-gradient(175deg,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.03)_45%,rgba(0,0,0,0.32)_100%)] hover:border-flame/70 hover:text-text-primary hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1rem_2.2rem_rgba(0,0,0,0.34)] hover:-translate-y-0.5",
   ghost:
-    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-surface-2/70 hover:border-stroke-subtle",
+    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-[linear-gradient(175deg,rgba(255,255,255,0.07)_0%,rgba(255,255,255,0.02)_48%,rgba(0,0,0,0.22)_100%)] hover:border-stroke-subtle hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0.7rem_1.7rem_rgba(0,0,0,0.26)]",
 };
 
 const sizeClasses: Record<Size, string> = {

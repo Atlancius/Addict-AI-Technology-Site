@@ -49,6 +49,8 @@
   /* Effects */
   --shadow-1: 0 0.875rem 2.6rem rgba(0, 0, 0, 0.36);
   --shadow-2: 0 1.75rem 5rem rgba(0, 0, 0, 0.52);
+  --shadow-lift-1: 0 1rem 2.4rem rgba(0, 0, 0, 0.34), 0 1.8rem 4rem rgba(0, 0, 0, 0.28);
+  --shadow-lift-2: 0 1.3rem 3.2rem rgba(0, 0, 0, 0.42), 0 2.4rem 5.2rem rgba(0, 0, 0, 0.34);
   --glow-flame: 0 0 3.5rem rgba(255, 115, 50, 0.32);
   --glow-metal: 0 0 3rem rgba(93, 134, 178, 0.32);
   --highlight: linear-gradient(
@@ -181,12 +183,15 @@ body::after {
 
 .glass-panel {
   background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 35%, rgba(0, 0, 0, 0.35) 100%),
-    var(--glass);
+    linear-gradient(162deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 36%, rgba(0, 0, 0, 0.42) 100%),
+    rgba(8, 13, 21, 0.72);
   backdrop-filter: blur(1.125rem);
   -webkit-backdrop-filter: blur(1.125rem);
-  border: 1px solid var(--stroke-subtle);
-  box-shadow: var(--shadow-1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1),
+    inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.04),
+    var(--shadow-lift-1);
 }
 
 .metal-text {
@@ -229,7 +234,7 @@ body::after {
   position: absolute;
   inset: 0;
   background: var(--highlight);
-  opacity: 0.72;
+  opacity: 0.46;
   pointer-events: none;
 }
 
@@ -344,16 +349,44 @@ body::after {
 }
 
 .panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border: 1px solid var(--stroke-subtle);
   border-radius: 1rem;
   background:
-    linear-gradient(170deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 34%, rgba(0, 0, 0, 0.42) 100%),
-    rgba(8, 13, 21, 0.55);
+    linear-gradient(170deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 34%, rgba(0, 0, 0, 0.44) 100%),
+    rgba(9, 14, 23, 0.76);
   box-shadow:
-    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08),
-    var(--shadow-1);
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.11),
+    inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.05),
+    var(--shadow-lift-1);
   backdrop-filter: blur(0.875rem);
   -webkit-backdrop-filter: blur(0.875rem);
+  transition: border-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 36%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.panel:not(.stack-card):hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12),
+    inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.06),
+    var(--shadow-lift-2);
 }
 
 .stack-stage {
@@ -387,11 +420,13 @@ body::after {
   border-radius: 0.875rem;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.02) 42%,
-    rgba(0, 0, 0, 0.26) 100%
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(0, 0, 0, 0.3) 100%
   );
-  box-shadow: var(--shadow-1);
+  box-shadow:
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1),
+    0 0.875rem 2.2rem rgba(0, 0, 0, 0.34);
 }
 
 .hero-pill {
@@ -437,17 +472,19 @@ body::after {
 }
 
 .metric-chip {
-  border: 1px solid var(--stroke-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 0.875rem;
   padding: 0.875rem 1rem;
   background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.03) 48%,
-      rgba(0, 0, 0, 0.22) 100%
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 48%,
+      rgba(0, 0, 0, 0.28) 100%
     ),
-    rgba(11, 18, 29, 0.66);
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08);
+    rgba(11, 18, 29, 0.8);
+  box-shadow:
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12),
+    0 0.75rem 2rem rgba(0, 0, 0, 0.3);
 }
 
 .tool-marquee {
