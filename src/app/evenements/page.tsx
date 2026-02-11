@@ -1,32 +1,36 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import { getLocationWithFallback } from "@/lib/content";
 import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Événements — Workshops & Rencontres",
   description:
-    "Découvrez nos prochains workshops et événements autour de la tech, de l'IA et du no-code.",
+    "Formats workshop et interventions sur mesure autour de la tech, de l'IA et du no-code.",
   alternates: {
     canonical: canonicalFor("/evenements"),
   },
   openGraph: {
     title: "Événements — Workshops & Rencontres",
     description:
-      "Découvrez nos prochains workshops et événements autour de la tech, de l'IA et du no-code.",
+      "Formats workshop et interventions sur mesure autour de la tech, de l'IA et du no-code.",
     url: canonicalFor("/evenements"),
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Événements — Workshops & Rencontres",
     description:
-      "Découvrez nos prochains workshops et événements autour de la tech, de l'IA et du no-code.",
+      "Formats workshop et interventions sur mesure autour de la tech, de l'IA et du no-code.",
   },
 };
 
-export default function EvenementsPage() {
+export default async function EvenementsPage() {
+  const location = await getLocationWithFallback();
+
   return (
     <>
       <Navbar />
@@ -80,6 +84,7 @@ export default function EvenementsPage() {
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} auditHref="/contact#contact-b2b" />
       <Footer />
     </>
   );

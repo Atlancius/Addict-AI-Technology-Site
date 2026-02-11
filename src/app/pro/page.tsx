@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { buildFaqJsonLd } from "@/lib/jsonld";
 import {
   getCaseStudiesWithFallback,
   getFaqsWithFallback,
+  getLocationWithFallback,
   getServicesWithFallback,
 } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
     url: canonicalFor("/pro"),
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Solutions Pro — Automatisation, IA & Formation",
     description:
       "Accompagnement digital pour les entreprises : audit, automatisation IA, formation no-code. Gagnez du temps et optimisez vos process.",
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 const METHODOLOGY = [
-  { step: "01", title: "Audit", description: "Analyse de vos process et identification des opportunites." },
+  { step: "01", title: "Audit", description: "Analyse de vos process et identification des opportunités." },
   { step: "02", title: "Stratégie", description: "Roadmap priorisée avec ROI estimé." },
   { step: "03", title: "Implémentation", description: "Mise en place des solutions et automatisations." },
   { step: "04", title: "Suivi", description: "Accompagnement continu et optimisation." },
@@ -60,6 +62,7 @@ export default async function ProPage() {
   const services = await getServicesWithFallback();
   const caseStudies = await getCaseStudiesWithFallback();
   const faqs = await getFaqsWithFallback("b2b");
+  const location = await getLocationWithFallback();
   const faqItems = faqs.map((faq) => ({
     question: faq.question,
     answer: stripHtml(faq.answer),
@@ -116,7 +119,7 @@ export default async function ProPage() {
                 Nos offres
               </h2>
               <p className="text-text-muted mb-12">
-                Des solutions adaptees a chaque besoin, de l&apos;audit a la formation.
+                Des solutions adaptées à chaque besoin, de l&apos;audit à la formation.
               </p>
             </ScrollReveal>
 
@@ -154,7 +157,7 @@ export default async function ProPage() {
           </div>
         </section>
 
-        {/* Methodologie */}
+        {/* Méthodologie */}
         <section id="audit" className="py-20 bg-surface-0">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
@@ -191,7 +194,7 @@ export default async function ProPage() {
                 Stack & crédibilité
               </h2>
               <p className="text-text-muted mb-8">
-                Outils fiables, process documentes et approche orientee ROI.
+                Outils fiables, process documentés et approche orientée ROI.
               </p>
             </ScrollReveal>
 
@@ -208,7 +211,7 @@ export default async function ProPage() {
           </div>
         </section>
 
-        {/* Cas / Realisations */}
+        {/* Cas / Réalisations */}
         <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
           <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
@@ -226,7 +229,7 @@ export default async function ProPage() {
                   <Card variant="caseStudy" className="h-full">
                     <CardTitle>{caseStudy.title}</CardTitle>
                     <CardDescription className="mb-3">
-                      {stripHtml(caseStudy.problem || "")} 
+                      {stripHtml(caseStudy.problem || "")}
                     </CardDescription>
                     <p className="text-text-muted text-sm mb-2">
                       <span className="text-text-secondary font-semibold">Solution:</span>{" "}
@@ -256,7 +259,7 @@ export default async function ProPage() {
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
-                Questions frequentes
+                Questions fréquentes
               </h2>
             </ScrollReveal>
             <ScrollReveal>
@@ -265,7 +268,7 @@ export default async function ProPage() {
           </div>
         </section>
 
-        {/* Formulaire qualifie */}
+        {/* Formulaire qualifié */}
         <section id="contact-pro" className="py-20 bg-surface-1 border-t border-stroke-subtle">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
@@ -285,6 +288,7 @@ export default async function ProPage() {
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} />
       <Footer />
     </>
   );

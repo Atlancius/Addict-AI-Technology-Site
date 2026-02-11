@@ -1,5 +1,8 @@
 import type { Location } from "./types";
 import type { FaqItem } from "./content";
+import type { CaseStudy, Service, Training } from "./types";
+import { stripHtml } from "./text";
+import { canonicalFor } from "./seo";
 
 export function buildLocalBusinessJsonLd(location: Location) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
@@ -66,5 +69,78 @@ export function buildFaqJsonLd(items: FaqItem[]) {
         text: item.answer,
       },
     })),
+  };
+}
+
+export function buildBreadcrumbJsonLd(
+  items: Array<{ name: string; path: string }>
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: canonicalFor(item.path),
+    })),
+  };
+}
+
+export function buildServiceJsonLd(service: Service) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: stripHtml(service.summary || service.description || ""),
+    url: canonicalFor(`/services/${service.slug}`),
+    areaServed: "FR",
+    provider: {
+      "@type": "LocalBusiness",
+      name: "Addict AI Technology",
+      url: canonicalFor("/"),
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "EUR",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "EUR",
+        description: service.starting_price_text || "Sur devis",
+      },
+      availability: "https://schema.org/InStock",
+      url: canonicalFor(`/services/${service.slug}`),
+    },
+  };
+}
+
+export function buildCourseJsonLd(training: Training) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: training.title,
+    description: stripHtml(training.summary || training.description || ""),
+    provider: {
+      "@type": "Organization",
+      name: "Addict AI Technology",
+      sameAs: canonicalFor("/"),
+    },
+    url: canonicalFor(`/formations/${training.slug}`),
+  };
+}
+
+export function buildCaseStudyJsonLd(caseStudy: CaseStudy) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: caseStudy.title,
+    description: stripHtml(caseStudy.problem || caseStudy.solution || ""),
+    abstract: stripHtml(caseStudy.results || ""),
+    creator: {
+      "@type": "Organization",
+      name: "Addict AI Technology",
+    },
+    url: canonicalFor(`/realisations/${caseStudy.slug}`),
+    keywords: (caseStudy.tools || []).join(", "),
   };
 }

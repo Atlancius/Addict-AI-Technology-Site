@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
 import { validateB2C } from "@/lib/lead-validation";
+import { trackEvent } from "@/lib/analytics";
 
 type FieldErrors = Partial<Record<string, string>>;
 
@@ -64,6 +65,7 @@ export default function LeadB2CForm() {
     if (!validation.ok) {
       setErrors(validation.errors as FieldErrors);
       setStatus("idle");
+      trackEvent("lead_validation_error", { lead_type: "b2c" });
       return;
     }
 
@@ -78,11 +80,16 @@ export default function LeadB2CForm() {
       if (!res.ok) {
         setStatus("error");
         setMessage(data?.message || "Une erreur est survenue.");
+        trackEvent("lead_submit_failed", { lead_type: "b2c", status_code: res.status });
         return;
       }
 
       setStatus("success");
       setMessage(data?.message || "Merci, on revient vers vous rapidement.");
+      trackEvent("lead_submit_success", {
+        lead_type: "b2c",
+        source_page: window.location.pathname,
+      });
       setForm({
         name: "",
         phone: "",
@@ -97,6 +104,7 @@ export default function LeadB2CForm() {
     } catch {
       setStatus("error");
       setMessage("Impossible d'envoyer la demande. Réessayez.");
+      trackEvent("lead_submit_failed", { lead_type: "b2c", status_code: 0 });
     }
   };
 
@@ -149,10 +157,14 @@ export default function LeadB2CForm() {
           required
         />
         <div>
-          <label className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1">
+          <label
+            htmlFor="b2c-urgency"
+            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+          >
             Urgence
           </label>
           <select
+            id="b2c-urgency"
             value={form.urgency}
             onChange={(event) => update("urgency", event.target.value)}
             className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none"
@@ -191,8 +203,9 @@ export default function LeadB2CForm() {
         </label>
       </div>
 
-      <label className="flex items-start gap-3 text-sm text-text-secondary">
+      <label htmlFor="b2c-consent" className="flex items-start gap-3 text-sm text-text-secondary">
         <input
+          id="b2c-consent"
           type="checkbox"
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
@@ -212,6 +225,7 @@ export default function LeadB2CForm() {
         </Button>
         {message && (
           <p
+            aria-live="polite"
             className={`text-sm ${
               status === "success" ? "text-emerald-300" : "text-ember"
             }`}

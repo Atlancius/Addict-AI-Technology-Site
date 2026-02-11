@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Card, { CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Button from "@/components/ui/Button";
-import { getTrainingsWithFallback } from "@/lib/content";
+import { getLocationWithFallback, getTrainingsWithFallback } from "@/lib/content";
 import { stripHtml } from "@/lib/text";
 import { canonicalFor } from "@/lib/seo";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     url: canonicalFor("/formations"),
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Formations — No-code, IA & Automatisation",
     description:
       "Formations pratiques pour monter en compétence sur le no-code, l'IA et l'automatisation.",
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
 
 export default async function FormationsPage() {
   const trainings = await getTrainingsWithFallback();
+  const location = await getLocationWithFallback();
 
   return (
     <>
@@ -43,7 +45,7 @@ export default async function FormationsPage() {
                 Formations <span className="metal-text">IA</span>
               </h1>
               <p className="text-text-secondary text-lg max-w-3xl">
-                Des parcours concrets pour rendre vos equipes autonomes sur le no-code et l&apos;IA.
+                Des parcours concrets pour rendre vos équipes autonomes sur le no-code et l&apos;IA.
               </p>
             </ScrollReveal>
           </div>
@@ -77,6 +79,7 @@ export default async function FormationsPage() {
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} auditHref="/pro#contact-pro" />
       <Footer />
     </>
   );

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { getServicesWithFallback } from "@/lib/content";
+import { getLocationWithFallback, getServicesWithFallback } from "@/lib/content";
 import { canonicalFor } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     url: canonicalFor("/services"),
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Services Pro — Audit, Automatisation, Formation",
     description:
       "Découvrez nos services B2B : audit digital, automatisation, IA, formation et accompagnement sur-mesure.",
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
 
 export default async function ServicesPage() {
   const services = await getServicesWithFallback();
+  const location = await getLocationWithFallback();
 
   return (
     <>
@@ -41,7 +43,7 @@ export default async function ServicesPage() {
                 Services <span className="metal-text">Pro</span>
               </h1>
               <p className="text-text-secondary text-lg max-w-3xl">
-                Audit, automatisation, IA, formation — on construit des solutions concretes pour vos equipes.
+                Audit, automatisation, IA, formation - on construit des solutions concrètes pour vos équipes.
               </p>
             </ScrollReveal>
           </div>
@@ -55,6 +57,7 @@ export default async function ServicesPage() {
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} auditHref="/pro#contact-pro" />
       <Footer />
     </>
   );

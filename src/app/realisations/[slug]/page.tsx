@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import MobileB2BBar from "@/components/sections/MobileB2BBar";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { getCaseStudiesWithFallback, getCaseStudyBySlugWithFallback } from "@/lib/content";
+import LeadB2BForm from "@/components/forms/LeadB2BForm";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  buildBreadcrumbJsonLd,
+  buildCaseStudyJsonLd,
+} from "@/lib/jsonld";
+import {
+  getCaseStudiesWithFallback,
+  getCaseStudyBySlugWithFallback,
+  getLocationWithFallback,
+} from "@/lib/content";
+import { extractMediaUrl } from "@/lib/media";
 import { stripHtml } from "@/lib/text";
 import { canonicalFor } from "@/lib/seo";
 
@@ -25,6 +38,7 @@ export async function generateMetadata({
   const description =
     caseStudy.seo_description || stripHtml(caseStudy.problem || caseStudy.solution || "");
   const canonical = canonicalFor(`/realisations/${caseStudy.slug}`);
+  const image = extractMediaUrl(caseStudy.cover_image) || "/opengraph-image";
 
   return {
     title,
@@ -36,11 +50,13 @@ export async function generateMetadata({
       title,
       description,
       url: canonical,
+      images: [{ url: image }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
+      images: [image],
     },
   };
 }
@@ -51,10 +67,19 @@ export default async function RealisationDetailPage({
   params: { slug: string };
 }) {
   const caseStudy = await getCaseStudyBySlugWithFallback(params.slug);
+  const location = await getLocationWithFallback();
   if (!caseStudy) notFound();
+  const coverUrl = extractMediaUrl(caseStudy.cover_image);
+  const caseStudyJsonLd = buildCaseStudyJsonLd(caseStudy);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Accueil", path: "/" },
+    { name: "Réalisations", path: "/realisations" },
+    { name: caseStudy.title, path: `/realisations/${caseStudy.slug}` },
+  ]);
 
   return (
     <>
+      <JsonLd data={[caseStudyJsonLd, breadcrumbJsonLd]} />
       <Navbar />
       <main>
         <section className="pt-28 pb-16 bg-surface-0">
@@ -82,6 +107,19 @@ export default async function RealisationDetailPage({
                 </Button>
               </div>
             </ScrollReveal>
+            {coverUrl && (
+              <ScrollReveal delay={80}>
+                <div className="mt-10 overflow-hidden rounded-sm border border-stroke-subtle">
+                  <Image
+                    src={coverUrl}
+                    alt={caseStudy.title}
+                    width={1200}
+                    height={680}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </ScrollReveal>
+            )}
           </div>
         </section>
 
@@ -120,13 +158,13 @@ export default async function RealisationDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-0">
-          <div className="max-w-5xl mx-auto px-6 text-center">
+        <section id="contact-pro" className="py-20 bg-surface-0">
+          <div className="max-w-5xl mx-auto px-6">
             <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4">
+              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
                 Un projet similaire ?
               </h2>
-              <p className="text-text-muted mb-8">
+              <p className="text-text-muted mb-8 text-center">
                 On vous aide à cadrer, prioriser et livrer une solution claire.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
@@ -138,10 +176,17 @@ export default async function RealisationDetailPage({
                 </Button>
               </div>
             </ScrollReveal>
+            <ScrollReveal delay={80}>
+              <div className="glass-panel rounded-sm p-8 mt-10 max-w-3xl mx-auto">
+                <LeadB2BForm />
+              </div>
+            </ScrollReveal>
           </div>
         </section>
       </main>
+      <MobileB2BBar phone={location.phone} auditHref="#contact-pro" />
       <Footer />
     </>
   );
 }
+

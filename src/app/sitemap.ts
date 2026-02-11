@@ -5,8 +5,15 @@ import {
   getTrainingsWithFallback,
 } from "@/lib/content";
 
+function parseDate(value?: string) {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
+  const staticLastModified = parseDate(process.env.SITE_BUILD_DATE) || new Date();
 
   const staticRoutes = [
     "",
@@ -26,14 +33,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const caseStudies = await getCaseStudiesWithFallback();
   const trainings = await getTrainingsWithFallback();
 
-  const serviceRoutes = services.map((service) => `/services/${service.slug}`);
-  const caseRoutes = caseStudies.map((item) => `/realisations/${item.slug}`);
-  const trainingRoutes = trainings.map((training) => `/formations/${training.slug}`);
-
-  const routes = [...staticRoutes, ...serviceRoutes, ...caseRoutes, ...trainingRoutes];
-
-  return routes.map((route) => ({
+  const staticEntries = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    lastModified: staticLastModified,
   }));
+
+  const serviceRoutes = services.map((service) => ({
+    url: `${baseUrl}/services/${service.slug}`,
+    lastModified: parseDate(service.updatedAt) || staticLastModified,
+  }));
+  const caseRoutes = caseStudies.map((item) => ({
+    url: `${baseUrl}/realisations/${item.slug}`,
+    lastModified: parseDate(item.updatedAt) || staticLastModified,
+  }));
+  const trainingRoutes = trainings.map((training) => ({
+    url: `${baseUrl}/formations/${training.slug}`,
+    lastModified: parseDate(training.updatedAt) || staticLastModified,
+  }));
+
+  return [...staticEntries, ...serviceRoutes, ...caseRoutes, ...trainingRoutes];
 }

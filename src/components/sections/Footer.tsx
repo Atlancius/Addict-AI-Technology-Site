@@ -1,4 +1,18 @@
 import Link from "next/link";
+import { getLocationWithFallback } from "@/lib/content";
+import type { Location } from "@/lib/types";
+
+const DAY_LABELS: Record<string, string> = {
+  mon: "Lun",
+  tue: "Mar",
+  wed: "Mer",
+  thu: "Jeu",
+  fri: "Ven",
+  sat: "Sam",
+  sun: "Dim",
+};
+
+const DAY_ORDER = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
 const FOOTER_LINKS = {
   services: [
@@ -21,7 +35,26 @@ const FOOTER_LINKS = {
   ],
 };
 
-export default function Footer() {
+function formatHours(location: Location) {
+  const opening = location.opening_hours;
+  if (!opening || Object.keys(opening).length === 0) {
+    return ["Lun - Ven : 09h - 18h", "Sam : 10h - 16h", "Dim : Fermé"];
+  }
+
+  return DAY_ORDER.map((day) => {
+    const slots = opening[day];
+    const label = DAY_LABELS[day] || day;
+    if (!slots || slots.length === 0) return `${label} : Fermé`;
+    const ranges = slots.map((slot) => `${slot.open} - ${slot.close}`).join(", ");
+    return `${label} : ${ranges}`;
+  });
+}
+
+export default async function Footer() {
+  const location = await getLocationWithFallback();
+  const hours = formatHours(location);
+  const email = location.email || "contact@addictai.tech";
+
   return (
     <footer className="bg-surface-1/80 border-t border-stroke-subtle pt-16 pb-8 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
@@ -53,15 +86,17 @@ export default function Footer() {
             </p>
             {/* NAP */}
             <div className="text-text-muted text-sm space-y-1">
-              <p>Immeuble les Mimosas</p>
-              <p>20213 Folelli, Corse</p>
-              <p>+33 4 95 31 12 90</p>
+              <p>{location.address_line1}</p>
+              <p>
+                {location.postal_code} {location.city}, {location.region || "Corse"}
+              </p>
+              {location.phone && <p>{location.phone}</p>}
               <p>
                 <a
-                  href="mailto:contact@addictai.tech"
+                  href={`mailto:${email}`}
                   className="hover:text-flame transition-colors"
                 >
-                  contact@addictai.tech
+                  {email}
                 </a>
               </p>
             </div>
@@ -111,16 +146,16 @@ export default function Footer() {
               Horaires
             </h4>
             <div className="text-sm text-text-muted space-y-1">
-              <p>Lun – Ven : 09h – 18h</p>
-              <p>Sam : 10h – 16h</p>
-              <p>Dim : Fermé</p>
+              {hours.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Bottom */}
         <div className="pt-8 border-t border-stroke-subtle flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-text-muted/50">
+          <p className="text-xs text-text-3/80">
             &copy; {new Date().getFullYear()} Addict AI Technology. Tous droits
             réservés.
           </p>
@@ -129,7 +164,7 @@ export default function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs text-text-muted/50 hover:text-text-muted transition-colors"
+                className="text-xs text-text-3/80 hover:text-text-muted transition-colors"
               >
                 {link.label}
               </Link>

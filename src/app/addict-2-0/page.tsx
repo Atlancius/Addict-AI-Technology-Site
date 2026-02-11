@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     url: canonicalFor("/addict-2-0"),
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Addict 2.0 — Réparation, Boutique Tech & Café Manga",
     description:
       "Réparation mobile & PC, boutique high-tech et café manga à Folelli, Corse. Diagnostic gratuit, intervention rapide, garantie incluse.",
@@ -37,19 +37,53 @@ export const metadata: Metadata = {
 
 const PILLARS = [
   {
-    icon: "🛍️",
+    icon: (
+      <svg
+        className="w-10 h-10"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+      >
+        <path d="M6 8h12l-1 11H7L6 8Z" />
+        <path d="M9 9V7a3 3 0 0 1 6 0v2" />
+      </svg>
+    ),
     title: "Boutique Tech",
     description:
       "Accessoires, pièces détachées, coques, protections et gadgets tech sélectionnés.",
   },
   {
-    icon: "🔧",
+    icon: (
+      <svg
+        className="w-10 h-10"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+      >
+        <path d="m14 7 3 3-7.5 7.5H6.5v-3L14 7Z" />
+        <path d="M15 6.5 17.5 4A2.1 2.1 0 0 1 20 6.5L17.5 9" />
+      </svg>
+    ),
     title: "Réparation",
     description:
       "Écran, batterie, connecteur, carte mère — diagnostic gratuit et réparation rapide.",
   },
   {
-    icon: "☕",
+    icon: (
+      <svg
+        className="w-10 h-10"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+      >
+        <path d="M5 10h11a3 3 0 0 1 0 6H7a2 2 0 0 1-2-2v-4Z" />
+        <path d="M16 11h1.5a2 2 0 0 1 0 4H16" />
+        <path d="M4 19h14" />
+      </svg>
+    ),
     title: "Café Manga",
     description:
       "Espace détente avec boissons chaudes et manga. Attendez votre réparation ou profitez.",
@@ -140,7 +174,9 @@ export default async function AddictB2C() {
                 <ScrollReveal key={pillar.title} delay={i * 100}>
                   <Card variant="service" className="h-full text-center">
                     <CardIcon className="text-center">
-                      <span className="text-4xl">{pillar.icon}</span>
+                      <span className="inline-flex justify-center text-flame">
+                        {pillar.icon}
+                      </span>
                     </CardIcon>
                     <CardTitle className="text-center">{pillar.title}</CardTitle>
                     <CardDescription className="text-center">
