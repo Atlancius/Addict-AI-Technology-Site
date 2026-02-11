@@ -27,7 +27,7 @@ export default function TrustBar() {
   return (
     <section className="py-12 bg-surface-0">
       <div className="max-w-7xl mx-auto px-6">
-        <ScrollReveal>
+        <ScrollReveal variant="soft" distance={18}>
           <div className="panel rounded-2xl p-8 md:p-9 space-y-7">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>

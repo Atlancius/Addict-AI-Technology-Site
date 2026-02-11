@@ -59,7 +59,7 @@ export default async function ContactPage() {
             </ScrollReveal>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <ScrollReveal>
+              <ScrollReveal variant="left">
                 <div className="panel rounded-2xl p-7 text-center space-y-3">
                   <div className="inline-flex justify-center text-flame">
                     <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
@@ -78,7 +78,7 @@ export default async function ContactPage() {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={100}>
+              <ScrollReveal delay={100} variant="up">
                 <div className="panel rounded-2xl p-7 text-center space-y-3">
                   <div className="inline-flex justify-center text-metal">
                     <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
@@ -102,7 +102,7 @@ export default async function ContactPage() {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={200}>
+              <ScrollReveal delay={200} variant="right">
                 <div className="panel rounded-2xl p-7 text-center space-y-3">
                   <div className="inline-flex justify-center text-text-primary">
                     <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>

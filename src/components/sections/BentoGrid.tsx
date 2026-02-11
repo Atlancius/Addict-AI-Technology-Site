@@ -222,7 +222,7 @@ export default function BentoGrid() {
   return (
     <section className="py-24 bg-surface-1 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
-        <ScrollReveal>
+        <ScrollReveal variant="up" distance={24}>
           <div className="mb-12 space-y-3">
             <p className="eyebrow">Offres animées</p>
             <h2 className="section-title">
@@ -238,7 +238,7 @@ export default function BentoGrid() {
 
         <div className="md:hidden grid grid-cols-1 gap-7">
           {OFFER_CARDS.map((offer, index) => (
-            <ScrollReveal key={offer.title} delay={index * 80}>
+            <ScrollReveal key={offer.title} delay={index * 80} variant="zoom" distance={20}>
               <article className="panel rounded-2xl p-5 space-y-5">
                 <div className="relative h-40 rounded-xl overflow-hidden border border-stroke-subtle">
                   <Image
@@ -346,7 +346,7 @@ export default function BentoGrid() {
             { label: "Parcours mobile", value: "Cards verticales fluides" },
             { label: "Parcours desktop", value: "Stack sticky immersif" },
           ].map((item, index) => (
-            <ScrollReveal key={item.label} delay={index * 60}>
+            <ScrollReveal key={item.label} delay={index * 60} variant="soft" distance={14}>
               <div className="metric-chip h-full text-center">
                 <p className="text-[0.62rem] uppercase tracking-[0.16em] text-text-muted font-heading">
                   {item.label}

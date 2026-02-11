@@ -585,6 +585,58 @@ body::after {
 }
 
 /* ============================================
+   Scroll Reveal Motion
+   ============================================ */
+
+.reveal-base {
+  will-change: transform, opacity, filter;
+  transition-property: opacity, transform, filter;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.reveal-hidden {
+  opacity: 0;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  filter: blur(0);
+}
+
+.reveal-up.reveal-hidden {
+  transform: translate3d(0, var(--reveal-distance, 28px), 0) scale(0.985);
+  filter: blur(4px);
+}
+
+.reveal-down.reveal-hidden {
+  transform: translate3d(0, calc(var(--reveal-distance, 28px) * -1), 0) scale(0.985);
+  filter: blur(4px);
+}
+
+.reveal-left.reveal-hidden {
+  transform: translate3d(calc(var(--reveal-distance, 28px) * -1), 0, 0) scale(0.99);
+  filter: blur(3px);
+}
+
+.reveal-right.reveal-hidden {
+  transform: translate3d(var(--reveal-distance, 28px), 0, 0) scale(0.99);
+  filter: blur(3px);
+}
+
+.reveal-zoom.reveal-hidden {
+  transform: translate3d(0, calc(var(--reveal-distance, 28px) * 0.24), 0) scale(0.94);
+  filter: blur(5px);
+}
+
+.reveal-soft.reveal-hidden {
+  transform: translate3d(0, calc(var(--reveal-distance, 28px) * 0.45), 0);
+  filter: blur(2px);
+}
+
+/* ============================================
    Reduced Motion
    ============================================ */
 
@@ -601,6 +653,15 @@ body::after {
   .tool-track {
     animation: none !important;
     transform: translateX(0) !important;
+  }
+
+  .reveal-base,
+  .reveal-hidden,
+  .reveal-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
   }
 }
 
