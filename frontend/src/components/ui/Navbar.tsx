@@ -209,6 +209,7 @@ export default function Navbar() {
                         ? "bg-surface-2/85 border border-stroke-medium text-text-primary"
                         : "bg-surface-2/45 text-text-secondary hover:text-flame"
                     }`}
+                    tabIndex={mobileOpen ? 0 : -1}
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -222,6 +223,7 @@ export default function Navbar() {
                 size="md"
                 href="/addict-2-0"
                 className="w-full"
+                tabIndex={mobileOpen ? 0 : -1}
                 onClick={() => setMobileOpen(false)}
               >
                 Réparer maintenant
@@ -231,6 +233,7 @@ export default function Navbar() {
                 size="md"
                 href="/pro"
                 className="w-full"
+                tabIndex={mobileOpen ? 0 : -1}
                 onClick={() => setMobileOpen(false)}
               >
                 Demander un audit
