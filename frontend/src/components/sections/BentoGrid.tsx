@@ -81,8 +81,10 @@ type StackState = {
   x: number;
   y: number;
   scale: number;
+  rotate: number;
   blur: number;
   brightness: number;
+  opacity: number;
   zIndex: number;
   interactive: boolean;
 };
@@ -91,75 +93,58 @@ function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
-function computeStackState(
-  index: number,
-  count: number,
-  active: number,
-  between: number
-): StackState {
+function computeStackState(index: number, count: number, activeFloat: number): StackState {
+  const delta = index - activeFloat;
+
   if (count <= 1) {
     return {
       x: 0,
       y: 0,
       scale: 1,
+      rotate: 0,
       blur: 0,
       brightness: 1,
+      opacity: 1,
       zIndex: 10,
       interactive: true,
     };
   }
 
-  if (index < active) {
-    const depth = active - index;
+  if (delta <= 0) {
+    const depth = -delta;
     return {
-      x: depth * 10 + between * 6,
-      y: -depth * 20 - between * 12,
-      scale: 1 - Math.min(0.2, depth * 0.05 + between * 0.02),
-      blur: Math.min(1.15, depth * 0.34 + between * 0.14),
-      brightness: Math.max(0.72, 0.95 - depth * 0.08 - between * 0.03),
-      zIndex: count - depth - 1,
-      interactive: false,
+      x: depth * 14,
+      y: -depth * 26,
+      scale: 1 - Math.min(0.22, depth * 0.055),
+      rotate: Math.min(5.5, depth * 2.1),
+      blur: Math.min(1.6, depth * 0.35),
+      brightness: Math.max(0.72, 1 - depth * 0.08),
+      opacity: Math.max(0.46, 1 - depth * 0.16),
+      zIndex: 320 - Math.round(depth * 20),
+      interactive: depth < 0.24,
     };
   }
 
-  if (index === active) {
-    return {
-      x: 0,
-      y: -between * 6,
-      scale: 1 - between * 0.018,
-      blur: 0,
-      brightness: 1,
-      zIndex: count + 10,
-      interactive: true,
-    };
-  }
-
-  if (index === active + 1) {
-    return {
-      x: 14 - between * 14,
-      y: 110 - between * 110,
-      scale: 0.92 + between * 0.08,
-      blur: Math.max(0, 0.58 - between * 0.58),
-      brightness: 0.9 + between * 0.1,
-      zIndex: count + 9,
-      interactive: between > 0.88,
-    };
-  }
-
-  const depth = index - active - 1;
+  const approach = Math.min(1, delta);
+  const tail = Math.max(0, delta - 1);
   return {
-    x: 24 + depth * 10,
-    y: 142 + depth * 30,
-    scale: Math.max(0.8, 0.9 - depth * 0.028),
-    blur: Math.min(1.55, 0.88 + depth * 0.22),
-    brightness: Math.max(0.64, 0.84 - depth * 0.055),
-    zIndex: count - depth - 2,
-    interactive: false,
+    x: approach * 18 + tail * 10,
+    y: approach * 124 + tail * 34,
+    scale: Math.max(0.78, 1 - approach * 0.09 - Math.min(0.18, tail * 0.04)),
+    rotate: -Math.min(4.6, delta * 1.35),
+    blur: Math.min(1.7, approach * 0.75 + tail * 0.28),
+    brightness: Math.max(0.72, 1 - approach * 0.1 - Math.min(0.3, tail * 0.06)),
+    opacity: Math.max(0.5, 1 - Math.min(0.45, delta * 0.1)),
+    zIndex: 520 - Math.round(delta * 20),
+    interactive: delta < 0.18,
   };
 }
 
 export default function BentoGrid() {
   const stageRef = useRef<HTMLDivElement>(null);
+  const targetProgressRef = useRef(0);
+  const renderedProgressRef = useRef(0);
+  const progressStateRef = useRef(0);
   const [reducedMotion, setReducedMotion] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -176,34 +161,59 @@ export default function BentoGrid() {
       return;
     }
 
-    let raf = 0;
-    const update = () => {
+    let scrollRaf = 0;
+    let smoothRaf = 0;
+
+    const measure = () => {
       const node = stageRef.current;
       if (!node) return;
 
       const rect = node.getBoundingClientRect();
       const vh = window.innerHeight || 1;
-      const startOffset = vh * 0.18;
-      const scrollDistance = Math.max(rect.height - vh * 0.55, 1);
-      const rawProgress = (startOffset - rect.top) / scrollDistance;
-      setProgress(clamp(rawProgress, 0, 1));
+      const startOffset = vh * 0.16;
+      const endOffset = vh * 0.62;
+      const distance = Math.max(rect.height - endOffset, 1);
+      const rawProgress = (startOffset - rect.top) / distance;
+      targetProgressRef.current = clamp(rawProgress, 0, 1);
     };
 
     const onScroll = () => {
-      if (raf) return;
-      raf = window.requestAnimationFrame(() => {
-        raf = 0;
-        update();
+      if (scrollRaf) return;
+      scrollRaf = window.requestAnimationFrame(() => {
+        scrollRaf = 0;
+        measure();
       });
     };
 
-    update();
+    const smooth = () => {
+      const current = renderedProgressRef.current;
+      const target = targetProgressRef.current;
+      const next = current + (target - current) * 0.15;
+      const snapped = Math.abs(target - next) < 0.0008 ? target : next;
+
+      if (snapped !== renderedProgressRef.current) {
+        renderedProgressRef.current = snapped;
+      }
+
+      if (Math.abs(renderedProgressRef.current - progressStateRef.current) > 0.0008) {
+        progressStateRef.current = renderedProgressRef.current;
+        setProgress(renderedProgressRef.current);
+      }
+
+      smoothRaf = window.requestAnimationFrame(smooth);
+    };
+
+    measure();
+    renderedProgressRef.current = targetProgressRef.current;
+    smoothRaf = window.requestAnimationFrame(smooth);
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
+      if (scrollRaf) window.cancelAnimationFrame(scrollRaf);
+      if (smoothRaf) window.cancelAnimationFrame(smoothRaf);
     };
   }, [reducedMotion]);
 
@@ -211,14 +221,11 @@ export default function BentoGrid() {
 
   const stackStates = useMemo(() => {
     const count = OFFER_CARDS.length;
-    const activeFloat = effectiveProgress * (count - 1);
-    const active = Math.min(count - 1, Math.max(0, Math.floor(activeFloat)));
-    const between = clamp(activeFloat - active, 0, 1);
-
-    return OFFER_CARDS.map((_, index) =>
-      computeStackState(index, count, active, between)
-    );
+    const activeFloat = clamp(effectiveProgress, 0, 1) * (count - 1);
+    return OFFER_CARDS.map((_, index) => computeStackState(index, count, activeFloat));
   }, [effectiveProgress]);
+
+  const stageHeightVh = 150 + (OFFER_CARDS.length - 1) * 38;
 
   return (
     <section className="py-24 bg-surface-1 section-shell surface-grid">
@@ -277,7 +284,7 @@ export default function BentoGrid() {
         </div>
 
         <div ref={stageRef} className="hidden md:block stack-stage">
-          <div className="h-[220vh]">
+          <div style={{ height: `${stageHeightVh}vh` }}>
             <div className="sticky top-28 h-[34rem]">
               <div className="relative h-full stack-deck px-3 md:px-5">
                 {OFFER_CARDS.map((offer, index) => {
@@ -287,8 +294,9 @@ export default function BentoGrid() {
                       key={offer.title}
                       className="stack-card absolute inset-y-0 inset-x-1 md:inset-x-2 panel rounded-3xl p-6 md:p-7 grid grid-cols-[0.95fr_1.05fr] gap-8"
                       style={{
-                        transform: `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale})`,
+                        transform: `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale}) rotate(${state.rotate}deg)`,
                         filter: `blur(${state.blur}px) brightness(${state.brightness})`,
+                        opacity: state.opacity,
                         zIndex: state.zIndex,
                         pointerEvents: state.interactive ? "auto" : "none",
                       }}
