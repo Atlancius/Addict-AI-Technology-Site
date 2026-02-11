@@ -1,5 +1,6 @@
-import Card, { CardIcon, CardTitle, CardDescription } from "@/components/ui/Card";
+import Image from "next/image";
 import Link from "next/link";
+import Card, { CardIcon, CardTitle, CardDescription } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const BENTO_ITEMS = [
@@ -16,6 +17,7 @@ const BENTO_ITEMS = [
       "Écran, batterie, connecteur — diagnostic gratuit, réparation rapide avec pièces testées.",
     href: "/addict-2-0",
     span: "lg:col-span-2",
+    image: "/images/stock/repair-phone.jpg",
   },
   {
     accent: "flame",
@@ -30,6 +32,7 @@ const BENTO_ITEMS = [
       "Espace détente avec boissons et mangas. Attendez sur place ou faites un stop plaisir.",
     href: "/addict-2-0",
     span: "",
+    image: "/images/stock/cafe-cozy.jpg",
   },
   {
     accent: "metal",
@@ -44,6 +47,7 @@ const BENTO_ITEMS = [
       "Workflows connectés et agents IA pour réduire les tâches manuelles et accélérer l’exécution.",
     href: "/pro",
     span: "",
+    image: "/images/stock/data-center.jpg",
   },
   {
     accent: "metal",
@@ -58,6 +62,7 @@ const BENTO_ITEMS = [
       "Parcours no-code, IA et automatisation. Objectifs clairs, exercices pratiques, support.",
     href: "/formations",
     span: "lg:col-span-2",
+    image: "/images/stock/team-meeting.jpg",
   },
   {
     accent: "metal",
@@ -72,6 +77,7 @@ const BENTO_ITEMS = [
       "KPIs concrets, gains de temps mesurés, documentation claire et transfert de compétences.",
     href: "/realisations",
     span: "",
+    image: "/images/stock/pro-workspace.jpg",
   },
   {
     accent: "flame",
@@ -87,6 +93,7 @@ const BENTO_ITEMS = [
       "Grille claire “à partir de”, délais annoncés, garantie et conseil avant toute décision.",
     href: "/reparations",
     span: "",
+    image: "/images/stock/repair-workbench.jpg",
   },
 ];
 
@@ -95,23 +102,33 @@ export default function BentoGrid() {
     <section className="py-24 bg-surface-1 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
-          <div className="mb-12">
-            <p className="text-[0.65rem] font-heading uppercase tracking-[0.24em] text-text-muted mb-3">
-              Deux univers
-            </p>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-text-primary mb-2 leading-tight">
-              Ce qu&apos;on fait, avec obsession du détail.
+          <div className="mb-12 space-y-3">
+            <p className="eyebrow">Expertises & services</p>
+            <h2 className="section-title">
+              Des offres concrètes,
+              <span className="block metal-text">structurées pour agir vite.</span>
             </h2>
-            <p className="text-text-muted">
-              Un aperçu de nos services B2C et B2B.
+            <p className="section-lead">
+              Côté particulier comme côté entreprise, chaque service est pensé
+              pour un résultat clair, mesurable et durable.
             </p>
           </div>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {BENTO_ITEMS.map((item, i) => (
-            <ScrollReveal key={item.title} delay={i * 80} className={item.span}>
-              <Card variant="bento" className="h-full flex flex-col">
+          {BENTO_ITEMS.map((item, index) => (
+            <ScrollReveal key={item.title} delay={index * 70} className={item.span}>
+              <Card variant="bento" className="h-full flex flex-col p-4 md:p-5">
+                <div className="relative h-36 rounded-xl overflow-hidden border border-stroke-subtle mb-5">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-0/70 via-surface-0/10 to-transparent" />
+                </div>
                 <CardIcon>
                   <span className={`text-2xl ${item.accent === "metal" ? "text-metal" : "text-flame"}`}>
                     {item.icon}
@@ -131,21 +148,21 @@ export default function BentoGrid() {
             </ScrollReveal>
           ))}
         </div>
+
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { label: "Diagnostic initial", value: "Offert en boutique" },
             { label: "Garantie atelier", value: "6 mois pièces & main d'œuvre" },
             { label: "Tarification", value: "Devis validé avant intervention" },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="panel-soft px-5 py-4 text-center"
-            >
-              <p className="text-[0.62rem] uppercase tracking-[0.16em] text-text-muted font-heading">
-                {item.label}
-              </p>
-              <p className="text-sm md:text-base font-heading text-text-primary mt-1">{item.value}</p>
-            </div>
+          ].map((item, index) => (
+            <ScrollReveal key={item.label} delay={index * 60}>
+              <div className="metric-chip h-full text-center">
+                <p className="text-[0.62rem] uppercase tracking-[0.16em] text-text-muted font-heading">
+                  {item.label}
+                </p>
+                <p className="text-sm md:text-base font-heading text-text-primary mt-1">{item.value}</p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
