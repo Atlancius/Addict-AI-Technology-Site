@@ -56,7 +56,7 @@ export default async function Footer() {
   const email = location.email || "contact@addictai.tech";
 
   return (
-    <footer className="bg-surface-1/80 border-t border-stroke-subtle pt-16 pb-8 relative overflow-hidden">
+    <footer className="bg-surface-1/85 section-shell pt-16 pb-8 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/40 to-transparent" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
@@ -65,7 +65,7 @@ export default async function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="absolute -inset-3 rounded-full bg-ember/20 blur-2xl opacity-70" />
-                <div className="relative w-9 h-9 rounded-sm border border-ember/40 bg-surface-2/70 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
+                <div className="relative w-9 h-9 rounded-xl border border-ember/40 bg-surface-2/75 shadow-[0_0_1.125rem_rgba(230,57,70,0.35)] flex items-center justify-center">
                   <span className="font-heading font-bold text-white text-lg leading-none">
                     A
                   </span>

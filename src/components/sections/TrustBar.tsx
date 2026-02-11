@@ -23,7 +23,7 @@ export default function TrustBar() {
     <section className="py-12 bg-surface-0">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 glass-panel rounded-md px-6 py-6">
+          <div className="panel flex flex-col md:flex-row items-center justify-between gap-8 px-6 py-6">
             {/* Badges */}
             <div className="flex flex-wrap gap-3 justify-center">
               {TRUST_ITEMS.map((item) => (
@@ -35,14 +35,14 @@ export default function TrustBar() {
             </div>
 
             <div className="relative overflow-hidden max-w-full space-y-2">
-              <p className="text-[0.6875rem] font-heading uppercase tracking-[0.18em] text-text-3 text-center">
+              <p className="text-[0.64rem] font-heading uppercase tracking-[0.2em] text-text-3 text-center">
                 Outils maîtrisés
               </p>
               <div className="flex flex-wrap items-center gap-6 justify-center">
                 {TOOLS.map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs font-heading font-medium text-text-2/80 uppercase tracking-wider"
+                    className="text-[0.7rem] font-heading font-medium text-text-2/90 uppercase tracking-[0.12em]"
                   >
                     {tool}
                   </span>

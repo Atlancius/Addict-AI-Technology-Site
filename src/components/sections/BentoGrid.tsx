@@ -92,14 +92,14 @@ const BENTO_ITEMS = [
 
 export default function BentoGrid() {
   return (
-    <section className="py-24 bg-surface-1 border-y border-stroke-subtle surface-grid">
+    <section className="py-24 bg-surface-1 section-shell surface-grid">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <p className="text-xs font-heading uppercase tracking-[0.3em] text-text-muted mb-3">
+            <p className="text-[0.65rem] font-heading uppercase tracking-[0.24em] text-text-muted mb-3">
               Deux univers
             </p>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold text-text-primary mb-2 leading-tight">
               Ce qu&apos;on fait, avec obsession du détail.
             </h2>
             <p className="text-text-muted">
@@ -122,7 +122,7 @@ export default function BentoGrid() {
                 <div className="mt-6">
                   <Link
                     href={item.href}
-                    className="text-xs font-heading uppercase tracking-wider text-flame hover:text-ember transition-colors"
+                    className="text-[0.68rem] font-heading uppercase tracking-[0.16em] text-flame hover:text-ember transition-colors"
                   >
                     Découvrir →
                   </Link>
@@ -139,12 +139,12 @@ export default function BentoGrid() {
           ].map((item) => (
             <div
               key={item.label}
-              className="rounded-sm border border-stroke-subtle bg-surface-2/70 px-5 py-4 text-center"
+              className="panel-soft px-5 py-4 text-center"
             >
-              <p className="text-xs uppercase tracking-wider text-text-muted font-heading">
+              <p className="text-[0.62rem] uppercase tracking-[0.16em] text-text-muted font-heading">
                 {item.label}
               </p>
-              <p className="text-2xl font-heading text-text-primary">{item.value}</p>
+              <p className="text-sm md:text-base font-heading text-text-primary mt-1">{item.value}</p>
             </div>
           ))}
         </div>

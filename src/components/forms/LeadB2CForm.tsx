@@ -159,7 +159,7 @@ export default function LeadB2CForm() {
         <div>
           <label
             htmlFor="b2c-urgency"
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Urgence
           </label>
@@ -167,7 +167,7 @@ export default function LeadB2CForm() {
             id="b2c-urgency"
             value={form.urgency}
             onChange={(event) => update("urgency", event.target.value)}
-            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-flame focus:ring-1 focus:ring-flame/30 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-flame focus:ring-2 focus:ring-flame/25 focus:outline-none"
           >
             {URGENCY_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -209,7 +209,7 @@ export default function LeadB2CForm() {
           type="checkbox"
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
-          className="mt-1 accent-flame"
+          className="mt-1 h-4 w-4 rounded border-stroke-subtle accent-flame"
         />
         <span>
           J&apos;accepte d&apos;être recontacté et que mes données soient traitées.

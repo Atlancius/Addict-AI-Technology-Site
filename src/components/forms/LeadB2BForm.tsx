@@ -176,7 +176,7 @@ export default function LeadB2BForm() {
         <div>
           <label
             htmlFor="b2b-company-size"
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Taille d&apos;entreprise
           </label>
@@ -184,7 +184,7 @@ export default function LeadB2BForm() {
             id="b2b-company-size"
             value={form.company_size}
             onChange={(event) => update("company_size", event.target.value)}
-            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-metal focus:ring-2 focus:ring-metal/25 focus:outline-none"
           >
             {COMPANY_SIZES.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -199,7 +199,7 @@ export default function LeadB2BForm() {
         <div>
           <label
             htmlFor="b2b-goal"
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Objectif
           </label>
@@ -207,7 +207,7 @@ export default function LeadB2BForm() {
             id="b2b-goal"
             value={form.goal}
             onChange={(event) => update("goal", event.target.value)}
-            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-metal focus:ring-2 focus:ring-metal/25 focus:outline-none"
           >
             {GOALS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -222,7 +222,7 @@ export default function LeadB2BForm() {
         <div>
           <label
             htmlFor="b2b-budget"
-            className="block text-xs font-heading font-medium uppercase tracking-wider text-text-secondary mb-1"
+            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Budget
           </label>
@@ -230,7 +230,7 @@ export default function LeadB2BForm() {
             id="b2b-budget"
             value={form.budget}
             onChange={(event) => update("budget", event.target.value)}
-            className="w-full bg-surface-2/80 border border-stroke-subtle text-text-primary rounded-sm px-4 py-3 text-sm font-body focus:border-metal focus:ring-1 focus:ring-metal/30 focus:outline-none"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-metal focus:ring-2 focus:ring-metal/25 focus:outline-none"
           >
             {BUDGETS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -272,7 +272,7 @@ export default function LeadB2BForm() {
           type="checkbox"
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
-          className="mt-1 accent-metal"
+          className="mt-1 h-4 w-4 rounded border-stroke-subtle accent-metal"
         />
         <span>
           J&apos;accepte d&apos;être recontacté et que mes données soient traitées.

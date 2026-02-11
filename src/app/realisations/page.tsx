@@ -62,7 +62,7 @@ export default async function RealisationsPage() {
                   <ScrollReveal key={caseStudy.id} delay={i * 80}>
                     <Card variant="caseStudy" className="h-full flex flex-col">
                       {coverUrl && (
-                        <div className="mb-4 overflow-hidden rounded-sm border border-stroke-subtle">
+                        <div className="mb-4 overflow-hidden rounded-xl border border-stroke-subtle">
                           <Image
                             src={coverUrl}
                             alt={caseStudy.title}
@@ -85,7 +85,7 @@ export default async function RealisationsPage() {
                       <div className="mt-auto">
                         <Link
                           href={`/realisations/${caseStudy.slug}`}
-                          className="text-xs font-heading uppercase tracking-wider text-metal hover:text-metal-hover transition-colors"
+                          className="text-[0.68rem] font-heading uppercase tracking-[0.14em] text-metal hover:text-metal-hover transition-colors"
                         >
                           Voir le cas →
                         </Link>

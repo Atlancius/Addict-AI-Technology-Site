@@ -148,10 +148,10 @@ export default async function ServiceDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Durée estimée
                 </h3>
@@ -161,7 +161,7 @@ export default async function ServiceDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Prix
                 </h3>
@@ -171,7 +171,7 @@ export default async function ServiceDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <div className="glass-panel rounded-sm p-6">
+              <div className="panel rounded-2xl p-6">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Accompagnement
                 </h3>
@@ -193,7 +193,7 @@ export default async function ServiceDetailPage({
                 {(service.deliverables || []).map((item) => (
                   <li
                     key={item}
-                    className="border border-stroke-subtle rounded-sm p-4 text-text-secondary text-sm"
+                    className="panel-soft p-4 text-text-secondary text-sm"
                   >
                     <span className="text-metal mr-2">✓</span>
                     {item}
@@ -209,7 +209,7 @@ export default async function ServiceDetailPage({
           </div>
         </section>
 
-        <section id="contact-pro" className="py-20 bg-surface-1 border-y border-stroke-subtle">
+        <section id="contact-pro" className="py-20 bg-surface-1 section-shell">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
@@ -220,14 +220,14 @@ export default async function ServiceDetailPage({
               </p>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="glass-panel rounded-sm p-8">
+              <div className="panel rounded-2xl p-8">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 border-t border-stroke-subtle">
+        <section className="py-20 bg-surface-1 section-shell">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
               <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">

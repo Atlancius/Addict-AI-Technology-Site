@@ -2,14 +2,14 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 
 export default function Manifesto() {
   return (
-    <section className="py-20 bg-surface-0 border-t border-stroke-subtle">
+    <section className="py-22 bg-surface-0 section-shell">
       <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
           <div className="text-center mb-12">
-            <p className="text-xs font-heading uppercase tracking-[0.3em] text-text-muted mb-4">
+            <p className="text-[0.65rem] font-heading uppercase tracking-[0.24em] text-text-muted mb-4">
               Pourquoi Addict
             </p>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-4">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold text-text-primary mb-4 leading-tight">
               Janus : deux univers, une seule exigence.
             </h2>
             <p className="text-text-secondary text-lg leading-relaxed max-w-3xl mx-auto">
@@ -38,8 +38,8 @@ export default function Manifesto() {
             },
           ].map((item, i) => (
             <ScrollReveal key={item.title} delay={i * 90}>
-              <div className="card-sheen rounded-sm border border-stroke-subtle bg-surface-2/80 p-6 shadow-[0_1.125rem_3.125rem_rgba(0,0,0,0.45)] hover:border-stroke-2 transition-all duration-300">
-                <h3 className="font-heading text-lg text-text-primary mb-2">
+              <div className="card-sheen panel-soft p-6 h-full hover:border-stroke-medium transition-all duration-300">
+                <h3 className="font-heading text-xl text-text-primary mb-2">
                   {item.title}
                 </h3>
                 <p className="text-text-muted text-sm leading-relaxed">
