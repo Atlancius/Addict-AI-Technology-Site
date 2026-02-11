@@ -77,6 +77,7 @@ const OFFER_CARDS: OfferCard[] = [
 ];
 
 type StackState = {
+  x: number;
   y: number;
   scale: number;
   blur: number;
@@ -97,6 +98,7 @@ function computeStackState(
 ): StackState {
   if (count <= 1) {
     return {
+      x: 0,
       y: 0,
       scale: 1,
       blur: 0,
@@ -109,7 +111,8 @@ function computeStackState(
   if (index < active) {
     const depth = active - index;
     return {
-      y: -depth * 18 - between * 10,
+      x: depth * 10 + between * 6,
+      y: -depth * 20 - between * 12,
       scale: 1 - Math.min(0.2, depth * 0.05 + between * 0.02),
       blur: Math.min(1.15, depth * 0.34 + between * 0.14),
       brightness: Math.max(0.72, 0.95 - depth * 0.08 - between * 0.03),
@@ -120,7 +123,8 @@ function computeStackState(
 
   if (index === active) {
     return {
-      y: -between * 8,
+      x: 0,
+      y: -between * 6,
       scale: 1 - between * 0.018,
       blur: 0,
       brightness: 1,
@@ -131,8 +135,9 @@ function computeStackState(
 
   if (index === active + 1) {
     return {
-      y: 92 - between * 92,
-      scale: 0.93 + between * 0.07,
+      x: 14 - between * 14,
+      y: 110 - between * 110,
+      scale: 0.92 + between * 0.08,
       blur: Math.max(0, 0.58 - between * 0.58),
       brightness: 0.9 + between * 0.1,
       zIndex: count + 9,
@@ -142,7 +147,8 @@ function computeStackState(
 
   const depth = index - active - 1;
   return {
-    y: 120 + depth * 24,
+    x: 24 + depth * 10,
+    y: 142 + depth * 30,
     scale: Math.max(0.8, 0.9 - depth * 0.028),
     blur: Math.min(1.55, 0.88 + depth * 0.22),
     brightness: Math.max(0.64, 0.84 - depth * 0.055),
@@ -230,10 +236,10 @@ export default function BentoGrid() {
           </div>
         </ScrollReveal>
 
-        <div className="md:hidden grid grid-cols-1 gap-5">
+        <div className="md:hidden grid grid-cols-1 gap-7">
           {OFFER_CARDS.map((offer, index) => (
             <ScrollReveal key={offer.title} delay={index * 80}>
-              <article className="panel rounded-2xl p-4 space-y-4">
+              <article className="panel rounded-2xl p-5 space-y-5">
                 <div className="relative h-40 rounded-xl overflow-hidden border border-stroke-subtle">
                   <Image
                     src={offer.image}
@@ -270,17 +276,17 @@ export default function BentoGrid() {
         </div>
 
         <div ref={stageRef} className="hidden md:block stack-stage">
-          <div className="h-[205vh]">
-            <div className="sticky top-28 h-[33rem]">
-              <div className="relative h-full stack-deck">
+          <div className="h-[220vh]">
+            <div className="sticky top-28 h-[34rem]">
+              <div className="relative h-full stack-deck px-3 md:px-5">
                 {OFFER_CARDS.map((offer, index) => {
                   const state = stackStates[index];
                   return (
                     <article
                       key={offer.title}
-                      className="stack-card absolute inset-0 panel rounded-3xl p-5 md:p-6 grid grid-cols-[0.95fr_1.05fr] gap-6"
+                      className="stack-card absolute inset-y-0 inset-x-1 md:inset-x-2 panel rounded-3xl p-6 md:p-7 grid grid-cols-[0.95fr_1.05fr] gap-8"
                       style={{
-                        transform: `translate3d(0, ${state.y}px, 0) scale(${state.scale})`,
+                        transform: `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale})`,
                         filter: `blur(${state.blur}px) brightness(${state.brightness})`,
                         zIndex: state.zIndex,
                         pointerEvents: state.interactive ? "auto" : "none",
@@ -334,7 +340,7 @@ export default function BentoGrid() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { label: "Expérience animation", value: "Empilement progressif" },
             { label: "Parcours mobile", value: "Cards verticales fluides" },

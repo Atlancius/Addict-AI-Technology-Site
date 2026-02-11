@@ -48,7 +48,7 @@ export default function UiKitPage() {
 
           <section className="space-y-4">
             <h2 className="font-heading text-2xl text-text-primary">Cards</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <Card variant="service">
                 <CardTitle>Service Card</CardTitle>
                 <CardDescription>Texte descriptif court.</CardDescription>
@@ -100,7 +100,7 @@ export default function UiKitPage() {
 
           <section className="space-y-4">
             <h2 className="font-heading text-2xl text-text-primary">Data Preview</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {fallbackServices.map((service) => (
                 <Card key={service.id} variant="service">
                   <CardTitle>{service.title}</CardTitle>
@@ -108,7 +108,7 @@ export default function UiKitPage() {
                 </Card>
               ))}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {fallbackCaseStudies.map((caseStudy) => (
                 <Card key={caseStudy.id} variant="caseStudy">
                   <CardTitle>{caseStudy.title}</CardTitle>

@@ -55,7 +55,7 @@ export default async function RealisationsPage() {
 
         <section className="pb-20">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {caseStudies.map((caseStudy, i) => {
                 const coverUrl = extractMediaUrl(caseStudy.cover_image);
                 return (

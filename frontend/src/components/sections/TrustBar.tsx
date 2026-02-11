@@ -28,8 +28,8 @@ export default function TrustBar() {
     <section className="py-12 bg-surface-0">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
-          <div className="panel rounded-2xl p-6 md:p-7 space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="panel rounded-2xl p-8 md:p-9 space-y-7">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <p className="eyebrow mb-2">Crédibilité opérationnelle</p>
                 <p className="text-sm text-text-secondary max-w-2xl">
@@ -37,7 +37,7 @@ export default function TrustBar() {
                   réaliste et suivi transparent à chaque étape.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {TRUST_ITEMS.map((item) => (
                   <Badge key={item.label} variant={item.variant}>
                     {item.label}

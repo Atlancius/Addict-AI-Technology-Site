@@ -141,7 +141,7 @@ export default function Navbar() {
         <div className="absolute inset-0 bg-surface-0/85 backdrop-blur-2xl" onClick={closeMobile} />
         <div className="relative px-5 pt-24 pb-8 h-full">
           <div
-            className={`panel h-full p-6 flex flex-col transition-transform duration-300 ${
+            className={`panel h-full p-7 flex flex-col transition-transform duration-300 ${
               mobileOpen ? "translate-y-0" : "translate-y-3"
             }`}
           >

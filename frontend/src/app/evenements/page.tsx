@@ -44,8 +44,8 @@ export default async function EvenementsPage() {
               <p className="text-text-secondary text-lg mb-8">
                 Workshops, masterclass IA et sessions no-code sur mesure pour équipes et communautés locales.
               </p>
-              <div className="panel rounded-2xl p-8 space-y-6 text-left">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="panel rounded-2xl p-8 md:p-9 space-y-6 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {[
                     {
                       title: "Workshop IA Express",
@@ -62,7 +62,7 @@ export default async function EvenementsPage() {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="panel-soft p-4"
+                      className="panel-soft p-5"
                     >
                       <h3 className="font-heading text-sm uppercase tracking-wider text-text-primary mb-2">
                         {item.title}

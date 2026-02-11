@@ -53,7 +53,7 @@ export default async function FormationsPage() {
 
         <section className="pb-20">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {trainings.map((training, i) => (
                 <ScrollReveal key={training.id} delay={i * 80}>
                   <Card variant="service" className="h-full flex flex-col">

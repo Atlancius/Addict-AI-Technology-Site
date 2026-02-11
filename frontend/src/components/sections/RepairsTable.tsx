@@ -52,7 +52,7 @@ export default function RepairsTable({ items }: { items: Repair[] }) {
 
   return (
     <div className="space-y-6">
-      <div className="panel p-4 md:p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="panel p-5 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <label
             htmlFor="repairs-brand"

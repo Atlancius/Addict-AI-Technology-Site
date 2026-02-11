@@ -49,7 +49,7 @@ export default function HeroSplit() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <ScrollReveal className="space-y-7">
             <h1 className="font-heading text-[2.15rem] md:text-6xl font-bold text-text-primary leading-[0.98]">
               Le QG local qui
@@ -87,7 +87,7 @@ export default function HeroSplit() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={120} className="panel rounded-3xl p-4 space-y-4">
+          <ScrollReveal delay={120} className="panel rounded-3xl p-5 md:p-6 space-y-5">
             <div className="relative h-60 rounded-2xl overflow-hidden border border-stroke-subtle">
               <Image
                 src="/images/stock/repair-workbench.jpg"
@@ -99,7 +99,7 @@ export default function HeroSplit() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-surface-0/75 via-surface-0/15 to-transparent" />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-5">
               <div className="relative h-36 rounded-2xl overflow-hidden border border-stroke-subtle">
                 <Image
                   src="/images/stock/cafe-cozy.jpg"
@@ -124,10 +124,10 @@ export default function HeroSplit() {
           </ScrollReveal>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {PATH_CARDS.map((card, index) => (
             <ScrollReveal key={card.title} delay={index * 90}>
-              <article className="panel rounded-2xl p-6 md:p-7 h-full">
+              <article className="panel rounded-2xl p-8 md:p-9 h-full">
                 <p
                   className={`text-[0.64rem] font-heading uppercase tracking-[0.18em] ${
                     card.tone === "flame" ? "text-flame" : "text-metal"

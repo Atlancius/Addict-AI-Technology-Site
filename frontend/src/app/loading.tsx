@@ -5,7 +5,7 @@ export default function GlobalLoading() {
         <div className="h-4 w-44 rounded-full bg-surface-3/70" />
         <div className="h-16 w-full max-w-3xl rounded-2xl bg-surface-2/65" />
         <div className="h-6 w-full max-w-2xl rounded-xl bg-surface-2/50" />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
           <div className="h-72 rounded-3xl bg-surface-2/60 border border-stroke-subtle" />
           <div className="h-72 rounded-3xl bg-surface-2/60 border border-stroke-subtle" />
         </div>

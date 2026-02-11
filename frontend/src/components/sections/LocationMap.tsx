@@ -87,10 +87,10 @@ export default function LocationMap({ location }: { location?: Location }) {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8">
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10">
+          <div className="space-y-6">
             <ScrollReveal>
-              <div className="panel rounded-2xl p-6 space-y-4">
+              <div className="panel rounded-2xl p-7 space-y-5">
                 <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Adresse
                 </h3>
@@ -102,7 +102,7 @@ export default function LocationMap({ location }: { location?: Location }) {
                   {data.region || "Corse"}
                 </p>
                 <div className="split-divider" />
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   <Button
                     variant="flame"
                     size="sm"
@@ -128,7 +128,7 @@ export default function LocationMap({ location }: { location?: Location }) {
             </ScrollReveal>
 
             <ScrollReveal delay={80}>
-              <div className="panel-soft rounded-2xl p-5 space-y-3">
+              <div className="panel-soft rounded-2xl p-6 space-y-4">
                 <h3 className="font-heading font-semibold text-[0.7rem] text-text-primary uppercase tracking-[0.16em]">
                   Horaires
                 </h3>

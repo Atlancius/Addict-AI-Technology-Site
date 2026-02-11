@@ -124,9 +124,9 @@ export default async function RealisationDetailPage({
         </section>
 
         <section className="py-20 bg-surface-1 section-shell">
-          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal>
-              <div className="panel rounded-2xl p-6">
+              <div className="panel rounded-2xl p-7">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Problème
                 </h3>
@@ -136,7 +136,7 @@ export default async function RealisationDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-6">
+              <div className="panel rounded-2xl p-7">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Solution
                 </h3>
@@ -146,7 +146,7 @@ export default async function RealisationDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <div className="panel rounded-2xl p-6">
+              <div className="panel rounded-2xl p-7">
                 <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
                   Résultat
                 </h3>
@@ -177,7 +177,7 @@ export default async function RealisationDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-8 mt-10 max-w-3xl mx-auto">
+              <div className="panel rounded-2xl p-8 md:p-9 mt-10 max-w-3xl mx-auto">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>

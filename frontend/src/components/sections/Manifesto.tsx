@@ -25,9 +25,9 @@ export default function Manifesto() {
   return (
     <section className="py-24 bg-surface-0 section-shell">
       <div className="max-w-7xl mx-auto px-6 space-y-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 items-start">
           <ScrollReveal>
-            <div className="panel rounded-2xl p-7 md:p-8 space-y-5">
+            <div className="panel rounded-2xl p-8 md:p-9 space-y-6">
               <p className="eyebrow">Manifeste Addict</p>
               <h2 className="section-title">
                 Un atelier local,
@@ -45,10 +45,10 @@ export default function Manifesto() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
             {PRINCIPLES.map((item, index) => (
               <ScrollReveal key={item.id} delay={index * 100}>
-                <article className="panel-soft h-full p-6">
+                <article className="panel-soft h-full p-7">
                   <p className="font-heading text-[0.64rem] tracking-[0.18em] uppercase text-text-muted">
                     Axe {item.id}
                   </p>
@@ -64,7 +64,7 @@ export default function Manifesto() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { label: "Diagnostic", value: "Offert" },
             { label: "Garantie", value: "6 mois" },
