@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Chakra_Petch, Plus_Jakarta_Sans } from "next/font/google";
 import AnalyticsScripts from "@/components/analytics/AnalyticsScripts";
 import ScrollDepthTracker from "@/components/analytics/ScrollDepthTracker";
+import Preloader from "@/components/animations/Preloader";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://addictai.tech";
@@ -71,6 +72,7 @@ export default function RootLayout({
       <body
         className={`${chakraPetch.variable} ${plusJakarta.variable} antialiased`}
       >
+        <Preloader />
         <AnalyticsScripts />
         <ScrollDepthTracker />
         {children}
