@@ -98,12 +98,19 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
     setStatus("loading");
     setMessage("");
 
+    const urlParams = new URLSearchParams(window.location.search);
     const payload = {
       ...form,
       company_size: form.company_size || undefined,
       goal: form.goal || undefined,
       budget: form.budget || undefined,
       source_page: `${window.location.pathname}${window.location.search}`,
+      audit_type: urlParams.get("audit") || undefined,
+      utm_source: urlParams.get("utm_source") || undefined,
+      utm_medium: urlParams.get("utm_medium") || undefined,
+      utm_campaign: urlParams.get("utm_campaign") || undefined,
+      utm_term: urlParams.get("utm_term") || undefined,
+      utm_content: urlParams.get("utm_content") || undefined,
     };
 
     const validation = validateB2B(payload);
@@ -218,7 +225,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
             id="b2b-company-size"
             value={form.company_size}
             onChange={(event) => update("company_size", event.target.value)}
-            className="w-full min-h-[3rem] input-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
+            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
           >
             {COMPANY_SIZES.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -239,7 +246,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
             id="b2b-goal"
             value={form.goal}
             onChange={(event) => update("goal", event.target.value)}
-            className="w-full min-h-[3rem] input-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
+            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
           >
             {GOALS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -260,7 +267,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
             id="b2b-budget"
             value={form.budget}
             onChange={(event) => update("budget", event.target.value)}
-            className="w-full min-h-[3rem] input-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
+            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
           >
             {BUDGETS.map((opt) => (
               <option key={opt.value} value={opt.value}>

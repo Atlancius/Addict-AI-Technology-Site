@@ -5,10 +5,9 @@ import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
 import Card, { CardDescription, CardTitle } from "@/components/ui/Card";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import FormationsTabs from "@/components/sections/FormationsTabs";
 import { canonicalFor } from "@/lib/seo";
 import {
-  FORMATIONS_PARTICULIERS,
-  FORMATIONS_PRO,
   FORMATION_TESTIMONIALS,
   buildAuditHref,
 } from "@/lib/hub-data";
@@ -76,45 +75,13 @@ export default function FormationsPage() {
         </section>
 
         <section className="py-20 section-shell">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="max-w-7xl mx-auto px-6">
             <ScrollReveal>
-              <Card variant="pricing" className="h-full">
-                <p className="eyebrow mb-2">Bloc Pro</p>
-                <CardTitle>{FORMATIONS_PRO.title}</CardTitle>
-                <CardDescription className="mb-6">{FORMATIONS_PRO.summary}</CardDescription>
-                <ul className="space-y-3 text-sm text-text-secondary mb-6">
-                  {FORMATIONS_PRO.packs.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="text-copper mt-0.5">✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" href={FORMATIONS_PRO.ctaHref}>{FORMATIONS_PRO.ctaLabel}</Button>
-                  <Button variant="secondary" href="/services/transition-digitale">Voir transition digitale</Button>
-                </div>
-              </Card>
+              <p className="eyebrow mb-3">Parcours</p>
+              <h2 className="section-title mb-8">Choisis ton parcours de formation</h2>
             </ScrollReveal>
-
-            <ScrollReveal delay={90}>
-              <Card variant="service" className="h-full">
-                <p className="eyebrow mb-2">Bloc Particuliers</p>
-                <CardTitle>{FORMATIONS_PARTICULIERS.title}</CardTitle>
-                <CardDescription className="mb-6">{FORMATIONS_PARTICULIERS.summary}</CardDescription>
-                <ul className="space-y-3 text-sm text-text-secondary mb-6">
-                  {FORMATIONS_PARTICULIERS.packs.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="text-copper mt-0.5">✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="secondary" href="/boutique">Voir le pôle particuliers</Button>
-                  <Button variant="tertiary" href={FORMATIONS_PARTICULIERS.ctaHref}>Parler de mon besoin</Button>
-                </div>
-              </Card>
+            <ScrollReveal delay={60}>
+              <FormationsTabs />
             </ScrollReveal>
           </div>
         </section>

@@ -16,7 +16,7 @@ export default function Accordion({ items, className = "" }: AccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className={`space-y-3 ${className}`}>
+    <div className={`faq_component ${className}`}>
       {items.map((item, index) => (
         <AccordionRow
           key={index}
@@ -48,18 +48,16 @@ function AccordionRow({
   const panelId = `accordion-panel-${index}`;
 
   return (
-    <div className="panel-soft overflow-hidden">
+    <div className="faq_item">
       <button
         id={buttonId}
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between gap-5 px-5 py-4 text-left bg-surface-2/70 hover:bg-surface-3/80 transition-colors cursor-pointer"
+        className="faq_question cursor-pointer"
         aria-expanded={isOpen}
         aria-controls={panelId}
       >
-        <span className="font-heading font-medium text-sm text-text-primary pr-4 leading-relaxed">
-          {question}
-        </span>
+        <span>{question}</span>
         <ChevronIcon isOpen={isOpen} />
       </button>
       <div
@@ -70,9 +68,7 @@ function AccordionRow({
           isOpen ? "max-h-96" : "max-h-0"
         }`}
       >
-        <div className="px-5 py-4 text-sm text-text-secondary leading-relaxed bg-surface-1/80 border-t border-stroke-subtle">
-          {answer}
-        </div>
+        <p className="faq_answer">{answer}</p>
       </div>
     </div>
   );
@@ -81,8 +77,8 @@ function AccordionRow({
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
-      className={`w-4 h-4 text-text-muted transition-transform transition-opacity duration-300 flex-shrink-0 ${
-        isOpen ? "rotate-180 opacity-100 text-flame" : "opacity-70"
+      className={`w-4 h-4 text-text-muted transition-transform duration-300 flex-shrink-0 ${
+        isOpen ? "rotate-180 text-copper-400" : ""
       }`}
       fill="none"
       viewBox="0 0 24 24"
