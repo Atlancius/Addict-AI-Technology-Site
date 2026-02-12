@@ -22,7 +22,7 @@ export default function PolitiqueConfidentialitePage() {
             Politique de confidentialité
           </h1>
 
-          <div className="prose prose-invert prose-sm max-w-none space-y-6 text-text-secondary">
+          <div className="rich-text max-w-none space-y-6">
             <section>
               <h2 className="font-heading text-xl font-semibold text-text-primary">
                 Responsable du traitement

@@ -20,8 +20,36 @@
       "targetField": "title",
       "required": true
     },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "gallery_desktop": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images"]
+    },
+    "gallery_mobile": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images"]
+    },
+    "tags": {
+      "type": "json"
+    },
+    "service_type": {
+      "type": "enumeration",
+      "enum": ["marketing-digital", "automatisation-ia", "crm-saas-integrations", "transition-digitale"]
+    },
+    "client_name": {
+      "type": "string"
+    },
     "client_type": {
       "type": "string"
+    },
+    "short_summary": {
+      "type": "text"
     },
     "problem": {
       "type": "richtext"
@@ -34,6 +62,9 @@
     },
     "tools": {
       "type": "json"
+    },
+    "external_link": {
+      "type": "string"
     },
     "cover_image": {
       "type": "media",
