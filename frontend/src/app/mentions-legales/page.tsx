@@ -21,7 +21,7 @@ export default function MentionsLegales() {
             Mentions légales
           </h1>
 
-          <div className="rich-text max-w-none space-y-6">
+          <div className="prose prose-invert prose-sm max-w-none space-y-6 text-text-secondary">
             <section>
               <h2 className="font-heading text-xl font-semibold text-text-primary">
                 Éditeur du site
@@ -66,6 +66,7 @@ export default function MentionsLegales() {
                 Consultez notre{" "}
                 <a
                   href="/politique-confidentialite"
+                  className="text-flame hover:underline"
                 >
                   politique de confidentialité
                 </a>{" "}

@@ -55,14 +55,10 @@ export default function LeadB2CForm() {
     setStatus("loading");
     setMessage("");
 
-    const urlParams = new URLSearchParams(window.location.search);
     const payload = {
       ...form,
       urgency: form.urgency || undefined,
-      source_page: `${window.location.pathname}${window.location.search}`,
-      utm_source: urlParams.get("utm_source") || undefined,
-      utm_medium: urlParams.get("utm_medium") || undefined,
-      utm_campaign: urlParams.get("utm_campaign") || undefined,
+      source_page: window.location.pathname,
     };
 
     const validation = validateB2C(payload);
@@ -180,7 +176,7 @@ export default function LeadB2CForm() {
             id="b2c-urgency"
             value={form.urgency}
             onChange={(event) => update("urgency", event.target.value)}
-            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-ember focus:outline-none focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]"
+            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-flame focus:ring-2 focus:ring-flame/25 focus:outline-none"
           >
             {URGENCY_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
