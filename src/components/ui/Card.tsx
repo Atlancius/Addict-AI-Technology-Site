@@ -12,13 +12,13 @@ const variantClasses: Record<CardVariant, string> = {
   service:
     "panel hover:border-ember/55 hover:bg-[linear-gradient(170deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.04)_36%,rgba(0,0,0,0.36)_100%),rgba(74,68,66,0.9)]",
   bento:
-    "panel hover:border-copper/55 hover:shadow-[0_1.2rem_3.2rem_rgba(122,50,51,0.24)]",
+    "panel hover:border-copper/55 hover:shadow-[0_20px_52px_rgba(122,50,51,0.24)]",
   pricing:
-    "panel hover:border-copper/60 hover:shadow-[0_1.2rem_3.4rem_rgba(122,50,51,0.26)]",
+    "panel hover:border-copper/60 hover:shadow-[0_20px_55px_rgba(122,50,51,0.26)]",
   caseStudy:
-    "panel hover:border-copper/65 hover:shadow-[0_1.3rem_3.6rem_rgba(122,50,51,0.28)]",
+    "panel hover:border-copper/65 hover:shadow-[0_22px_58px_rgba(122,50,51,0.28)]",
   repair:
-    "panel hover:border-ember/55 hover:shadow-[0_1.1rem_3rem_rgba(91,36,39,0.3)]",
+    "panel hover:border-ember/55 hover:shadow-[0_18px_48px_rgba(91,36,39,0.3)]",
 };
 
 export default function Card({

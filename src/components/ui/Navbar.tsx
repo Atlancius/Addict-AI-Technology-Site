@@ -57,7 +57,7 @@ export default function Navbar() {
       }`}
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember/50 to-transparent" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[4.45rem] md:h-20 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[4.5rem] md:h-20 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
           <div className="relative w-10 h-10 rounded-2xl overflow-hidden border border-ember/45 bg-surface-2/80 shadow-[0_0_20px_rgba(147,69,64,0.32)]">
             <Image src="/images/brand/addict-mark-96.png" alt="Addict" fill className="object-cover" sizes="40px" priority />

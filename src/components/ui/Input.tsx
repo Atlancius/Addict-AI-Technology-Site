@@ -12,16 +12,17 @@ type TextareaProps = BaseInputProps &
   TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
 const baseClasses =
-  "w-full input-shell text-text-primary placeholder:text-text-3/80 rounded-xl px-4 py-3.5 text-sm font-body transition-all duration-200 focus:outline-none";
+  "w-full min-h-[3rem] input-shell text-text-primary placeholder:text-text-3/80 rounded-xl px-4 py-3 text-sm font-body transition-all duration-200 focus:outline-none";
 
 const focusClasses: Record<NonNullable<BaseInputProps["tone"]>, string> = {
-  ember: "focus:border-ember focus:ring-2 focus:ring-ember/30",
-  copper: "focus:border-copper focus:ring-2 focus:ring-copper/28",
-  flame: "focus:border-ember focus:ring-2 focus:ring-ember/30",
-  metal: "focus:border-copper focus:ring-2 focus:ring-copper/28",
+  ember: "focus:border-ember focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]",
+  copper: "focus:border-copper focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]",
+  flame: "focus:border-ember focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]",
+  metal: "focus:border-copper focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]",
 };
 
-const errorClasses = "!border-ember focus:!border-ember focus:ring-ember/35";
+const errorClasses =
+  "!border-ember focus:!border-ember focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   { label, error, tone = "ember", className = "", ...props },
@@ -35,7 +36,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {label && (
         <label
           htmlFor={props.id}
-          className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
+          className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
         >
           {label}
         </label>
@@ -66,7 +67,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "mul
         {label && (
           <label
             htmlFor={props.id}
-            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
+            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
           >
             {label}
           </label>

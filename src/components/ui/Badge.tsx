@@ -10,11 +10,11 @@ interface BadgeProps {
 
 const variantClasses: Record<BadgeVariant, string> = {
   local:
-    "bg-metal/18 text-metal border-metal/45 shadow-[0_0_1rem_rgba(93,134,178,0.2)]",
+    "bg-metal/18 text-metal border-metal/45 shadow-[0_0_16px_rgba(93,134,178,0.2)]",
   express:
-    "bg-flame/16 text-flame border-flame/45 shadow-[0_0_1rem_rgba(255,115,50,0.2)]",
+    "bg-flame/16 text-flame border-flame/45 shadow-[0_0_16px_rgba(255,115,50,0.2)]",
   quality:
-    "bg-ember/16 text-ember border-ember/45 shadow-[0_0_1rem_rgba(239,68,86,0.2)]",
+    "bg-ember/16 text-ember border-ember/45 shadow-[0_0_16px_rgba(239,68,86,0.2)]",
   default:
     "bg-surface-2/80 text-text-secondary border-stroke-subtle",
 };

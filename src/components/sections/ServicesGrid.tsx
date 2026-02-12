@@ -42,7 +42,7 @@ export default function ServicesGrid({ items }: { items: Service[] }) {
                 onClick={() => setActiveCategory(category)}
                 className={`px-4 py-2 text-[0.64rem] font-heading uppercase tracking-[0.14em] rounded-full border transition-colors ${
                   activeCategory === category
-                    ? "bg-surface-3/95 text-metal border-metal/50 shadow-[0_0_1.2rem_rgba(93,134,178,0.3)]"
+                    ? "bg-surface-3/95 text-metal border-metal/50 shadow-[0_0_20px_rgba(93,134,178,0.3)]"
                     : "bg-surface-2/70 text-text-secondary border-stroke-subtle hover:text-text-primary hover:border-stroke-medium"
                 }`}
               >

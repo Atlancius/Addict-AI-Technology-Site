@@ -15,6 +15,7 @@ type GoalValue =
   | "ia"
   | "crm"
   | "transition"
+  | "formation"
   | "formation-pro"
   | "formation-particulier"
   | "audit"
@@ -35,7 +36,7 @@ const GOALS: Array<{ value: GoalValue; label: string }> = [
   { value: "ia", label: "Audit automatisation & IA" },
   { value: "crm", label: "Audit CRM / SaaS" },
   { value: "transition", label: "Audit transition digitale" },
-  { value: "formation-pro", label: "Audit formation pro" },
+  { value: "formation", label: "Audit formation" },
   { value: "formation-particulier", label: "Formation particulier" },
   { value: "audit", label: "Audit global" },
   { value: "other", label: "Autre besoin" },
@@ -209,7 +210,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
         <div>
           <label
             htmlFor="b2b-company-size"
-            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
+            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Taille d&apos;entreprise
           </label>
@@ -217,7 +218,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
             id="b2b-company-size"
             value={form.company_size}
             onChange={(event) => update("company_size", event.target.value)}
-            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-copper focus:ring-2 focus:ring-copper/25 focus:outline-none"
+            className="w-full min-h-[3rem] input-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
           >
             {COMPANY_SIZES.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -230,7 +231,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
         <div>
           <label
             htmlFor="b2b-goal"
-            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
+            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Type d&apos;audit
           </label>
@@ -238,7 +239,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
             id="b2b-goal"
             value={form.goal}
             onChange={(event) => update("goal", event.target.value)}
-            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-copper focus:ring-2 focus:ring-copper/25 focus:outline-none"
+            className="w-full min-h-[3rem] input-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
           >
             {GOALS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -251,7 +252,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
         <div>
           <label
             htmlFor="b2b-budget"
-            className="block text-[0.65rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
+            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
           >
             Budget indicatif
           </label>
@@ -259,7 +260,7 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
             id="b2b-budget"
             value={form.budget}
             onChange={(event) => update("budget", event.target.value)}
-            className="w-full input-shell text-text-primary rounded-xl px-4 py-3.5 text-sm font-body focus:border-copper focus:ring-2 focus:ring-copper/25 focus:outline-none"
+            className="w-full min-h-[3rem] input-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
           >
             {BUDGETS.map((opt) => (
               <option key={opt.value} value={opt.value}>

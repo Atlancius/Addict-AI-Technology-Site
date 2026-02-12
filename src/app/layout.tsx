@@ -82,7 +82,9 @@ export default function RootLayout({
         <ScrollProgressLine />
         <AnalyticsScripts />
         <ScrollDepthTracker />
-        {children}
+        <div className="page-wrapper">
+          <div className="main-wrapper">{children}</div>
+        </div>
       </body>
     </html>
   );

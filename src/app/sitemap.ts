@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/a-propos",
     "/contact",
     "/mentions-legales",
-    "/confidentialite",
+    "/politique-confidentialite",
     "/pro",
     "/addict-2-0",
     "/reparations",

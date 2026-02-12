@@ -68,7 +68,7 @@ export default function CinematicHero({
           <ScrollReveal variant="left" distance={26}>
             <div className="space-y-6 md:space-y-7">
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <div className="relative h-14 w-14 rounded-xl border border-ember/45 bg-surface-2/85 overflow-hidden shadow-[0_0_1.6rem_rgba(239,68,86,0.28)]">
+                <div className="relative h-14 w-14 rounded-xl border border-ember/45 bg-surface-2/85 overflow-hidden shadow-[0_0_26px_rgba(239,68,86,0.28)]">
                   <Image
                     src="/images/brand/addict-mark-96.png"
                     alt="Logo Addict"

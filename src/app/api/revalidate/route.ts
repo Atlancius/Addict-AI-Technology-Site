@@ -10,7 +10,7 @@ const DEFAULT_PATHS = [
   "/a-propos",
   "/contact",
   "/mentions-legales",
-  "/confidentialite",
+  "/politique-confidentialite",
 ];
 
 const MAX_PATHS = 25;
