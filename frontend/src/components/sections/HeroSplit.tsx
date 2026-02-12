@@ -32,7 +32,7 @@ const PATH_CARDS = [
 
 export default function HeroSplit() {
   return (
-    <section className="min-h-[92vh] md:min-h-screen flex items-center relative overflow-hidden pt-[5.5rem] md:pt-24 pb-12 md:pb-14 surface-grid">
+    <section className="min-h-[26rem] md:min-h-[30rem] lg:min-h-[36rem] flex items-center relative overflow-hidden pt-[5.5rem] md:pt-24 pb-12 md:pb-14 surface-grid">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-0 to-surface-1" />
         <div className="ambient-orb -left-44 top-[-14%] w-[40rem] h-[40rem] bg-metal/70 aurora" />
@@ -43,7 +43,7 @@ export default function HeroSplit() {
       <div className="max-w-7xl mx-auto px-6 w-full py-10 md:py-14 relative space-y-10 md:space-y-14">
         <ScrollReveal className="text-center" variant="soft" distance={18}>
           <div className="inline-flex flex-col items-center gap-3">
-            <div className="relative h-20 w-20 rounded-2xl border border-ember/45 bg-surface-2/85 overflow-hidden shadow-[0_0_2.2rem_rgba(239,68,86,0.3)]">
+            <div className="relative h-20 w-20 rounded-2xl border border-ember/45 bg-surface-2/85 overflow-hidden shadow-[0_0_35px_rgba(239,68,86,0.3)]">
               <Image
                 src="/images/brand/addict-mark-160.png"
                 alt="Logo Addict"

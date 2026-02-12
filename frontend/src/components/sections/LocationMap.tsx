@@ -163,7 +163,7 @@ export default function LocationMap({ location }: { location?: Location }) {
           <div className="lg:col-span-1">
             <ScrollReveal variant="right">
               <MouseTilt
-                className="w-full h-96 lg:h-full min-h-96 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_1.25rem_3.75rem_rgba(0,0,0,0.35)]"
+                className="w-full h-96 lg:h-full min-h-96 rounded-2xl border border-stroke-subtle overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
                 maxTilt={4}
                 scale={1.004}
               >

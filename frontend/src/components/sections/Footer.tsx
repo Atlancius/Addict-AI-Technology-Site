@@ -15,7 +15,7 @@ const HUB_LINKS = [
 
 const LEGAL_LINKS = [
   { label: "Mentions légales", href: "/mentions-legales" },
-  { label: "Confidentialité", href: "/confidentialite" },
+  { label: "Confidentialité", href: "/politique-confidentialite" },
 ];
 
 export default async function Footer() {

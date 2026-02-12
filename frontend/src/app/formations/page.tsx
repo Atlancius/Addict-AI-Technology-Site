@@ -47,7 +47,7 @@ export default function FormationsPage() {
                   Deux parcours distincts, une même exigence: transformer les compétences en résultats tangibles sur le terrain.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" href={buildAuditHref("formation-pro")}>
+                  <Button variant="primary" href={buildAuditHref("formation")}>
                     Audit formation entreprise
                   </Button>
                   <Button variant="secondary" href="/contact">Contact formations</Button>
@@ -149,7 +149,7 @@ export default function FormationsPage() {
                   <span className="block ember-text">vraiment utile à ton contexte ?</span>
                 </h2>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <Button variant="primary" href={buildAuditHref("formation-pro")}>
+                  <Button variant="primary" href={buildAuditHref("formation")}>
                     Demander un audit formation
                   </Button>
                   <Button variant="secondary" href="/contact">Contacter Addict</Button>

@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex items-center justify-center">
+      <main className="min-h-[36rem] flex items-center justify-center">
         <div className="text-center space-y-6 px-6">
           <div className="font-heading text-8xl font-bold text-flame/20">
             404

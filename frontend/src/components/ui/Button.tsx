@@ -14,25 +14,25 @@ type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "btn-sheen bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-700)_48%,var(--ember-500)_100%)] text-white border border-ember/45 shadow-[0_14px_34px_rgba(63,21,24,0.42)] hover:bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-500)_50%,var(--ember-400)_100%)] hover:shadow-[0_18px_40px_rgba(91,36,39,0.5)] hover:-translate-y-0.5",
+    "btn-sheen bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-700)_48%,var(--ember-500)_100%)] text-white border border-transparent shadow-[0_14px_34px_rgba(63,21,24,0.42)] hover:bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-500)_50%,var(--ember-400)_100%)] hover:shadow-[0_18px_40px_rgba(91,36,39,0.5)] hover:-translate-y-0.5",
   secondary:
-    "bg-[linear-gradient(172deg,rgba(231,166,133,0.12)_0%,rgba(63,57,56,0.88)_100%)] text-copper border border-copper/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_30px_rgba(0,0,0,0.32)] hover:text-copper-400 hover:border-copper-400 hover:bg-[linear-gradient(172deg,rgba(231,166,133,0.18)_0%,rgba(63,57,56,0.95)_100%)] hover:-translate-y-0.5",
+    "bg-transparent text-copper border border-copper/60 shadow-[0_12px_28px_rgba(0,0,0,0.28)] hover:text-copper-400 hover:border-copper-400 hover:bg-tint-copper-8 hover:-translate-y-0.5",
   tertiary:
-    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-[linear-gradient(172deg,rgba(255,255,255,0.07)_0%,rgba(0,0,0,0.16)_100%)] hover:border-stroke-subtle",
+    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-tint-ember-8 hover:border-stroke-subtle",
   flame:
-    "btn-sheen bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-700)_48%,var(--ember-500)_100%)] text-white border border-ember/45 shadow-[0_14px_34px_rgba(63,21,24,0.42)] hover:bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-500)_50%,var(--ember-400)_100%)] hover:shadow-[0_18px_40px_rgba(91,36,39,0.5)] hover:-translate-y-0.5",
+    "btn-sheen bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-700)_48%,var(--ember-500)_100%)] text-white border border-transparent shadow-[0_14px_34px_rgba(63,21,24,0.42)] hover:bg-[linear-gradient(112deg,var(--ember-900)_0%,var(--ember-500)_50%,var(--ember-400)_100%)] hover:shadow-[0_18px_40px_rgba(91,36,39,0.5)] hover:-translate-y-0.5",
   metal:
-    "bg-[linear-gradient(172deg,rgba(231,166,133,0.12)_0%,rgba(63,57,56,0.88)_100%)] text-copper border border-copper/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_30px_rgba(0,0,0,0.32)] hover:text-copper-400 hover:border-copper-400 hover:bg-[linear-gradient(172deg,rgba(231,166,133,0.18)_0%,rgba(63,57,56,0.95)_100%)] hover:-translate-y-0.5",
+    "bg-transparent text-copper border border-copper/60 shadow-[0_12px_28px_rgba(0,0,0,0.28)] hover:text-copper-400 hover:border-copper-400 hover:bg-tint-copper-8 hover:-translate-y-0.5",
   outline:
-    "bg-[linear-gradient(172deg,rgba(231,166,133,0.12)_0%,rgba(63,57,56,0.88)_100%)] text-copper border border-copper/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_30px_rgba(0,0,0,0.32)] hover:text-copper-400 hover:border-copper-400 hover:bg-[linear-gradient(172deg,rgba(231,166,133,0.18)_0%,rgba(63,57,56,0.95)_100%)] hover:-translate-y-0.5",
+    "bg-transparent text-copper border border-copper/60 shadow-[0_12px_28px_rgba(0,0,0,0.28)] hover:text-copper-400 hover:border-copper-400 hover:bg-tint-copper-8 hover:-translate-y-0.5",
   ghost:
-    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-[linear-gradient(172deg,rgba(255,255,255,0.07)_0%,rgba(0,0,0,0.16)_100%)] hover:border-stroke-subtle",
+    "bg-transparent text-text-secondary border border-transparent hover:text-text-primary hover:bg-tint-ember-8 hover:border-stroke-subtle hover:underline hover:underline-offset-4",
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-4 py-2.5 text-[0.66rem]",
+  sm: "px-5 py-2.5 text-[0.66rem]",
   md: "px-6 py-3 text-[0.7rem]",
-  lg: "px-8 py-3.5 text-[0.74rem]",
+  lg: "px-7 py-3.5 text-[0.74rem]",
 };
 
 type BaseProps = {
@@ -63,9 +63,9 @@ export default function Button({
   const classes = [
     "inline-flex items-center justify-center gap-2 relative isolate overflow-hidden",
     "font-heading font-semibold uppercase tracking-[0.14em]",
-    "rounded-full transition-[transform,box-shadow,border-color,background,color] duration-300 cursor-pointer",
+    "rounded-xl transition-[transform,box-shadow,border-color,background,color] duration-300 cursor-pointer",
     "active:translate-y-0.5",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/55 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep focus-visible:shadow-[0_0_18px_rgba(147,69,64,0.28)]",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     variantClasses[variant],
     sizeClasses[size],

@@ -10,6 +10,7 @@ export type AuditContext =
   | "ia"
   | "crm"
   | "transition"
+  | "formation"
   | "formation-pro";
 
 export interface ServicePack {
@@ -662,7 +663,7 @@ export const FORMATIONS_PRO: FormationOffer = {
     "Pack Elite : accompagnement équipe + coaching managers",
   ],
   ctaLabel: "Demander un audit formation",
-  ctaHref: "/contact?audit=formation-pro#audit-pro",
+  ctaHref: "/contact?audit=formation#audit-pro",
 };
 
 export const FORMATIONS_PARTICULIERS: FormationOffer = {
@@ -755,6 +756,7 @@ export const AUDIT_CONTEXT_LABELS: Record<AuditContext, string> = {
   ia: "Audit automatisation & IA",
   crm: "Audit CRM / SaaS",
   transition: "Audit transition digitale",
+  formation: "Audit formation",
   "formation-pro": "Audit formation pro",
 };
 

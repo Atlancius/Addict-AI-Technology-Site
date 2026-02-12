@@ -171,6 +171,7 @@ export interface LeadB2BPayload {
     | "ia"
     | "crm"
     | "transition"
+    | "formation"
     | "formation-pro"
     | "formation-particulier"
     | "automation"

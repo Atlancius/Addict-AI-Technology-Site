@@ -21,7 +21,7 @@ export default function ScrollReveal({
   delay = 0,
   threshold = 0.15,
   duration = 760,
-  distance = 28,
+  distance = 8,
   variant = "up",
   once = true,
 }: ScrollRevealProps) {
@@ -67,7 +67,7 @@ export default function ScrollReveal({
   const style = {
     transitionDelay: `${Math.max(0, delay)}ms`,
     transitionDuration: `${Math.max(180, duration)}ms`,
-    ["--reveal-distance" as string]: `${Math.max(8, distance)}px`,
+    ["--reveal-distance" as string]: `${Math.max(4, distance) / 16}rem`,
   } as CSSProperties;
 
   return (

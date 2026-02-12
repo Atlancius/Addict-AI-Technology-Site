@@ -1,6 +1,6 @@
 export default function GlobalLoading() {
   return (
-    <main className="min-h-screen pt-28 pb-16 px-6">
+    <main className="min-h-[36rem] pt-28 pb-16 px-6">
       <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
         <div className="h-4 w-44 rounded-full bg-surface-3/70" />
         <div className="h-16 w-full max-w-3xl rounded-2xl bg-surface-2/65" />

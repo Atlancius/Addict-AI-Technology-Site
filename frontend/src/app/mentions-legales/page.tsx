@@ -65,7 +65,7 @@ export default function MentionsLegales() {
               <p>
                 Consultez notre{" "}
                 <a
-                  href="/confidentialite"
+                  href="/politique-confidentialite"
                   className="text-flame hover:underline"
                 >
                   politique de confidentialité

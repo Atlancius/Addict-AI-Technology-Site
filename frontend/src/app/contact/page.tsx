@@ -30,6 +30,7 @@ function mapAuditParamToGoal(value?: string):
   | "ia"
   | "crm"
   | "transition"
+  | "formation"
   | "formation-pro"
   | "formation-particulier"
   | "audit"
@@ -39,7 +40,7 @@ function mapAuditParamToGoal(value?: string):
   if (value === "ia") return "ia";
   if (value === "crm") return "crm";
   if (value === "transition") return "transition";
-  if (value === "formation-pro") return "formation-pro";
+  if (value === "formation" || value === "formation-pro") return "formation";
   if (value === "formation-particulier") return "formation-particulier";
   if (value === "general") return "audit";
   return "";

@@ -119,6 +119,7 @@ export function validateB2B(input: Partial<LeadB2BInput>) {
       "ia",
       "crm",
       "transition",
+      "formation",
       "formation-pro",
       "formation-particulier",
       "automation",

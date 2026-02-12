@@ -54,7 +54,7 @@ export default function MobileB2BBar({
         hidden ? "translate-y-[calc(100%+1rem)]" : "translate-y-0"
       }`}
     >
-      <div className="bg-surface-0/88 backdrop-blur-xl border-t border-stroke-subtle shadow-[0_-0.8rem_2.6rem_rgba(0,0,0,0.3)]">
+      <div className="bg-surface-0/88 backdrop-blur-xl border-t border-stroke-subtle shadow-[0_-13px_42px_rgba(0,0,0,0.3)]">
         <div className="mx-auto max-w-7xl px-4 pt-2 pb-[calc(0.75rem+env(safe-area-inset-bottom))] grid grid-cols-2 gap-2">
           <Button
             variant="metal"
