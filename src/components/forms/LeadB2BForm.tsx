@@ -51,6 +51,9 @@ const BUDGETS: Array<{ value: BudgetValue; label: string }> = [
   { value: "10k+", label: "10k+" },
 ];
 
+const selectStyles =
+  "w-full min-h-[3rem] rounded-lg border border-border-default bg-bg-tertiary/60 text-text-primary px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/30 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_0.5rem_center] bg-no-repeat pr-10";
+
 interface LeadB2BFormProps {
   defaultGoal?: GoalValue;
 }
@@ -168,8 +171,8 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
         Décris ton contexte et tes objectifs: on revient avec un cadrage clair et une proposition adaptée.
       </p>
       {goalLabel && (
-        <div className="inline-flex items-center rounded-full border border-copper/45 bg-tint-copper-12 px-3 py-1">
-          <span className="accent-label text-[0.58rem] text-copper-400">Contexte: {goalLabel}</span>
+        <div className="inline-flex items-center rounded-full border border-brand/30 bg-brand/10 px-3 py-1">
+          <span className="text-xs font-medium text-brand-light">Contexte: {goalLabel}</span>
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -180,7 +183,6 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
           autoComplete="name"
-          tone="copper"
           required
         />
         <Input
@@ -190,7 +192,6 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
           onChange={(event) => update("company", event.target.value)}
           error={errors.company}
           autoComplete="organization"
-          tone="copper"
           required
         />
         <Input
@@ -201,7 +202,6 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
           error={errors.email}
           type="email"
           autoComplete="email"
-          tone="copper"
           required
         />
         <Input
@@ -212,70 +212,39 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
           error={errors.phone}
           autoComplete="tel"
           inputMode="tel"
-          tone="copper"
         />
-        <div>
-          <label
-            htmlFor="b2b-company-size"
-            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
-          >
+        <div className="space-y-1.5">
+          <label htmlFor="b2b-company-size" className="block text-sm text-text-secondary">
             Taille d&apos;entreprise
           </label>
-          <select
-            id="b2b-company-size"
-            value={form.company_size}
-            onChange={(event) => update("company_size", event.target.value)}
-            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
-          >
+          <select id="b2b-company-size" value={form.company_size} onChange={(event) => update("company_size", event.target.value)} className={selectStyles}>
             {COMPANY_SIZES.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          {errors.company_size && <p className="text-xs text-ember mt-1">{errors.company_size}</p>}
+          {errors.company_size && <p className="text-xs text-red-400">{errors.company_size}</p>}
         </div>
-        <div>
-          <label
-            htmlFor="b2b-goal"
-            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
-          >
+        <div className="space-y-1.5">
+          <label htmlFor="b2b-goal" className="block text-sm text-text-secondary">
             Type d&apos;audit
           </label>
-          <select
-            id="b2b-goal"
-            value={form.goal}
-            onChange={(event) => update("goal", event.target.value)}
-            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
-          >
+          <select id="b2b-goal" value={form.goal} onChange={(event) => update("goal", event.target.value)} className={selectStyles}>
             {GOALS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          {errors.goal && <p className="text-xs text-ember mt-1">{errors.goal}</p>}
+          {errors.goal && <p className="text-xs text-red-400">{errors.goal}</p>}
         </div>
-        <div>
-          <label
-            htmlFor="b2b-budget"
-            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
-          >
+        <div className="space-y-1.5">
+          <label htmlFor="b2b-budget" className="block text-sm text-text-secondary">
             Budget indicatif
           </label>
-          <select
-            id="b2b-budget"
-            value={form.budget}
-            onChange={(event) => update("budget", event.target.value)}
-            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-copper focus:outline-none focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]"
-          >
+          <select id="b2b-budget" value={form.budget} onChange={(event) => update("budget", event.target.value)} className={selectStyles}>
             {BUDGETS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          {errors.budget && <p className="text-xs text-ember mt-1">{errors.budget}</p>}
+          {errors.budget && <p className="text-xs text-red-400">{errors.budget}</p>}
         </div>
       </div>
 
@@ -285,18 +254,13 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
         value={form.problem}
         onChange={(event) => update("problem", event.target.value)}
         error={errors.problem}
-        tone="copper"
         required
       />
 
       <div className="hidden">
         <label>
           Website
-          <input
-            type="text"
-            value={form.website}
-            onChange={(event) => update("website", event.target.value)}
-          />
+          <input type="text" value={form.website} onChange={(event) => update("website", event.target.value)} />
         </label>
       </div>
 
@@ -306,21 +270,18 @@ export default function LeadB2BForm({ defaultGoal = "" }: LeadB2BFormProps) {
           type="checkbox"
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
-          className="mt-1 h-4 w-4 rounded border-stroke-subtle accent-ember"
+          className="mt-1 h-4 w-4 rounded border-border-default accent-brand"
         />
         <span>J&apos;accepte d&apos;être recontacté et que mes données soient traitées.</span>
       </label>
-      {errors.consent && <p className="text-xs text-ember">{errors.consent}</p>}
+      {errors.consent && <p className="text-xs text-red-400">{errors.consent}</p>}
 
       <div className="flex flex-wrap items-center gap-4">
         <Button variant="primary" size="md" type="submit" disabled={status === "loading"}>
           {status === "loading" ? "Envoi..." : "Envoyer la demande"}
         </Button>
         {message && (
-          <p
-            aria-live="polite"
-            className={`text-sm ${status === "success" ? "text-copper-400" : "text-ember"}`}
-          >
+          <p aria-live="polite" className={`text-sm ${status === "success" ? "text-emerald-400" : "text-red-400"}`}>
             {message}
           </p>
         )}

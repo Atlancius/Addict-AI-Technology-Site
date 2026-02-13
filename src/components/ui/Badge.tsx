@@ -1,6 +1,16 @@
 import { type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
-type BadgeVariant = "local" | "express" | "quality" | "default";
+type BadgeVariant = "default" | "brand" | "accent" | "local" | "express" | "quality";
+
+const variantStyles: Record<BadgeVariant, string> = {
+  default: "border-border-default text-text-secondary",
+  brand: "border-brand/25 bg-brand-muted text-brand-light",
+  accent: "border-accent/25 bg-accent-muted text-accent-light",
+  local: "border-accent/30 bg-accent-muted text-accent-light",
+  express: "border-brand/30 bg-brand-muted text-brand-light",
+  quality: "border-brand/30 bg-brand-muted text-brand-light",
+};
 
 interface BadgeProps {
   variant?: BadgeVariant;
@@ -8,25 +18,14 @@ interface BadgeProps {
   children: ReactNode;
 }
 
-const variantClasses: Record<BadgeVariant, string> = {
-  local:
-    "bg-metal/18 text-metal border-metal/45 shadow-[0_0_16px_rgba(93,134,178,0.2)]",
-  express:
-    "bg-flame/16 text-flame border-flame/45 shadow-[0_0_16px_rgba(255,115,50,0.2)]",
-  quality:
-    "bg-ember/16 text-ember border-ember/45 shadow-[0_0_16px_rgba(239,68,86,0.2)]",
-  default:
-    "bg-surface-2/80 text-text-secondary border-stroke-subtle",
-};
-
-export default function Badge({
-  variant = "default",
-  className = "",
-  children,
-}: BadgeProps) {
+export default function Badge({ variant = "default", className, children }: BadgeProps) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] border rounded-full ${variantClasses[variant]} ${className}`}
+      className={cn(
+        "inline-flex items-center gap-1.5 px-3 py-1 text-[0.65rem] font-heading font-medium uppercase tracking-widest border rounded-full",
+        variantStyles[variant],
+        className,
+      )}
     >
       {children}
     </span>

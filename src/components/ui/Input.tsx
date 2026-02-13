@@ -1,4 +1,5 @@
 import { type InputHTMLAttributes, type TextareaHTMLAttributes, forwardRef } from "react";
+import { cn } from "@/lib/utils";
 
 interface BaseInputProps {
   label?: string;
@@ -8,84 +9,66 @@ interface BaseInputProps {
 }
 
 type InputProps = BaseInputProps & InputHTMLAttributes<HTMLInputElement>;
-type TextareaProps = BaseInputProps &
-  TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
-const baseClasses =
-  "w-full min-h-[3rem] input-shell text-text-primary placeholder:text-text-3/80 rounded-xl px-4 py-3 text-sm font-body transition-all duration-200 focus:outline-none";
+const baseStyles = cn(
+  "w-full min-h-[3rem] rounded-lg border bg-bg-tertiary/60 text-text-primary",
+  "placeholder:text-text-muted px-4 py-3 text-sm",
+  "transition-all duration-200",
+  "focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/30",
+);
 
-const focusClasses: Record<NonNullable<BaseInputProps["tone"]>, string> = {
-  ember: "focus:border-ember focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]",
-  copper: "focus:border-copper focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]",
-  flame: "focus:border-ember focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]",
-  metal: "focus:border-copper focus:shadow-[0_0_0_1px_rgba(231,166,133,0.45),0_0_16px_rgba(222,141,109,0.2)]",
-};
-
-const errorClasses =
-  "!border-ember focus:!border-ember focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]";
-
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { label, error, tone = "ember", className = "", ...props },
-  ref
-) {
-  const errorId = props.id ? `${props.id}-error` : undefined;
-  const describedBy = error ? errorId : props["aria-describedby"];
-
-  return (
-    <div className="space-y-1.5">
-      {label && (
-        <label
-          htmlFor={props.id}
-          className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
-        >
-          {label}
-        </label>
-      )}
-      <input
-        ref={ref}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={describedBy}
-        className={`${baseClasses} ${focusClasses[tone]} ${error ? errorClasses : ""} ${className}`}
-        {...props}
-      />
-      {error && (
-        <p id={errorId} className="text-xs text-ember mt-1">
-          {error}
-        </p>
-      )}
-    </div>
-  );
-});
-
-export const Textarea = forwardRef<HTMLTextAreaElement, Omit<TextareaProps, "multiline">>(
-  function Textarea({ label, error, tone = "ember", className = "", ...props }, ref) {
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  function Input({ label, error, className, ...props }, ref) {
     const errorId = props.id ? `${props.id}-error` : undefined;
     const describedBy = error ? errorId : props["aria-describedby"];
 
     return (
       <div className="space-y-1.5">
         {label && (
-          <label
-            htmlFor={props.id}
-            className="block text-[0.75rem] font-accent font-medium uppercase tracking-[0.14em] text-text-secondary"
-          >
+          <label htmlFor={props.id} className="block text-sm text-text-secondary">
             {label}
           </label>
         )}
-        <textarea
+        <input
           ref={ref}
-          rows={4}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className={`${baseClasses} ${focusClasses[tone]} resize-y min-h-[6.25rem] ${error ? errorClasses : ""} ${className}`}
+          className={cn(baseStyles, error ? "border-red-500/50" : "border-border-default", className)}
           {...props}
         />
         {error && (
-          <p id={errorId} className="text-xs text-ember mt-1">
-            {error}
-          </p>
+          <p id={errorId} className="text-xs text-red-400">{error}</p>
         )}
       </div>
     );
-  }
+  },
 );
+
+export const Textarea = forwardRef<
+  HTMLTextAreaElement,
+  BaseInputProps & TextareaHTMLAttributes<HTMLTextAreaElement>
+>(function Textarea({ label, error, className, ...props }, ref) {
+  const errorId = props.id ? `${props.id}-error` : undefined;
+  const describedBy = error ? errorId : props["aria-describedby"];
+
+  return (
+    <div className="space-y-1.5">
+      {label && (
+        <label htmlFor={props.id} className="block text-sm text-text-secondary">
+          {label}
+        </label>
+      )}
+      <textarea
+        ref={ref}
+        rows={4}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy}
+        className={cn(baseStyles, "resize-y min-h-[6.25rem]", error ? "border-red-500/50" : "border-border-default", className)}
+        {...props}
+      />
+      {error && (
+        <p id={errorId} className="text-xs text-red-400">{error}</p>
+      )}
+    </div>
+  );
+});

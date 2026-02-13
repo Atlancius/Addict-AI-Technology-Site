@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
@@ -16,9 +17,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const caseStudy = getCaseStudyBySlug(params.slug);
+  const { slug } = await params;
+  const caseStudy = getCaseStudyBySlug(slug);
   if (!caseStudy) return { title: "Réalisation" };
 
   return {
@@ -36,8 +38,9 @@ export async function generateMetadata({
   };
 }
 
-export default function RealisationDetailPage({ params }: { params: { slug: string } }) {
-  const caseStudy = getCaseStudyBySlug(params.slug);
+export default async function RealisationDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const caseStudy = getCaseStudyBySlug(slug);
   if (!caseStudy) notFound();
 
   const jsonLd = {
@@ -59,36 +62,41 @@ export default function RealisationDetailPage({ params }: { params: { slug: stri
       <JsonLd data={jsonLd} />
       <Navbar />
       <main>
-        <section className="pt-28 pb-20 md:pt-32 md:pb-24 surface-grid relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-deep via-bg-main to-bg-section" />
+        {/* Hero */}
+        <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand/5 via-bg-primary to-bg-secondary/30" />
+          <div className="absolute top-20 right-1/4 w-96 h-96 bg-brand/8 rounded-full blur-[120px] pointer-events-none" />
+
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.02fr_0.98fr] gap-10 items-center">
             <ScrollReveal variant="left">
               <div className="space-y-6">
                 <p className="eyebrow">Étude de cas</p>
-                <h1 className="section-title">{caseStudy.title}</h1>
-                <p className="section-lead">{caseStudy.summary}</p>
-                <p className="text-copper text-lg">{caseStudy.impact}</p>
+                <h1 className="font-heading text-4xl md:text-5xl text-text-primary leading-tight">{caseStudy.title}</h1>
+                <p className="text-text-secondary text-base md:text-lg">{caseStudy.summary}</p>
+                <p className="text-brand-light text-lg">{caseStudy.impact}</p>
                 <div className="flex flex-wrap gap-2">
                   {caseStudy.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-border-soft bg-bg-main/55 px-3 py-1 accent-label text-[0.54rem] text-text-secondary"
+                      className="rounded-full border border-border-default bg-bg-secondary/55 px-3 py-1 text-[0.65rem] font-medium text-text-secondary"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" href={buildAuditHref("general")}>Demander un audit</Button>
+                  <Button variant="primary" href={buildAuditHref("general")}>
+                    Demander un audit <ArrowRight className="w-4 h-4" />
+                  </Button>
                   <Button variant="secondary" href="/realisations">Retour aux réalisations</Button>
                 </div>
               </div>
             </ScrollReveal>
             <ScrollReveal variant="right" delay={100}>
-              <div className="panel rounded-3xl p-5">
-                <div className="relative h-80 rounded-2xl overflow-hidden border border-border-soft">
+              <div className="rounded-2xl border border-border-default bg-bg-secondary/50 p-4">
+                <div className="relative h-80 rounded-xl overflow-hidden">
                   <Image src={caseStudy.image} alt={caseStudy.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-deep/78 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/78 to-transparent" />
                 </div>
               </div>
             </ScrollReveal>

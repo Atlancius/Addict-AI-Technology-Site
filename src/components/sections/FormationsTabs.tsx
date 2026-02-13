@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckCircle2 } from "lucide-react";
 import Tabs from "@/components/ui/Tabs";
 import Button from "@/components/ui/Button";
 import Card, { CardDescription, CardTitle } from "@/components/ui/Card";
@@ -17,7 +18,7 @@ function ProContent() {
       <ul className="space-y-3 text-sm text-text-secondary mb-6">
         {FORMATIONS_PRO.packs.map((item) => (
           <li key={item} className="flex items-start gap-2">
-            <span className="text-copper mt-0.5">✓</span>
+            <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
             <span>{item}</span>
           </li>
         ))}
@@ -39,7 +40,7 @@ function ParticuliersContent() {
       <ul className="space-y-3 text-sm text-text-secondary mb-6">
         {FORMATIONS_PARTICULIERS.packs.map((item) => (
           <li key={item} className="flex items-start gap-2">
-            <span className="text-copper mt-0.5">✓</span>
+            <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
             <span>{item}</span>
           </li>
         ))}

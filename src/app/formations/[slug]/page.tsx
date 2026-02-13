@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import MobileB2BBar from "@/components/sections/MobileB2BBar";
@@ -38,9 +39,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const training = await getTrainingBySlugWithFallback(params.slug);
+  const { slug } = await params;
+  const training = await getTrainingBySlugWithFallback(slug);
   if (!training) return { title: "Formation" };
 
   const title = training.seo_title || training.title;
@@ -70,14 +72,15 @@ export async function generateMetadata({
 export default async function TrainingDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   let training: TrainingWithFaqs | null = null;
   let faqItems: Array<{ question: string; answer: string }> = [];
   const location = await getLocationWithFallback();
 
   try {
-    const res = await getTrainingBySlug(params.slug);
+    const res = await getTrainingBySlug(slug);
     const trainings = unwrapCollection<TrainingWithFaqs>(res);
     training = trainings[0] ?? null;
 
@@ -93,7 +96,7 @@ export default async function TrainingDetailPage({
   }
 
   if (!training) {
-    const fallback = await getTrainingBySlugWithFallback(params.slug);
+    const fallback = await getTrainingBySlugWithFallback(slug);
     if (!fallback) notFound();
     training = fallback;
   }
@@ -120,25 +123,29 @@ export default async function TrainingDetailPage({
       <JsonLd data={jsonLdPayload} />
       <Navbar />
       <main>
-        <section className="pt-28 pb-16 bg-surface-0 surface-grid">
+        {/* Hero */}
+        <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-accent/5 via-bg-primary to-bg-secondary/30" />
+          <div className="absolute top-20 left-1/3 w-96 h-96 bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
+
           <div className="max-w-5xl mx-auto px-6">
             <ScrollReveal>
-              <div className="inline-flex items-center gap-2 px-3 py-1 border-l-2 border-metal bg-surface-3/60 mb-6">
-                <span className="text-[0.625rem] font-heading font-medium tracking-[0.2em] text-metal uppercase">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/30 bg-accent/10 mb-6">
+                <span className="text-xs font-medium text-accent-light uppercase tracking-widest">
                   Formation
                 </span>
               </div>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold text-text-primary mb-4">
+              <h1 className="font-heading text-4xl md:text-5xl text-text-primary leading-tight mb-4">
                 {training.title}
               </h1>
-              <p className="text-text-secondary text-lg">
+              <p className="text-text-secondary text-lg max-w-2xl">
                 {training.summary || stripHtml(training.description || "")}
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
-                <Button variant="metal" size="md" href={training.cta_link || "/contact"}>
-                  {training.cta_label || "Demander une session"}
+                <Button variant="primary" size="md" href={training.cta_link || "/contact"}>
+                  {training.cta_label || "Demander une session"} <ArrowRight className="w-4 h-4" />
                 </Button>
-                <Button variant="outline" size="md" href="/formations">
+                <Button variant="secondary" size="md" href="/formations">
                   Toutes les formations
                 </Button>
               </div>
@@ -146,11 +153,12 @@ export default async function TrainingDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 section-shell">
+        {/* Stats */}
+        <section className="py-20 border-t border-border-default">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             <ScrollReveal>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-7">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-text-secondary mb-3">
                   Audience
                 </h3>
                 <p className="text-text-primary text-lg font-semibold">
@@ -159,8 +167,8 @@ export default async function TrainingDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-7">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-text-secondary mb-3">
                   Format
                 </h3>
                 <p className="text-text-primary text-lg font-semibold">
@@ -169,8 +177,8 @@ export default async function TrainingDetailPage({
               </div>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <div className="panel rounded-2xl p-7">
-                <h3 className="font-heading text-sm uppercase tracking-wider text-text-secondary mb-3">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-7">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-text-secondary mb-3">
                   Durée
                 </h3>
                 <p className="text-text-primary text-lg font-semibold">
@@ -181,22 +189,18 @@ export default async function TrainingDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-0">
+        {/* Objectives + Prerequisites */}
+        <section className="py-20 bg-bg-secondary/30 border-t border-border-default">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
               <ScrollReveal>
-                <h2 className="font-heading text-3xl font-bold text-text-primary mb-6">
-                  Objectifs
-                </h2>
+                <h2 className="font-heading text-3xl text-text-primary mb-6">Objectifs</h2>
               </ScrollReveal>
               <ScrollReveal>
                 <ul className="space-y-3">
                   {(training.objectives || []).map((item) => (
-                    <li
-                      key={item}
-                      className="panel-soft p-5 text-text-secondary text-sm"
-                    >
-                      <span className="text-metal mr-2">✓</span>
+                    <li key={item} className="flex items-start gap-3 rounded-lg border border-border-default bg-bg-secondary/50 p-5 text-text-secondary text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
                       {item}
                     </li>
                   ))}
@@ -205,18 +209,13 @@ export default async function TrainingDetailPage({
             </div>
             <div>
               <ScrollReveal>
-                <h2 className="font-heading text-3xl font-bold text-text-primary mb-6">
-                  Prérequis
-                </h2>
+                <h2 className="font-heading text-3xl text-text-primary mb-6">Prérequis</h2>
               </ScrollReveal>
               <ScrollReveal>
                 <ul className="space-y-3">
                   {(training.prerequisites || []).map((item) => (
-                    <li
-                      key={item}
-                      className="panel-soft p-5 text-text-secondary text-sm"
-                    >
-                      <span className="text-metal mr-2">✓</span>
+                    <li key={item} className="flex items-start gap-3 rounded-lg border border-border-default bg-bg-secondary/50 p-5 text-text-secondary text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                       {item}
                     </li>
                   ))}
@@ -226,25 +225,25 @@ export default async function TrainingDetailPage({
           </div>
         </section>
 
-        <section className="py-20 bg-surface-1 section-shell">
+        {/* Programme */}
+        <section className="py-20 border-t border-border-default">
           <div className="max-w-5xl mx-auto px-6">
             <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-6">
-                Programme
-              </h2>
+              <h2 className="font-heading text-3xl text-text-primary mb-6">Programme</h2>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="panel rounded-2xl p-8 md:p-9 text-text-secondary text-sm leading-relaxed">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-8 md:p-9 text-text-secondary text-sm leading-relaxed">
                 {stripHtml(training.program_outline || training.description || "")}
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        <section id="contact-pro" className="py-20 bg-surface-1 section-shell">
+        {/* Contact Form */}
+        <section id="contact-pro" className="py-20 bg-bg-secondary/30 border-t border-border-default">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-4 text-center">
+              <h2 className="font-heading text-3xl text-text-primary mb-4 text-center">
                 Réserver une session
               </h2>
               <p className="text-text-muted mb-8 text-center">
@@ -252,17 +251,18 @@ export default async function TrainingDetailPage({
               </p>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="panel rounded-2xl p-8 md:p-9">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-8 md:p-9">
                 <LeadB2BForm />
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        <section className="py-20 bg-surface-0">
+        {/* FAQ */}
+        <section className="py-20 border-t border-border-default">
           <div className="max-w-3xl mx-auto px-6">
             <ScrollReveal>
-              <h2 className="font-heading text-3xl font-bold text-text-primary mb-8">
+              <h2 className="font-heading text-3xl text-text-primary mb-8">
                 Questions fréquentes
               </h2>
             </ScrollReveal>
@@ -277,4 +277,3 @@ export default async function TrainingDetailPage({
     </>
   );
 }
-

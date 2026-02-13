@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ArrowRight, Diamond } from "lucide-react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
@@ -26,29 +27,35 @@ export default function AboutPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-20 md:pt-32 md:pb-24 surface-grid relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-deep via-bg-main to-bg-section" />
+        {/* Hero */}
+        <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-accent/5 via-bg-primary to-bg-secondary/30" />
+          <div className="absolute top-20 left-1/3 w-96 h-96 bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-brand/6 rounded-full blur-[100px] pointer-events-none" />
+
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[0.98fr_1.02fr] gap-10 items-center">
             <ScrollReveal variant="left" distance={24}>
               <div className="space-y-6">
                 <p className="eyebrow">À propos</p>
-                <h1 className="section-title">
+                <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-text-primary leading-tight">
                   Exigence premium,
-                  <span className="block copper-text">ancrage terrain.</span>
+                  <span className="block gradient-text">ancrage terrain.</span>
                 </h1>
-                <p className="section-lead">
+                <p className="text-text-secondary text-base md:text-lg max-w-xl">
                   Addict Hub combine stratégie, design et exécution opérationnelle pour transformer des intentions digitales en résultats concrets.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" href={buildAuditHref("general")}>Demander un audit</Button>
+                  <Button variant="primary" href={buildAuditHref("general")}>
+                    Demander un audit <ArrowRight className="w-4 h-4" />
+                  </Button>
                   <Button variant="secondary" href="/contact">Nous contacter</Button>
                 </div>
               </div>
             </ScrollReveal>
 
             <ScrollReveal variant="right" delay={90}>
-              <div className="panel rounded-3xl p-5">
-                <div className="relative h-80 rounded-2xl overflow-hidden border border-border-soft">
+              <div className="rounded-2xl border border-border-default bg-bg-secondary/50 p-4">
+                <div className="relative h-80 rounded-xl overflow-hidden">
                   <Image
                     src="/images/stock/pro-workspace.jpg"
                     alt="Portrait professionnel Addict"
@@ -56,9 +63,9 @@ export default function AboutPage() {
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 45vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-deep/80 via-bg-deep/12 to-transparent" />
-                  <div className="absolute left-4 bottom-4 hero-pill">
-                    <span className="accent-label text-[0.55rem] text-copper">Fondateur & opérateur</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/80 via-bg-primary/12 to-transparent" />
+                  <div className="absolute left-4 bottom-4 inline-flex items-center rounded-full border border-brand/30 bg-bg-primary/80 backdrop-blur-sm px-3 py-1.5">
+                    <span className="text-xs font-medium text-brand-light">Fondateur & opérateur</span>
                   </div>
                 </div>
               </div>
@@ -66,7 +73,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="py-20 section-shell">
+        {/* Vision / Method / Positioning */}
+        <section className="py-20 border-t border-border-default">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
@@ -92,15 +100,16 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="py-20 section-shell bg-bg-section/55">
+        {/* Trust + Stack */}
+        <section className="py-20 bg-bg-secondary/30 border-t border-border-default">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[0.96fr_1.04fr] gap-8 items-start">
             <ScrollReveal variant="left">
-              <div className="panel rounded-2xl p-7">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-7">
                 <h2 className="font-heading text-3xl text-text-primary mb-5">Ce qui nous distingue</h2>
                 <ul className="space-y-3 text-sm text-text-secondary">
                   {TRUST_ITEMS.map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <span className="text-copper mt-0.5">◆</span>
+                      <Diamond className="w-4 h-4 text-brand shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -109,13 +118,13 @@ export default function AboutPage() {
             </ScrollReveal>
 
             <ScrollReveal variant="right" delay={90}>
-              <div className="panel rounded-2xl p-7">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-7">
                 <h2 className="font-heading text-3xl text-text-primary mb-5">Stack maîtrisée</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {STACK_ITEMS.map((item) => (
                     <div
                       key={item}
-                      className="panel-soft p-3 text-center accent-label text-[0.56rem] text-text-secondary"
+                      className="rounded-lg border border-border-default bg-bg-primary/50 p-3 text-center text-xs font-medium text-text-secondary"
                     >
                       {item}
                     </div>
