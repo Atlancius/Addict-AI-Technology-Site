@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { MapPin, Phone, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
@@ -39,33 +40,38 @@ export default async function BoutiquePage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-28 pb-20 md:pt-32 md:pb-24 surface-grid relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-deep via-bg-main to-bg-section" />
+        {/* Hero */}
+        <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand/5 via-bg-primary to-bg-secondary/30" />
+          <div className="absolute top-20 right-1/4 w-96 h-96 bg-brand/8 rounded-full blur-[120px] pointer-events-none" />
+
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.06fr_0.94fr] gap-10 items-center">
             <ScrollReveal variant="left" distance={24}>
               <div className="space-y-6">
                 <p className="eyebrow">Boutique / Particuliers</p>
-                <h1 className="section-title">
+                <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-text-primary leading-tight">
                   Service local,
-                  <span className="block copper-text">accompagnement pratique.</span>
+                  <span className="block gradient-text">accompagnement pratique.</span>
                 </h1>
-                <p className="section-lead">
+                <p className="text-text-secondary text-base md:text-lg max-w-xl">
                   Réparation, dépannage et formations numériques accessibles depuis un seul point de contact à Folelli.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" href={`tel:${phoneHref}`}>Appeler la boutique</Button>
+                  <Button variant="primary" href={`tel:${phoneHref}`}>
+                    <Phone className="w-4 h-4" /> Appeler la boutique
+                  </Button>
                   <Button variant="secondary" href={mapHref} target="_blank" rel="noopener noreferrer">
-                    Itinéraire
+                    <MapPin className="w-4 h-4" /> Itinéraire
                   </Button>
                 </div>
               </div>
             </ScrollReveal>
             <ScrollReveal variant="right" delay={100}>
-              <div className="panel rounded-3xl p-5 md:p-6 space-y-4">
-                <div className="relative h-52 rounded-2xl overflow-hidden border border-border-soft">
+              <div className="rounded-2xl border border-border-default bg-bg-secondary/50 p-4 space-y-3">
+                <div className="relative h-52 rounded-xl overflow-hidden">
                   <Image src="/images/stock/repair-workbench.jpg" alt="Atelier réparation" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 42vw" />
                 </div>
-                <div className="relative h-36 rounded-2xl overflow-hidden border border-border-soft">
+                <div className="relative h-36 rounded-xl overflow-hidden">
                   <Image src="/images/stock/cafe-cozy.jpg" alt="Ambiance boutique" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 42vw" />
                 </div>
               </div>
@@ -73,7 +79,8 @@ export default async function BoutiquePage() {
           </div>
         </section>
 
-        <section className="py-20 section-shell" id="reparations">
+        {/* Offers */}
+        <section className="py-20 border-t border-border-default" id="reparations">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {BOUTIQUE_OFFERS.map((offer, index) => (
@@ -84,7 +91,7 @@ export default async function BoutiquePage() {
                     <ul className="space-y-2 text-sm text-text-secondary">
                       {offer.points.map((point) => (
                         <li key={point} className="flex items-start gap-2">
-                          <span className="text-copper mt-0.5">✓</span>
+                          <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
                           <span>{point}</span>
                         </li>
                       ))}
@@ -96,10 +103,11 @@ export default async function BoutiquePage() {
           </div>
         </section>
 
-        <section className="py-20 section-shell bg-bg-section/55">
+        {/* Practical Info + Map */}
+        <section className="py-20 bg-bg-secondary/30 border-t border-border-default">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[0.92fr_1.08fr] gap-8">
             <ScrollReveal variant="left">
-              <div className="panel rounded-2xl p-7 space-y-5 h-full">
+              <div className="rounded-xl border border-border-default bg-bg-secondary/50 p-7 space-y-5 h-full">
                 <h2 className="font-heading text-3xl text-text-primary">Infos pratiques</h2>
                 <p className="text-text-secondary text-sm leading-relaxed">
                   {location.address_line1}
@@ -109,7 +117,7 @@ export default async function BoutiquePage() {
                 <p className="text-text-secondary text-sm">Lun - Ven: 09h00 - 18h00</p>
                 <p className="text-text-secondary text-sm">Sam: 10h00 - 16h00</p>
                 <p className="text-text-secondary text-sm">Dim: Fermé</p>
-                <div className="split-divider" />
+                <div className="h-px bg-border-default" />
                 <div className="flex flex-wrap gap-3">
                   <Button variant="primary" href={`tel:${phoneHref}`}>Appeler</Button>
                   <Button variant="secondary" href={mapHref} target="_blank" rel="noopener noreferrer">
@@ -119,7 +127,7 @@ export default async function BoutiquePage() {
               </div>
             </ScrollReveal>
             <ScrollReveal variant="right" delay={90}>
-              <div className="panel rounded-2xl overflow-hidden h-[24rem] md:h-[30rem]">
+              <div className="rounded-xl border border-border-default overflow-hidden h-[24rem] md:h-[30rem]">
                 <iframe
                   src={mapEmbed}
                   width="100%"

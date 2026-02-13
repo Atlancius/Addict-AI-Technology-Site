@@ -17,6 +17,9 @@ const URGENCY_OPTIONS: Array<{ value: UrgencyValue; label: string }> = [
   { value: "no_rush", label: "Pas d'urgence" },
 ];
 
+const selectStyles =
+  "w-full min-h-[3rem] rounded-lg border border-border-default bg-bg-tertiary/60 text-text-primary px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/30 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_0.5rem_center] bg-no-repeat pr-10";
+
 export default function LeadB2CForm() {
   const [form, setForm] = useState<{
     name: string;
@@ -40,9 +43,7 @@ export default function LeadB2CForm() {
     website: "",
   });
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
   const update = (field: string, value: string | boolean) => {
@@ -125,7 +126,6 @@ export default function LeadB2CForm() {
           onChange={(event) => update("name", event.target.value)}
           error={errors.name}
           autoComplete="name"
-          tone="flame"
           required
         />
         <Input
@@ -136,7 +136,6 @@ export default function LeadB2CForm() {
           error={errors.phone}
           autoComplete="tel"
           inputMode="tel"
-          tone="flame"
           required
         />
         <Input
@@ -147,7 +146,6 @@ export default function LeadB2CForm() {
           error={errors.email}
           type="email"
           autoComplete="email"
-          tone="flame"
         />
         <Input
           label="Marque"
@@ -156,7 +154,6 @@ export default function LeadB2CForm() {
           onChange={(event) => update("device_brand", event.target.value)}
           error={errors.device_brand}
           autoComplete="off"
-          tone="flame"
           required
         />
         <Input
@@ -166,31 +163,18 @@ export default function LeadB2CForm() {
           onChange={(event) => update("device_model", event.target.value)}
           error={errors.device_model}
           autoComplete="off"
-          tone="flame"
           required
         />
-        <div>
-          <label
-            htmlFor="b2c-urgency"
-            className="block text-[0.65rem] font-heading font-medium uppercase tracking-[0.14em] text-text-secondary mb-1"
-          >
+        <div className="space-y-1.5">
+          <label htmlFor="b2c-urgency" className="block text-sm text-text-secondary">
             Urgence
           </label>
-          <select
-            id="b2c-urgency"
-            value={form.urgency}
-            onChange={(event) => update("urgency", event.target.value)}
-            className="w-full min-h-[3rem] input-shell select-shell text-text-primary rounded-xl px-4 py-3 text-sm font-body focus:border-ember focus:outline-none focus:shadow-[0_0_0_1px_rgba(169,111,99,0.45),0_0_16px_rgba(147,69,64,0.24)]"
-          >
+          <select id="b2c-urgency" value={form.urgency} onChange={(event) => update("urgency", event.target.value)} className={selectStyles}>
             {URGENCY_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          {errors.urgency && (
-            <p className="text-xs text-ember mt-1">{errors.urgency}</p>
-          )}
+          {errors.urgency && <p className="text-xs text-red-400">{errors.urgency}</p>}
         </div>
       </div>
 
@@ -200,19 +184,13 @@ export default function LeadB2CForm() {
         value={form.issue}
         onChange={(event) => update("issue", event.target.value)}
         error={errors.issue}
-        tone="flame"
         required
       />
 
-      {/* Honeypot */}
       <div className="hidden">
         <label>
           Website
-          <input
-            type="text"
-            value={form.website}
-            onChange={(event) => update("website", event.target.value)}
-          />
+          <input type="text" value={form.website} onChange={(event) => update("website", event.target.value)} />
         </label>
       </div>
 
@@ -222,27 +200,18 @@ export default function LeadB2CForm() {
           type="checkbox"
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
-          className="mt-1 h-4 w-4 rounded border-stroke-subtle accent-flame"
+          className="mt-1 h-4 w-4 rounded border-border-default accent-brand"
         />
-        <span>
-          J&apos;accepte d&apos;être recontacté et que mes données soient traitées.
-        </span>
+        <span>J&apos;accepte d&apos;être recontacté et que mes données soient traitées.</span>
       </label>
-      {errors.consent && (
-        <p className="text-xs text-ember">{errors.consent}</p>
-      )}
+      {errors.consent && <p className="text-xs text-red-400">{errors.consent}</p>}
 
       <div className="flex flex-wrap items-center gap-4">
-        <Button variant="flame" size="md" type="submit" disabled={status === "loading"}>
+        <Button variant="primary" size="md" type="submit" disabled={status === "loading"}>
           {status === "loading" ? "Envoi..." : "Envoyer la demande"}
         </Button>
         {message && (
-          <p
-            aria-live="polite"
-            className={`text-sm ${
-              status === "success" ? "text-emerald-300" : "text-ember"
-            }`}
-          >
+          <p aria-live="polite" className={`text-sm ${status === "success" ? "text-emerald-400" : "text-red-400"}`}>
             {message}
           </p>
         )}
